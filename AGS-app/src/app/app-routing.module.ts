@@ -4,6 +4,7 @@ import { InicioComponent } from './Pages/inicio/inicio.component';
 import { LoginComponent } from './Components/login/login.component';
 import { ContainerComponent } from './Components/container/container.component';
 import { NosotrosComponent } from './Pages/nosotros/nosotros.component';
+import { InicioAdminComponent } from './Pages/inicio-admin/inicio-admin.component';
 
 const routes: Routes = [
   { path: "", component: InicioComponent },
@@ -11,7 +12,8 @@ const routes: Routes = [
   { path: "AGS", component: ContainerComponent,
     children: [
       { path: "inicio", component: InicioComponent },
-      { path: "nosotros", component: NosotrosComponent }
+      { path: "nosotros", component: NosotrosComponent },
+      { path: "admin", component: InicioAdminComponent }
     ]
    }
 ];
