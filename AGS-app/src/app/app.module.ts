@@ -10,6 +10,7 @@ import { NosotrosComponent } from './Pages/nosotros/nosotros.component';
 import { LoginComponent } from './Components/login/login.component';
 import { LockedComponent } from './Components/locked/locked.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
+import { InicioAdminComponent } from './Pages/inicio-admin/inicio-admin.component';
 
 @NgModule({
   declarations: [
@@ -19,11 +20,14 @@ import { NavbarComponent } from './Components/navbar/navbar.component';
     NosotrosComponent,
     LoginComponent,
     LockedComponent,
-    NavbarComponent
+    NavbarComponent,
+    InicioAdminComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     provideClientHydration(withEventReplay())
