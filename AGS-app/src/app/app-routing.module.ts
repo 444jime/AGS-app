@@ -7,10 +7,11 @@ import { NosotrosComponent } from './Pages/nosotros/nosotros.component';
 import { InicioAdminComponent } from './Pages/inicio-admin/inicio-admin.component';
 
 const routes: Routes = [
-  { path: "", component: InicioComponent },
-  { path: "login", component: LoginComponent },
+  { path: '', redirectTo:'AGS/inicio', pathMatch: 'full'},
+  { path: "login", component: LoginComponent},
   { path: "AGS", component: ContainerComponent,
     children: [
+      // { path: "login", component: LoginComponent },
       { path: "inicio", component: InicioComponent },
       { path: "nosotros", component: NosotrosComponent },
       { path: "admin", component: InicioAdminComponent }
