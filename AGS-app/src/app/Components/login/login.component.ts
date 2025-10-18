@@ -10,7 +10,9 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit{
 
-  constructor ( private userService: UserService, private router : Router) {}
+  constructor ( 
+    private userService: UserService, 
+    private router : Router) {}
 
   mail:any;
   pass:any;
@@ -37,7 +39,8 @@ export class LoginComponent implements OnInit{
 
     this.userService.Login(obj).subscribe( x => {
       this.dataSourceLogin = x;
-      console.log(this.dataSourceLogin)
+      console.log(this.dataSourceLogin.message)
+
       if (this.dataSourceLogin.result == true) {
         localStorage.setItem("user_state", "true")
         this.userService.GetUsers().subscribe( x => {
@@ -45,7 +48,7 @@ export class LoginComponent implements OnInit{
           const user = users.find((n:any) => n.mail === this.mail)
           localStorage.setItem("userId", user.id)
           console.log("login",user.id)
-          
+          this.router.navigate([this.router.url]);
         })
 
         this.router.navigate(["AGS/admin"])
