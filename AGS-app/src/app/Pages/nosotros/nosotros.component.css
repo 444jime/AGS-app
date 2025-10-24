@@ -1,0 +1,25 @@
+.card {
+  border-radius: 12px !important;
+}
+
+.card img {
+  border-radius: 50%;
+}
+
+.btn-primary {
+  background-color: #4858e8;
+  border-color: #4858e8;
+}
+
+.btn-primary:hover {
+  background-color: #3a47c7;
+  border-color: #3a47c7;
+}
+
+h1, h2 {
+  font-weight: 600;
+}
+
+section {
+  scroll-margin-top: 80px; /* si tenés navbar fijo */
+}

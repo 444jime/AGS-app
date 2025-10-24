@@ -1,0 +1,40 @@
+/* Minimal navbar links */
+/*
+.minimal-link {
+  position: relative;
+  color: #333;
+  font-weight: 500;
+  text-decoration: none;
+  padding-bottom: 4px;
+  transition: all 0.3s ease;
+}
+
+.minimal-link:hover {
+  color: #4858e8;
+}
+
+.minimal-link::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #4858e8;
+  transition: width 0.3s ease;
+}
+
+.minimal-link:hover::after {
+  width: 100%;
+}
+*/
+/* Opcional: sombra y padding */
+/*
+.navbar {
+  background-color: transparent !important; /* transparente */
+  /* position: absolute; se sobrepone al hero */
+  /* top: 0; */
+  /* left: 0; */
+  /* width: 100%; */
+  /* z-index: 10; para que quede arriba de la imagen */
+/* } */

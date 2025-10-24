@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ProyectosService } from '../../Services/proyectos.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,26 +8,31 @@ import { Router } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent implements OnInit {
-  usuarioRegistrado = false
+export class NavbarComponent implements OnInit{
+  usuarioRegistrado :boolean = localStorage.getItem("user_state") === "true"
+  images:any
+  log:any
 
-  constructor(private router: Router) {}
-
+  constructor(private router: Router, private servicio: ProyectosService ) {}
+  
   ngOnInit(): void {
-    console.log("dd"+ this.usuarioRegistrado)
-    let user_state = localStorage.getItem("user_state")
-
-    if (user_state === "true"){
-        this.usuarioRegistrado = true
-        this.router.navigate([this.router.url]);
-        console.log(user_state)
-    }
+    this.getLogo()
+    console.log(this.images)
   }
-
+  
   LogOut(){
     localStorage.removeItem("user_state")
     localStorage.removeItem("userId");
     this.usuarioRegistrado = false;
     this.router.navigate(['AGS/inicio'])
+  }
+
+  getLogo(){
+    this.servicio.getImages().subscribe( x => {
+      this.images = x
+      console.log(this.images)
+      console.log(x)
+
+    })
   }
 }

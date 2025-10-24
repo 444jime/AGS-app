@@ -31,7 +31,7 @@ export class InicioAdminComponent implements OnInit {
           }, 100);
         }
       } else {
-        this.router.navigate(['AGS/inicio'])
+        // this.router.navigate(['AGS/inicio'])
       }
   }
 }

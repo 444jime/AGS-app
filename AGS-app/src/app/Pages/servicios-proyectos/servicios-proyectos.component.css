@@ -1,0 +1,46 @@
+.navbar-custom {
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.nav-link {
+  color: #4858e8;
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin: 0 15px;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #2330cc;
+  text-decoration: none;
+  transform: scale(1.05);
+}
+
+.nav-link.active {
+  color: #fff;
+  background-color: #4858e8;
+  border-radius: 30px;
+  padding: 8px 18px;
+}
+
+.custom-file-upload label {
+  cursor: pointer;
+}
+
+.container {
+  border-radius: 12px;
+}
+
+.btn-primary {
+  background-color: #4858e8;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #3343d1;
+}
+
+.text-primary {
+  color: #4858e8 !important;
+}

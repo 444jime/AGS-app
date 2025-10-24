@@ -1,0 +1,25 @@
+.hero {
+  /* background-image: url('ruta-de-tu-imagen.jpg'); */
+  background-size: cover;
+  background-position: center;
+  height: 70vh; /* ocupa 70% de la ventana */
+  position: relative;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0,0,0,0.5); /* overlay para que el texto destaque */
+}
+
+.hero .container {
+  position: relative; /* para que el texto quede encima del overlay */
+  z-index: 2;
+}
+
+.card {
+  margin-bottom: 20px;       /* espaciado vertical entre cards */
+  border-radius: 10px;       /* bordes redondeados */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* sombra leve */
+}
