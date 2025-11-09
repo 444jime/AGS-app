@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-servicios-proyectos',
@@ -8,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class ServiciosProyectosComponent {
 
+  showProyects = false;
+  showServices = true;
+
+  show(tipo: 'proyectos' | 'servicios', event: Event) {
+    event.preventDefault();
+    this.showProyects = tipo === 'proyectos';
+    this.showServices = tipo === 'servicios';
+  }
 }

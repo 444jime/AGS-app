@@ -1,1 +1,65 @@
-<p>servicios-proyectos works!</p>
+<!-- NAVBAR -->
+<nav class="navbar-custom py-3 mb-4 shadow-sm">
+  <ul class="nav justify-content-center">
+    <li class="nav-item">
+      <a href="#" class="nav-link" [class.active]="showServices" (click)="show('servicios', $event)">
+        <i class="bi bi-gear"></i> Servicios
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link" [class.active]="showProyects" (click)="show('proyectos', $event)">
+        <i class="bi bi-folder2-open"></i> Proyectos
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<!-- FORMULARIO DE PROYECTOS -->
+<section class="py-5 bg-light container shadow-lg rounded-4" id="proyecto" *ngIf="showProyects">
+  <h2 class="mb-4 text-center fw-bold text-primary">Agregar Nuevo Proyecto</h2>
+  <p class="text-center mb-4">Completa la información del proyecto que deseas agregar.</p>
+
+  <form class="mx-auto" style="max-width: 600px;">
+    <div class="mb-3">
+      <label class="form-label">Nombre del proyecto</label>
+      <input type="text" class="form-control" placeholder="Ejemplo: Sitio Web de Fotografía">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Breve descripción</label>
+      <textarea class="form-control" rows="3" placeholder="Describe brevemente el proyecto..."></textarea>
+    </div>
+    <div class="mb-3">
+      <label class="form-label d-block">Imagen del proyecto</label>
+      <div class="custom-file-upload text-center p-4 border rounded-3 bg-white shadow-sm">
+        <input type="file" id="formFile" class="d-none" accept="image/*">
+        <label for="formFile" class="btn btn-outline-primary px-4 py-2">
+          <i class="bi bi-upload"></i> Subir imagen
+        </label>
+        <p id="fileName" class="mt-2 text-muted small">Ningún archivo seleccionado</p>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <button type="submit" class="btn btn-primary btn-lg px-5">Confirmar proyecto</button>
+    </div>
+  </form>
+</section>
+
+<!-- FORMULARIO DE SERVICIOS -->
+<section class="py-5 bg-light container shadow-lg rounded-4" id="servicios" *ngIf="showServices">
+  <h2 class="mb-4 text-center fw-bold text-primary">Agregar Nuevo Servicio</h2>
+  <p class="text-center mb-4">Completa la información del servicio que deseas agregar.</p>
+
+  <form class="mx-auto" style="max-width: 600px;">
+    <div class="mb-3">
+      <label class="form-label">Nombre del servicio</label>
+      <input type="text" class="form-control" placeholder="Ejemplo: Desarrollo Web">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Descripción del servicio</label>
+      <textarea class="form-control" rows="3" placeholder="Describe brevemente el servicio..."></textarea>
+    </div>
+    <div class="text-center mt-4">
+      <button type="submit" class="btn btn-primary btn-lg px-5">Confirmar servicio</button>
+    </div>
+  </form>
+</section>
