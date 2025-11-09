@@ -8,6 +8,7 @@ import { ProyectosService } from '../../Services/proyectos.service';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
+
 export class NavbarComponent implements OnInit{
   usuarioRegistrado :boolean = localStorage.getItem("user_state") === "true"
   images:any

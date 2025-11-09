@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './servicios-proyectos.component.css'
 })
 export class ServiciosProyectosComponent {
+
   showProyects = false;
   showServices = true;
 
@@ -16,4 +17,3 @@ export class ServiciosProyectosComponent {
     this.showServices = tipo === 'servicios';
   }
 }
-
