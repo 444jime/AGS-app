@@ -7,22 +7,11 @@ import { Router } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent implements OnInit {
-  usuarioRegistrado = false
+export class NavbarComponent {
+  usuarioRegistrado :boolean = localStorage.getItem("user_state") === "true"
 
   constructor(private router: Router) {}
-
-  ngOnInit(): void {
-    console.log("dd"+ this.usuarioRegistrado)
-    let user_state = localStorage.getItem("user_state")
-
-    if (user_state === "true"){
-        this.usuarioRegistrado = true
-        this.router.navigate([this.router.url]);
-        console.log(user_state)
-    }
-  }
-
+  
   LogOut(){
     localStorage.removeItem("user_state")
     localStorage.removeItem("userId");

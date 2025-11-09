@@ -12,6 +12,10 @@ import { LoginComponent } from './Components/login/login.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { InicioAdminComponent } from './Pages/inicio-admin/inicio-admin.component';
 import { FooterComponent } from './Components/footer/footer.component';
+import { PerfilComponent } from './Pages/perfil/perfil.component';
+import { PanelAdministrativoComponent } from './Pages/panel-administrativo/panel-administrativo.component';
+import { MetricasComponent } from './Pages/metricas/metricas.component';
+import { ServiciosProyectosComponent } from './Pages/servicios-proyectos/servicios-proyectos.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,11 @@ import { FooterComponent } from './Components/footer/footer.component';
     LoginComponent,
     NavbarComponent,
     InicioAdminComponent,
-    FooterComponent
+    FooterComponent,
+    PerfilComponent,
+    PanelAdministrativoComponent,
+    MetricasComponent,
+    ServiciosProyectosComponent
   ],
   imports: [
     BrowserModule,

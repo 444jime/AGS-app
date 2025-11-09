@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -20,6 +20,15 @@ export class UserService {
 
   GetUsers(){
     return this.httpClient.get(this.url + "/GetUsers")
+  }
+
+  GetUserById(id:any){
+    return this.httpClient.get(this.url + "/GetUserById?id=" + id)
+  }
+
+  ChangePass(pass:any,id:any){
+    const params = new HttpParams().set('pass',pass).set("id",id)
+    return this.httpClient.put(this.url + "/ChangePass", null, {params})
   }
 
   getUserId(){
