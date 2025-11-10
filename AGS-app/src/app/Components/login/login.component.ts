@@ -22,6 +22,8 @@ export class LoginComponent implements OnInit{
   ngOnInit(): void {
     localStorage.removeItem("user_state")
     localStorage.removeItem("userId")
+    localStorage.removeItem("change_pass")
+    localStorage.removeItem("token")
 
     const esperarId = setInterval(() => {
       const userId = this.userService.getUserId()
@@ -39,24 +41,22 @@ export class LoginComponent implements OnInit{
 
     this.userService.Login(obj).subscribe( x => {
       this.dataSourceLogin = x;
-      console.log(this.dataSourceLogin)
-      console.log(this.dataSourceLogin.contrasena)
-
+      // console.log(this.dataSourceLogin.token)
+      localStorage.setItem("token", this.dataSourceLogin.token)
 
       if (this.dataSourceLogin.result == true) {
         localStorage.setItem("user_state", "true")
 
-        this.userService.GetUsers().subscribe( x => {
-          const users = x as any[];
-          const user = users.find((n:any) => n.mail === this.mail)
-          localStorage.setItem("userId", user.id)
-          console.log("login",user.id)
-          if(this.dataSourceLogin.contrasena == true){
-            console.log(this.dataSourceLogin.contrasena)
-            localStorage.setItem("change_pass", this.dataSourceLogin.contrasena)  
-            this.router.navigate(["AGS/panel"])      
-          }
-        })
+        // this.userService.GetUsers().subscribe( x => {
+        //   const users = x as any[];
+        //   const user = users.find((n:any) => n.mail === this.mail)
+        //   localStorage.setItem("userId", user.id)
+        //   // console.log("login",user.id)
+        //   if(this.dataSourceLogin.contrasena == true){
+        //     localStorage.setItem("change_pass", this.dataSourceLogin.contrasena)  
+        //     this.router.navigate(["AGS/panel"])      
+        //   }
+        // })
 
         this.router.navigate(["AGS/admin"])
 

@@ -9,31 +9,33 @@ import { ProyectosService } from '../../Services/proyectos.service';
   styleUrl: './navbar.component.css'
 })
 
-export class NavbarComponent implements OnInit{
-  usuarioRegistrado :boolean = localStorage.getItem("user_state") === "true"
-  images:any
-  log:any
+export class NavbarComponent implements OnInit {
+  usuarioRegistrado: boolean = localStorage.getItem("user_state") === "true"
+  images: any
+  logo: any
 
-  constructor(private router: Router, private servicio: ProyectosService ) {}
-  
+  constructor(private router: Router, private servicio: ProyectosService) { }
+
   ngOnInit(): void {
     this.getLogo()
-    console.log(this.images)
   }
-  
-  LogOut(){
+
+  LogOut() {
     localStorage.removeItem("user_state")
     localStorage.removeItem("userId");
     this.usuarioRegistrado = false;
     this.router.navigate(['AGS/inicio'])
   }
 
-  getLogo(){
-    this.servicio.getImages().subscribe( x => {
-      this.images = x
-      console.log(this.images)
-      console.log(x)
-
+  getLogo() {
+    this.servicio.getImages().subscribe({
+      next: (res) => {
+        this.images = res
+        const logoImage = this.images.find((img: any) => img.nombre === "Logo AGS")
+        this.logo = logoImage ? logoImage.url : ''
+        console.log(this.logo)
+      },
+      error: (err) => console.error(err)
     })
   }
 }

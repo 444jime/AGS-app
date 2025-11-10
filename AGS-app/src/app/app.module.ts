@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ContainerComponent } from './Components/container/container.component';
@@ -16,6 +15,8 @@ import { PerfilComponent } from './Pages/perfil/perfil.component';
 import { PanelAdministrativoComponent } from './Pages/panel-administrativo/panel-administrativo.component';
 import { MetricasComponent } from './Pages/metricas/metricas.component';
 import { ServiciosProyectosComponent } from './Pages/servicios-proyectos/servicios-proyectos.component';
+
+import { authInterceptor } from './Interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ServiciosProyectosComponent } from './Pages/servicios-proyectos/servici
     FormsModule
   ],
   providers: [
-    provideClientHydration(withEventReplay())
+    provideClientHydration(withEventReplay()),
+    provideHttpClient(withInterceptors([authInterceptor]))
   ],
   bootstrap: [AppComponent]
 })
