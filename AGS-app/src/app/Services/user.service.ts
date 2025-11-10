@@ -22,14 +22,14 @@ export class UserService {
     return this.httpClient.get(this.url + "/GetUsers")
   }
 
-  GetUserById(id:any){
-    return this.httpClient.get(this.url + "/GetUserById?id=" + id)
-  }
+  // GetUserById(id:any){
+  //   return this.httpClient.get(this.url + "/GetUserById?id=" + id)
+  // }
 
-  ChangePass(pass:any,id:any){
-    const params = new HttpParams().set('pass',pass).set("id",id)
-    return this.httpClient.put(this.url + "/ChangePass", null, {params})
-  }
+  // ChangePass(pass:any,id:any){
+  //   const params = new HttpParams().set('pass',pass).set("id",id)
+  //   return this.httpClient.put(this.url + "/ChangePass", null, {params})
+  // }
 
   getUserId(){
     return this.userId

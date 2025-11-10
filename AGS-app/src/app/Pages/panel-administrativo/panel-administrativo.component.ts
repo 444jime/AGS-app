@@ -9,59 +9,103 @@ import { Router } from '@angular/router';
   styleUrl: './panel-administrativo.component.css'
 })
 export class PanelAdministrativoComponent implements OnInit {
-  change_pass:boolean = localStorage.getItem("change_pass") === "true"
-  contrasena:any;
-  contrasena2:any;
+  change_pass: boolean = localStorage.getItem("change_pass") === "true"
+  contrasena: any;
+  contrasena2: any;
 
-  dataSourceUser:any;
-  id:any;
-  nombre:any;
-  apellido:any;
-  telefono:any;
-  mail:any;
-  pass:any;
-  pass2:any;
-  msg:any;
+  dataSourceUser: any;
+  id: any;
+  nombre: any;
+  apellido: any;
+  telefono: any;
+  mail: any;
+  pass: any;
+  pass2: any;
+  msg: any;
   passMsg = false;
+  listaUsuarios: any;
+  selectedUser: any;
+  showCreate = false;
+  showList = true;
 
-  constructor (private userService : UserService, private router: Router) {}
-  
+  constructor(private userService: UserService, private router: Router) { }
+
   ngOnInit(): void {
     this.id = localStorage.getItem("userId")
-    if (this.id){
-      this.getUser(this.id)
-    }
-  }
+    // if (this.id){
+    //   this.getUser(this.id)
+    // }
 
-  getUser(id:any){
-    console.log(this.id)
-    this.userService.GetUserById(id).subscribe( x => {
-      this.dataSourceUser = x
-      console.log(this.dataSourceUser[0].mail)
-      this.mail = this.dataSourceUser[0].mail
-      this.apellido = this.dataSourceUser[0].apellido
-      this.nombre = this.dataSourceUser[0].nombre
-      this.telefono = this.dataSourceUser[0].telefono
+    this.userService.GetUsers().subscribe(x => {
+      this.listaUsuarios = x
+      console.log(this.listaUsuarios)
     })
   }
 
-  changePass(){
-    if(!this.validPass(this.pass,this.pass2)){
-      this.passMsg = true;
-      return
-    }
-
-    this.userService.ChangePass(this.pass,this.id).subscribe( x => {        
-      console.log(x)
-      this.msg = "Contraseña cambiada exitosamente!"
-      this.passMsg = true;
-      localStorage.setItem("change_pass", "false")
-      window.location.reload();
-    })
+  show(tipo: 'lista' | 'crear', event: Event) {
+    event.preventDefault();
+    this.showCreate = tipo === 'crear';
+    this.showList = tipo === 'lista';
   }
 
-  validPass(pass:any,pass2:any){
-    if(pass != pass2){
+  EditValues(user: any) {
+    this.selectedUser = { ...user }
+    this.nombre = user.nombre
+    this.apellido = user.apellido
+    this.mail = user.mail
+    this.telefono = user.telefono
+  }
+
+  editarUser(){
+    let user = {
+      id: this.id,
+      nombre: this.nombre,
+      apellido: this.apellido,
+      mail: this.apellido,
+      telefono: this.telefono
+    }
+    console.log(user)
+  }
+
+  createUser(){
+    let user = {
+      nombre: this.nombre,
+      apellido: this.apellido,
+      mail: this.apellido,
+      contrasena: this.contrasena,
+      telefono: this.telefono,
+    }
+  }
+
+  // getUser(id:any){
+  //   console.log(this.id)
+  //   this.userService.GetUserById(id).subscribe( x => {
+  //     this.dataSourceUser = x
+  //     console.log(this.dataSourceUser[0].mail)
+  //     this.mail = this.dataSourceUser[0].mail
+  //     this.apellido = this.dataSourceUser[0].apellido
+  //     this.nombre = this.dataSourceUser[0].nombre
+  //     this.telefono = this.dataSourceUser[0].telefono
+  //   })
+  // }
+
+  // changePass(){
+  //   if(!this.validPass(this.pass,this.pass2)){
+  //     this.passMsg = true;
+  //     return
+  //   }
+
+  //   this.userService.ChangePass(this.pass,this.id).subscribe( x => {        
+  //     console.log(x)
+  //     this.msg = "Contraseña cambiada exitosamente!"
+  //     this.passMsg = true;
+  //     localStorage.setItem("change_pass", "false")
+  //     window.location.reload();
+  //   })
+  // }
+
+  validPass(pass: any, pass2: any) {
+    if (pass != pass2) {
       this.msg = "las contraseñas deben ser iguales"
       return false;
     }

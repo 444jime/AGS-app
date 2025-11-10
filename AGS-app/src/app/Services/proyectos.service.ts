@@ -5,12 +5,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ProyectosService {
-  url = "https://localhost:7198/AGS/Carousel"
+  url = "https://localhost:7198/api/Carousel"
 
   constructor(private httpClient: HttpClient ) { }
 
   getImages(){
-    return this.httpClient.get(this.url + "/GetArchivos")
+    return this.httpClient.get(this.url)
   }
 
   postImagen(title:any,sortOrder:any, file:any){

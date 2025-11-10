@@ -1,5 +1,5 @@
 /* Minimal navbar links */
-/*
+
 .minimal-link {
   position: relative;
   color: #333;
@@ -7,6 +7,7 @@
   text-decoration: none;
   padding-bottom: 4px;
   transition: all 0.3s ease;
+  font-size: 1.05rem;
 }
 
 .minimal-link:hover {
@@ -27,14 +28,46 @@
 .minimal-link:hover::after {
   width: 100%;
 }
-*/
+
 /* Opcional: sombra y padding */
-/*
-.navbar {
-  background-color: transparent !important; /* transparente */
-  /* position: absolute; se sobrepone al hero */
-  /* top: 0; */
-  /* left: 0; */
-  /* width: 100%; */
-  /* z-index: 10; para que quede arriba de la imagen */
-/* } */
+
+/* .navbar {
+  background-color: transparent !important; 
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10; 
+} */
+/* Enlaces del menú principal */
+
+
+/* Ajustes del dropdown */
+.dropdown-menu {
+  border-radius: 10px;
+  border: none;
+  min-width: 230px;
+  font-size: 0.95rem;
+  padding: 0.5rem 0;
+}
+
+.dropdown-item {
+  padding: 0.6rem 1rem;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f3ff;
+  color: #4858e8;
+  font-weight: 500;
+}
+
+/* Posición más cómoda del dropdown */
+.nav-item.dropdown {
+  position: relative;
+}
+
+.dropdown-menu-end {
+  right: 0;
+  left: auto;
+}
