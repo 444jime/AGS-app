@@ -27,19 +27,19 @@ export class PanelAdministrativoComponent implements OnInit {
   selectedUser: any;
   showCreate = false;
   showList = true;
+  idLoggeado: any
+  idDelete: any
+  mensajeExito = false
+  mensajeError = false
 
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
-    this.id = localStorage.getItem("userId")
+    this.idLoggeado = localStorage.getItem("userId")
     // if (this.id){
     //   this.getUser(this.id)
     // }
-
-    this.userService.GetUsers().subscribe(x => {
-      this.listaUsuarios = x
-      console.log(this.listaUsuarios)
-    })
+    this.getUsers()
   }
 
   show(tipo: 'lista' | 'crear', event: Event) {
@@ -48,44 +48,88 @@ export class PanelAdministrativoComponent implements OnInit {
     this.showList = tipo === 'lista';
   }
 
+  getUsers() {
+    this.userService.GetUsers().subscribe(x => {
+      this.listaUsuarios = x
+      console.log(this.listaUsuarios)
+    })
+  }
+
   EditValues(user: any) {
     this.selectedUser = { ...user }
+    this.id = user.id
     this.nombre = user.nombre
     this.apellido = user.apellido
     this.mail = user.mail
     this.telefono = user.telefono
   }
 
-  editarUser(){
+  editarUser() {
     let user = {
       id: this.id,
       nombre: this.nombre,
       apellido: this.apellido,
-      mail: this.apellido,
+      mail: this.mail,
       telefono: this.telefono
     }
-    console.log(user)
+    // console.log(user)
+    this.userService.EditUser(user.id, user).subscribe(x => {
+      // console.log("rta del edituser",x)
+      // location.reload()
+    })
+
   }
 
-  createUser(){
+  getId(id: any) {
+    this.idDelete = id
+    // console.log(id)
+  }
+
+  deleteUser() {
+    // console.log('id:',this.idDelete)
+    this.userService.DeleteUser(this.idDelete).subscribe(x => {
+      location.reload()
+    })
+  }
+
+  createUser() {
     let user = {
+      id: 0,
       nombre: this.nombre,
       apellido: this.apellido,
-      mail: this.apellido,
+      mail: this.mail,
       contrasena: this.contrasena,
       telefono: this.telefono,
+      requiere_cambio_contrasena: "true"
     }
+    this.userService.CreateUser(user).subscribe({
+      next: (res) => {
+        this.mensajeExito = true
+        this.mensajeError = false
+        this.getUsers()
+        this.nombre = ''
+        this.apellido = ''
+        this.mail = ''
+        this.contrasena = ''
+        this.telefono = ''
+      },
+      error: (err) => {
+        this.mensajeError = true
+        this.mensajeExito = false
+      }
+    })
   }
 
+  // LO VOY A USAR PARA CAMBIAR LA PASS MAYBE, VEO, POR AHORA NO LO USO
   // getUser(id:any){
-  //   console.log(this.id)
+  //   // console.log(this.id)
   //   this.userService.GetUserById(id).subscribe( x => {
   //     this.dataSourceUser = x
-  //     console.log(this.dataSourceUser[0].mail)
-  //     this.mail = this.dataSourceUser[0].mail
-  //     this.apellido = this.dataSourceUser[0].apellido
-  //     this.nombre = this.dataSourceUser[0].nombre
-  //     this.telefono = this.dataSourceUser[0].telefono
+  //     // console.log(this.dataSourceUser)
+  //     // this.mail = this.dataSourceUser[0].mail
+  //     // this.apellido = this.dataSourceUser[0].apellido
+  //     // this.nombre = this.dataSourceUser[0].nombre
+  //     // this.telefono = this.dataSourceUser[0].telefono
   //   })
   // }
 

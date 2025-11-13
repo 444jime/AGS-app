@@ -22,10 +22,17 @@ export class UserService {
     return this.httpClient.get(this.url + "/GetUsers")
   }
 
-  // GetUserById(id:any){
-  //   return this.httpClient.get(this.url + "/GetUserById?id=" + id)
-  // }
+  GetUserById(id:any){
+    return this.httpClient.get(`${this.url}/${id}`)
+  }
 
+  EditUser(id:any,obj:any){
+    return this.httpClient.put(`${this.url}/${id}`,obj)
+  }
+
+  DeleteUser(id:any){
+    return this.httpClient.delete(`${this.url}/${id}`)
+  }
   // ChangePass(pass:any,id:any){
   //   const params = new HttpParams().set('pass',pass).set("id",id)
   //   return this.httpClient.put(this.url + "/ChangePass", null, {params})

@@ -47,16 +47,16 @@ export class LoginComponent implements OnInit{
       if (this.dataSourceLogin.result == true) {
         localStorage.setItem("user_state", "true")
 
-        // this.userService.GetUsers().subscribe( x => {
-        //   const users = x as any[];
-        //   const user = users.find((n:any) => n.mail === this.mail)
-        //   localStorage.setItem("userId", user.id)
-        //   // console.log("login",user.id)
-        //   if(this.dataSourceLogin.contrasena == true){
-        //     localStorage.setItem("change_pass", this.dataSourceLogin.contrasena)  
-        //     this.router.navigate(["AGS/panel"])      
-        //   }
-        // })
+        this.userService.GetUsers().subscribe( x => {
+          const users = x as any[];
+          const user = users.find((n:any) => n.mail === this.mail)
+          localStorage.setItem("userId", user.id)
+          console.log("login",user.id)
+          if(this.dataSourceLogin.contrasena == true){
+            localStorage.setItem("change_pass", this.dataSourceLogin.contrasena)  
+            // this.router.navigate(["AGS/perfil"])      
+          }
+        })
 
         this.router.navigate(["AGS/admin"])
 

@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ProyectosService {
-  url = "https://localhost:7198/api/Carousel"
+  url = "https://localhost:7198/AGS/Carousel"
 
   constructor(private httpClient: HttpClient ) { }
 
