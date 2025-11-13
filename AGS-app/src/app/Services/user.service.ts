@@ -6,43 +6,43 @@ import { Injectable } from '@angular/core';
 })
 export class UserService {
   url = "https://localhost:7198/AGS/users"
-  private userId:any
+  private userId: any
 
   constructor(private httpClient: HttpClient) { }
 
-  CreateUser(obj:any){
-    return this.httpClient.post(this.url + "/CreateUser", obj)
-  }
-
-  Login(obj:any){
-    return this.httpClient.post(this.url + "/Login", obj)
-  }
-
-  GetUsers(){
+  GetUsers() {
     return this.httpClient.get(this.url + "/GetUsers")
   }
 
-  GetUserById(id:any){
+  GetUserById(id: any) {
     return this.httpClient.get(`${this.url}/${id}`)
   }
 
-  EditUser(id:any,obj:any){
-    return this.httpClient.put(`${this.url}/${id}`,obj)
+  CreateUser(obj: any) {
+    return this.httpClient.post(this.url + "/CreateUser", obj)
   }
 
-  DeleteUser(id:any){
+  Login(obj: any) {
+    return this.httpClient.post(this.url + "/Login", obj)
+  }
+
+  EditUser(id: any, obj: any) {
+    return this.httpClient.put(`${this.url}/${id}`, obj)
+  }
+
+  DeleteUser(id: any) {
     return this.httpClient.delete(`${this.url}/${id}`)
   }
-  // ChangePass(pass:any,id:any){
-  //   const params = new HttpParams().set('pass',pass).set("id",id)
-  //   return this.httpClient.put(this.url + "/ChangePass", null, {params})
-  // }
 
-  getUserId(){
+  ChangePass(obj: any, id: any) {
+    return this.httpClient.post(`${this.url}/ChangePass/${id}`, obj)
+  }
+
+  getUserId() {
     return this.userId
   }
 
-  setUserId(id:any){
+  setUserId(id: any) {
     this.userId = id
   }
 }
