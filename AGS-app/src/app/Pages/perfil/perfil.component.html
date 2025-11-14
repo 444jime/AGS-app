@@ -1,1 +1,172 @@
-<p>perfil works!</p>
+<div *ngIf="change_pass" class="alerta-pass mt-3 mb-4 text-center">
+    <h2>¡Requiere cambio de contraseña!</h2>
+    <p>Es tu primer inicio de sesión. Por seguridad, te recomendamos cambiar la contraseña.</p>
+</div>
+<!-- Sección de perfil -->
+<section class="perfil-container container-fluid py-4 border-bottom">
+    <div class="row align-items-center">
+        <!-- Título -->
+        <div class="col-md-6">
+            <h1 class="fw-bold text-dark mb-1">Mi perfil</h1>
+            <p class="text-muted mb-0">Gestioná tu información personal y credenciales de acceso</p>
+        </div>
+
+        <!-- Info del usuario -->
+        <div class="col-md-6 d-flex align-items-center justify-content-md-end mt-4 mt-md-0">
+            <i class="bi bi-person-circle perfil-icon me-3"></i>
+            <div>
+                <h5 class="mb-1 fw-semibold text-dark">{{ nombre }} {{ apellido }}</h5>
+                <p class="text-muted mb-2">{{ mail }}</p>
+                <button type="button" class="btn btn-sm rounded-pill px-3"
+                    [ngClass]="change_pass ? 'btn-pass-alerta':'btn-outline-primary '" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+                    Cambiar contraseña
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="row mt-4 contenido-principal">
+    
+    <!-- CALENDARIO -->
+    <div class="col-lg-7">
+        <div class="calendar-wrapper">
+            <full-calendar [events]="events" [options]="calendarOptions"></full-calendar>
+        </div>
+    </div>
+
+    <!-- PROYECTOS -->
+    <div class="col-lg-5 proyectos-wrapper">
+        <h1 class="titulo-proyectos">Proyectos disponibles</h1>
+
+        <div class="card proyecto-card">
+            <div class="card-header titulo-proyecto"> Proyecto </div>
+
+            <div class="card-body">
+                <p class="desc-proyecto"> Descripcion </p>
+                <span class="estado-proyecto en-progreso">
+                    En progreso
+                </span>
+            </div>
+        </div>
+        
+        <div class="card proyecto-card">
+            <div class="card-header titulo-proyecto"> Proyecto </div>
+
+            <div class="card-body">
+                <p class="desc-proyecto"> Descripcion </p>
+                <span class="estado-proyecto finalizado">
+                    Finalizado
+                </span>
+            </div>
+        </div>
+        <div class="card proyecto-card">
+            <div class="card-header titulo-proyecto"> Proyecto </div>
+
+            <div class="card-body">
+                <p class="desc-proyecto"> Descripcion </p>
+                <span class="estado-proyecto pendiente">
+                    Pendiente
+                </span>
+            </div>
+        </div>
+        <div class="card proyecto-card">
+            <div class="card-header titulo-proyecto"> Proyecto </div>
+
+            <div class="card-body">
+                <p class="desc-proyecto"> Descripcion </p>
+                <span class="estado-proyecto en-progreso">
+                    En progreso
+                </span>
+            </div>
+        </div>
+        <div class="card proyecto-card">
+            <div class="card-header titulo-proyecto"> Proyecto </div>
+
+            <div class="card-body">
+                <p class="desc-proyecto"> Descripcion </p>
+                <span class="estado-proyecto finalizado">
+                    Finalizado
+                </span>
+            </div>
+        </div>
+        <div class="card proyecto-card">
+            <div class="card-header titulo-proyecto"> Proyecto </div>
+
+            <div class="card-body">
+                <p class="desc-proyecto"> Descripcion </p>
+                <span class="estado-proyecto pendiente">
+                    Pendiente
+                </span>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- MODAL CALENDARIO -->
+<div *ngIf="openOptions" class="custom-modal-overlay">
+    <div class="custom-modal">
+        <h5 class="mb-3">Registrar tarea para <span>{{ selectedDate }}</span></h5>
+
+        <div class="mb-3">
+            <label class="form-label">Seleccionar proyecto</label>
+            <select class="form-select" [(ngModel)]="proyecto" name="proyecto">
+                <option value="" disabled selected>Elegí un proyecto</option>
+                <option value="Proyecto 1">Proyecto 1</option>
+                <option value="Proyecto 2">Proyecto 2</option>
+                <option value="Proyecto 3">Proyecto 3</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Horas trabajadas</label>
+            <input type="number" class="form-control" [(ngModel)]="horas" name="horas" placeholder="Ej: 5">
+        </div>
+
+        <div class="modal-actions">
+            <button type="button" class="btn btn-light" (click)="openOptions = false">Cancelar</button>
+            <button type="button" class="btn btn-primary" (click)="createEvent()">Crear</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL CAMBIO CONTRASEÑA -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold" style="color: #4858e8;">Cambiar contraseña</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Correo</label>
+                        <input type="text" class="form-control" [value]="mail" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nueva contraseña</label>
+                        <input type="password" class="form-control" [(ngModel)]="pass" name="pass">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Repetir contraseña</label>
+                        <input type="password" class="form-control" [(ngModel)]="pass2" name="pass2">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn" style="background-color: #4858e8;color:white;"
+                    (click)="changePass()">Guardar</button>
+                <p *ngIf="passMsg" [ngClass]="msg.includes('exitosamente') ? 'success' : 'error'">
+                    {{ msg }}
+                </p>
+
+            </div>
+        </div>
+    </div>
+</div>

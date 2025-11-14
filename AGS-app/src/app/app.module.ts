@@ -3,6 +3,7 @@ import { BrowserModule, provideClientHydration, withEventReplay } from '@angular
 import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import { FullCalendarModule } from '@fullcalendar/angular';
 import { AppComponent } from './app.component';
 import { ContainerComponent } from './Components/container/container.component';
 import { InicioComponent } from './Pages/inicio/inicio.component';
@@ -15,7 +16,6 @@ import { PerfilComponent } from './Pages/perfil/perfil.component';
 import { PanelAdministrativoComponent } from './Pages/panel-administrativo/panel-administrativo.component';
 import { MetricasComponent } from './Pages/metricas/metricas.component';
 import { ServiciosProyectosComponent } from './Pages/servicios-proyectos/servicios-proyectos.component';
-
 import { authInterceptor } from './Interceptors/auth.interceptor';
 
 @NgModule({
@@ -37,7 +37,8 @@ import { authInterceptor } from './Interceptors/auth.interceptor';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    FullCalendarModule
   ],
   providers: [
     provideClientHydration(withEventReplay()),
