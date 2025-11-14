@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit{
           console.log("login",user.id)
           if(this.dataSourceLogin.contrasena == true){
             localStorage.setItem("change_pass", this.dataSourceLogin.contrasena)  
-            // this.router.navigate(["AGS/perfil"])      
+            this.router.navigate(["AGS/perfil"])      
           }
         })
 

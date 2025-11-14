@@ -1,0 +1,429 @@
+/* PERFIL */
+.perfil-container {
+  border-color: #dee2e6 !important;
+  /* max-width: 95%; */
+  padding: 60px;
+  background: white;
+  /* border-radius: 20px; */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* 
+  
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  font-family: "Inter", "Segoe UI", sans-serif !important; */
+.perfil-icon {
+  font-size: 3.5rem;
+  color: #4858e8;
+}
+
+/* BOTON */
+.btn-outline-primary {
+  border-color: #4858e8;
+  color: #4858e8;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+  background-color: #4858e8;
+  color: #fff;
+}
+
+/* MENSAJE ERROR CONTRASEÑA */
+p.error {
+  color: #dc3545;
+  background-color: #fdecea;
+  border: 1px solid #f5c2c7;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+/* MENSAJE EXITO CONTRASEÑA */
+p.success {
+  color: #155724;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+/* Fondo semitransparente detrás del modal */
+.custom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+}
+
+/* Caja del modal */
+.custom-modal {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+  width: 400px;
+  max-width: 90%;
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+/* Título */
+.custom-modal h5 {
+  font-weight: 600;
+  color: #1f1f1f;
+}
+
+.custom-modal h5 span {
+  color: #4858e8;
+}
+
+/* Botones */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 1.5rem;
+}
+
+.btn-primary {
+  background-color: #4858e8;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #3c4ed6;
+}
+
+.btn-light {
+  background-color: #f5f5f5;
+  border: none;
+  color: #333;
+}
+
+.btn-light:hover {
+  background-color: #e4e4e4;
+}
+
+/* Animación */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ALERTA de cambio de contraseña */
+.alerta-pass {
+  border: 2px solid #dc3545;
+  background-color: rgba(220, 53, 69, 0.12);
+  color: #b02a37;
+  padding: 18px 22px;
+  border-radius: 10px;
+  animation: alertaPulse 1.8s infinite ease-in-out;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.alerta-pass h2 {
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+/* BOTÓN ROJO MOLESTO */
+.btn-pass-alerta {
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+  color: #fff !important;
+  animation: vibrar 0.25s infinite;
+}
+
+/* Animation molesta */
+@keyframes vibrar {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+  75% { transform: translateX(-2px); }
+  100% { transform: translateX(0); }
+}
+
+.btn-pass-alerta:hover {
+  background-color: #bb2d3b !important;
+  border-color: #bb2d3b !important;
+}
+
+/* ================================
+   CONTENEDOR DEL CALENDARIO
+================================ */
+.calendar-wrapper {
+  /* max-width: 900px; */
+  margin-left: 40px;
+  margin-top: 20px;
+  padding: 20px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  font-family: "Inter", "Segoe UI", sans-serif !important;
+}
+
+.calendar-wrapper,
+.proyectos-wrapper {
+  margin: 0;          /* sin margen para que flex los acomode */
+}
+
+
+.fc-daygrid-day:hover {
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+.fc-day-today {
+  background: rgba(72, 88, 232, 0.07) !important;
+  border: 1px solid #0d6efd !important;
+}
+
+/* BOTONES */
+.fc-button {
+  background: transparent !important;
+  border: none !important;
+  color: #4858e8 !important;
+  font-size: 1.2rem !important;
+  box-shadow: none !important;
+}
+
+.fc-button:hover {
+  background: rgba(72, 88, 232, 0.1) !important;
+}
+
+.fc-today-button:hover {
+  background: #3f4fd1 !important;
+}
+
+
+/* NÚMEROS DEL DÍA */
+.fc-daygrid-day-number {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  color: #333 !important;
+  text-decoration: none !important;
+}
+
+.fc-daygrid-day {
+  border: 1px solid #e8e8e8 !important;
+}
+
+/* Botón HOY */
+.fc .fc-today-button {
+  background-color: #4858e8 !important;
+  color: white !important;
+  border-radius: 12px !important;
+  padding: 6px 12px !important;
+  margin-left: 10px !important;
+  border: none !important;
+}
+
+/* ================================
+   ESTILO DE DIAS
+================================ */
+
+/* Nombres de los días */
+.fc .fc-col-header-cell-cushion {
+  font-size: 20px;
+  font-weight: 500;
+  color: #4858e8;
+  padding: 8px 0 !important;
+  text-decoration: none !important;
+}
+
+/* Cuadrículas redondeadas */
+.fc .fc-daygrid-day-frame {
+  border-radius: 14px !important;
+  padding: 6px !important;
+}
+
+/* Hover sutil */
+.fc .fc-daygrid-day-frame:hover {
+  background-color: #f3f4ff;
+  transition: 0.2s ease;
+}
+
+/* ================================
+   EVENTOS
+================================ */
+.fc .fc-event {
+  background-color: #4858e8 !important;
+  color: white !important;
+  border-radius: 10px !important;
+  border: none !important;
+  padding: 4px 6px !important;
+  font-size: 13px !important;
+}
+
+/* ================================
+   QUITAR BORDES FUERTES
+================================ */
+.fc-theme-standard td,
+.fc-theme-standard th {
+  border: 0;
+}
+
+/* ================================
+   TOOLBAR (flechas + mes centrado)
+================================ */
+.fc .fc-toolbar.fc-header-toolbar {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 20px;
+
+}
+
+/* Grupo de la izquierda (flecha atrás) */
+.fc .fc-toolbar-chunk:first-child {
+  display: flex;
+  justify-content: flex-start;
+  flex: 1;
+}
+
+/* Centro (título del mes) */
+.fc .fc-toolbar-title {
+  flex: 1;
+  text-align: center !important;
+  font-size: 1.6rem !important;
+  font-weight: 600 !important;
+  color: #4858e8 !important;
+}
+
+/* Grupo de la derecha (flecha adelante + botón hoy si lo tenés ahí) */
+.fc .fc-toolbar-chunk:last-child {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+/* Botones de flechas minimalistas */
+.fc-prev-button,
+.fc-next-button {
+  background: transparent !important;
+  border: none !important;
+  color: #4858e8 !important;
+  font-size: 18px !important;
+}
+
+.fc-scrollgrid {
+  border: none !important;
+}
+
+/* SECCION PROYECTOS */
+/* ================================
+   LAYOUT PRINCIPAL
+================================ */
+.contenido-principal {
+  display: flex;
+  flex-wrap: wrap;      /* permite que se apilen en pantallas chicas */
+  gap: 20px;            /* separación entre calendario y proyectos */
+  justify-content: center;
+}
+
+
+/* Contenedor proyectos */
+.proyectos-wrapper {
+  max-width: 600px;
+  margin-left: 70px;
+  margin-top: 20px;
+  padding: 20px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  font-family: "Inter", "Segoe UI", sans-serif !important;
+}
+
+/* Título proyectos */
+.titulo-proyectos {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #4858e8;
+  margin-bottom: 20px;
+}
+
+
+/* ================================
+   CARDS DE PROYECTO
+================================ */
+.proyecto-card {
+  border-radius: 14px !important;
+  border: 1px solid #e4e4e4 !important;
+  margin-bottom: 18px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.proyecto-card:hover {
+  box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+}
+
+/* Título del proyecto */
+.titulo-proyecto {
+  background-color: #f7f7ff !important;
+  font-weight: 700;
+  font-size: 1.1rem;
+  /* color: #4858e8; */
+  border-bottom: 1px solid #ececec;
+  padding: 10px 16px;
+  border-radius: 14px 14px 0 0 !important;
+}
+
+/* Descripción */
+.desc-proyecto {
+  color: #555;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+
+
+/* ================================
+   ESTADOS (chips)
+================================ */
+.estado-proyecto {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Estado: En progreso */
+.estado-proyecto.en-progreso,
+.estado-proyecto.en\ progreso {
+  background-color: rgba(255, 193, 7, 0.15);
+  color: #a07900;
+  border: 1px solid #ffca2c;
+}
+
+/* Estado: Finalizado */
+.estado-proyecto.finalizado {
+  background-color: rgba(40, 167, 69, 0.15);
+  color: #1e7e34;
+  border: 1px solid #28a745;
+}
+
+/* Estado: Pendiente */
+.estado-proyecto.pendiente {
+  background-color: rgba(220, 53, 69, 0.15);
+  color: #b02a37;
+  border: 1px solid #dc3545;
+}
