@@ -32,7 +32,7 @@ export class NavbarComponent implements OnInit {
       next: (res) => {
         this.images = res
         const logoImage = this.images.find((img: any) => img.nombre === "LOGO AGS 2")
-        this.logo = logoImage ? logoImage.url : ''
+        this.logo = logoImage ? logoImage.url : ''        
       },
       error: (err) => console.error(err)
     })
