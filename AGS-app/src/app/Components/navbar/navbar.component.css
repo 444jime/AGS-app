@@ -1,5 +1,9 @@
-/* Minimal navbar links */
+/* LOGO IMAGE */
+.logo-image {
+  border-radius: 53px;
+}
 
+/* Minimal navbar links */
 .minimal-link {
   position: relative;
   color: #333;
