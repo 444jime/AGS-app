@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProyectosService } from '../../Services/proyectos.service';
+import { ImagenesService } from '../../Services/imagenes.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,7 +15,7 @@ export class NavbarComponent implements OnInit {
   images: any
   logo: any
 
-  constructor(private router: Router, private servicio: ProyectosService) { }
+  constructor(private router: Router, private servicio: ImagenesService) { }
 
   ngOnInit(): void {
     this.getLogo()

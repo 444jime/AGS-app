@@ -22,3 +22,21 @@
   border-radius: 10px;       /* bordes redondeados */
   box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* sombra leve */
 }
+
+/* CAROUSEL */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1) brightness(0); 
+}
+
+.carousel-indicators [data-bs-target] {
+  background-color: #000 !important;  
+}
+
+/* FONDITO MEDIO TRANSPARENTE PARA Q SE NOTE LA DESC Y NOMBRE */
+.carousel-caption {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  padding: 10px;
+}
+

@@ -5,16 +5,28 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ProyectosService {
-  url = "https://localhost:7198/AGS/Carousel"
+  url = "https://localhost:7198/AGS/Project"
 
   constructor(private httpClient: HttpClient ) { }
 
-  getImages(){
+  getProject(){
     return this.httpClient.get(this.url)
   }
 
-  postImagen(title:any,sortOrder:any, file:any){
-    const params = new HttpParams().set('title',title).set('sortOrder', sortOrder).set('file', file)
-    return this.httpClient.post(this.url + "/upload", null, {params})
+  getProjectId(id:any){
+    return this.httpClient.get(`${this.url}/${id}`)
   }
+
+  postProject(obj:any){
+    return this.httpClient.post(this.url, obj)
+  }
+
+  editProject(id:any,obj:any){
+    return this.httpClient.patch(`${this.url}/${id}`,obj)
+  }
+
+  deleteProject(id:any){
+    return this.httpClient.delete(`${this.url}/${id}`)
+  }
+  
 }
