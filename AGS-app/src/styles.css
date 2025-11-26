@@ -3,3 +3,10 @@ html, body {
   margin: 0;
   padding: 0;
 }
+/* Archivo: src/styles.css */
+:root {
+  --primary: #4858e8;
+  --primary-dark: #3240b5;
+  --text-dark: #222;
+  --bg-light: #f9faff;
+}
