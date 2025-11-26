@@ -343,15 +343,25 @@ p.success {
 
 /* Contenedor proyectos */
 .proyectos-wrapper {
+  width: 100%;
   max-width: 600px;
+
   margin-left: 70px;
   margin-top: 20px;
+
   padding: 20px;
   background: white;
   border-radius: 20px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+
   font-family: "Inter", "Segoe UI", sans-serif !important;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: auto;
 }
+
 
 /* Título proyectos */
 .titulo-proyectos {
@@ -427,3 +437,11 @@ p.success {
   color: #b02a37;
   border: 1px solid #dc3545;
 }
+
+/* Horas */
+.horas-proyecto {
+  font-weight: 600;
+  color: #444;
+  font-size: 0.95rem;
+}
+

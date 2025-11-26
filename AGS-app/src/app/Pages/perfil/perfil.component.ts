@@ -3,6 +3,7 @@ import { UserService } from '../../Services/user.service';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import esLocale from '@fullcalendar/core/locales/es';
+import { ProyectosService } from '../../Services/proyectos.service';
 
 @Component({
   selector: 'app-perfil',
@@ -32,8 +33,10 @@ export class PerfilComponent implements OnInit {
   openOptions = false;
   selectedDate: any;
 
-  proyecto: any;
+  proyectoCalendar: any;
   horas: any;  
+
+  proyectos:any
 
   calendarOptions = {
     intinialView: 'dayGridMonth',
@@ -49,17 +52,18 @@ export class PerfilComponent implements OnInit {
 
   events: any[]=[];
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private proyectoService: ProyectosService) { }
 
   ngOnInit(): void {
     console.log(this.userId)
     this.getUser()
+    this.getProyectos()
   }
 
   getUser() {
     this.userService.GetUserById(this.userId).subscribe(x => {
       this.user = x
-      console.log(x)
+      // console.log(x)
       this.nombre = this.user.nombre
       this.apellido = this.user.apellido
       this.mail = this.user.mail
@@ -114,7 +118,6 @@ export class PerfilComponent implements OnInit {
 
   // calendario
   handleDateClick(info: any) {
-    // alert('Fecha seleccionada: ' + arg.dateStr)
     this.selectedDate = info.dateStr
     this.openOptions = true
     // console.log
@@ -123,7 +126,7 @@ export class PerfilComponent implements OnInit {
   // calendario
   createEvent() {
     const event = {
-      title: `${this.proyecto} - ${this.horas} hs`,
+      title: `${this.proyectoCalendar} - ${this.horas} hs`,
       date: this.selectedDate      
     };
     console.log(event)
@@ -131,6 +134,14 @@ export class PerfilComponent implements OnInit {
     this.openOptions = false;
 
     this.events = [...this.events, event];
+  }
+
+  // traer proyectos
+  getProyectos(){
+    this.proyectoService.getProject().subscribe(x =>{
+      this.proyectos = x
+      console.log(x)
+    })
   }
 
 }

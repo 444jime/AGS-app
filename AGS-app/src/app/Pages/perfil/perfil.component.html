@@ -28,7 +28,7 @@
 </section>
 
 <div class="row mt-4 contenido-principal">
-    
+
     <!-- CALENDARIO -->
     <div class="col-lg-7">
         <div class="calendar-wrapper">
@@ -40,70 +40,23 @@
     <div class="col-lg-5 proyectos-wrapper">
         <h1 class="titulo-proyectos">Proyectos disponibles</h1>
 
-        <div class="card proyecto-card">
-            <div class="card-header titulo-proyecto"> Proyecto </div>
+        <div class="card proyecto-card" *ngFor="let p of proyectos">
+            <div class="card-header titulo-proyecto"> {{p.nombre}} </div>
 
             <div class="card-body">
-                <p class="desc-proyecto"> Descripcion </p>
-                <span class="estado-proyecto en-progreso">
-                    En progreso
+                <p class="desc-proyecto"> {{p.descripcion}} </p>
+                <p class="horas-proyecto">Horas: {{p.horas}}</p>
+                <span class="estado-proyecto" [ngClass]="{
+                'finalizado': p.estado === 'Finalizado',
+                'pendiente': p.estado === 'Pendiente',
+                'en-progreso': p.estado === 'En progreso'
+                }">
+                    {{ p.estado }}
                 </span>
             </div>
-        </div>
-        
-        <div class="card proyecto-card">
-            <div class="card-header titulo-proyecto"> Proyecto </div>
-
-            <div class="card-body">
-                <p class="desc-proyecto"> Descripcion </p>
-                <span class="estado-proyecto finalizado">
-                    Finalizado
-                </span>
-            </div>
-        </div>
-        <div class="card proyecto-card">
-            <div class="card-header titulo-proyecto"> Proyecto </div>
-
-            <div class="card-body">
-                <p class="desc-proyecto"> Descripcion </p>
-                <span class="estado-proyecto pendiente">
-                    Pendiente
-                </span>
-            </div>
-        </div>
-        <div class="card proyecto-card">
-            <div class="card-header titulo-proyecto"> Proyecto </div>
-
-            <div class="card-body">
-                <p class="desc-proyecto"> Descripcion </p>
-                <span class="estado-proyecto en-progreso">
-                    En progreso
-                </span>
-            </div>
-        </div>
-        <div class="card proyecto-card">
-            <div class="card-header titulo-proyecto"> Proyecto </div>
-
-            <div class="card-body">
-                <p class="desc-proyecto"> Descripcion </p>
-                <span class="estado-proyecto finalizado">
-                    Finalizado
-                </span>
-            </div>
-        </div>
-        <div class="card proyecto-card">
-            <div class="card-header titulo-proyecto"> Proyecto </div>
-
-            <div class="card-body">
-                <p class="desc-proyecto"> Descripcion </p>
-                <span class="estado-proyecto pendiente">
-                    Pendiente
-                </span>
-            </div>
-        </div>
+        </div>       
 
     </div>
-
 </div>
 
 
@@ -114,7 +67,7 @@
 
         <div class="mb-3">
             <label class="form-label">Seleccionar proyecto</label>
-            <select class="form-select" [(ngModel)]="proyecto" name="proyecto">
+            <select class="form-select" [(ngModel)]="proyectoCalendar" name="proyecto">
                 <option value="" disabled selected>Elegí un proyecto</option>
                 <option value="Proyecto 1">Proyecto 1</option>
                 <option value="Proyecto 2">Proyecto 2</option>
