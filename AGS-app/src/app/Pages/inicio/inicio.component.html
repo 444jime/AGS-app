@@ -1,116 +1,126 @@
 <!-- HERO -->
-<section class="hero d-flex align-items-center text-center"
-[ngStyle]="{'background-image': 'url(' + imagenHeader +') '}">
-  <div class="container">
-    <h1 class="display-3 text-black fw-bold">Bienvenidos a Nuestro Sitio</h1>
-    <p class="lead text-black mb-4">Descubrí nuestros servicios y proyectos</p>
-    <a href="#proyectos" class="btn btn-primary btn-lg">Ver proyectos</a>
+<section class="hero d-flex align-items-center text-center">
+  <div class="hero-bg" [ngStyle]="{'background-image': 'url(' + imagenHeader +')'}"></div>
+
+  <div class="container hero-content">
+    <h1 class="hero-title">AGS Web</h1>
+    <p class="hero-subtitle">
+      Construimos soluciones con compromiso, innovación y calidad. <br>
+      Un equipo joven, decidido a transformar cada proyecto en realidad.
+    </p>
+    <div class="d-flex gap-3 justify-content-center">
+      <a href="#proyectos" class="btn btn-primary-custom">Ver proyectos</a> 
+      <a href="AGS/nosotros/#formulario" class="btn btn-outline-light-custom">Contáctanos</a>
+    </div>
   </div>
 </section>
 
+
 <!-- SERVICIOS -->
-<section id="servicios" class="py-5">
-  <div class="container text-center">
-    <h4 class="mb-4">Nuestros Servicios:</h4>
+<section id="servicios" class="py-5 bg-light-minimal">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h6 class="text-primary fw-bold text-uppercase ls-2">Lo que hacemos</h6>
+      <h2 class="fw-bold section-title">Nuestros Servicios</h2>
+    </div>
 
-    <div class="row justify-content-center g4">
-      <!-- CARD 1 -->
-      <div class="col-md-4 mb-4">
-        <div class="card h-100">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            
-            <h5 class="card-title"> <i class="bi bi-droplet fs-1 text-primary mb-2"></i>  Instalaciones sanitarias</h5>
-            <p class="card-text">Diseño, planificación e instalación de sistemas de agua potable, desagües y redes sanitarias, garantizando funcionalidad y cumplimiento de normas.</p>
+    <div class="row g-4">
+
+      <div class="col-md-4">
+        <div class="service-card p-4 h-100">
+          <div class="icon-box mb-3">
+            <i class="bi bi-droplet fs-2"></i>
           </div>
+          <h5 class="card-title fw-bold">Instalaciones sanitarias</h5>
+          <p class="card-text text-muted small">Diseño, planificación e instalación de sistemas de agua potable,
+            desagües y redes sanitarias.</p>
         </div>
       </div>
 
-      <!-- CARD 2 -->
-      <div class="col-md-4 mb-4">
-        <div class="card h-100">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title"><i class="bi bi-fire fs-1 text-primary mb-2"></i>  Instalaciones de gas</h5>
-            <p class="card-text">Ejecución de redes de gas domiciliarias e industriales con seguridad, certificación y cumplimiento de normativas vigentes.</p>
+      <div class="col-md-4">
+        <div class="service-card p-4 h-100">
+          <div class="icon-box mb-3">
+            <i class="bi bi-fire fs-2"></i>
           </div>
+          <h5 class="card-title fw-bold">Instalaciones de gas</h5>
+          <p class="card-text text-muted small">Ejecución de redes de gas domiciliarias e industriales con seguridad y
+            certificación.</p>
         </div>
       </div>
 
-      <!-- CARD 3 -->
-      <div class="col-md-4 mb-4">
-        <div class="card h-100">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title"><i class="bi bi-shield-check fs-1 text-primary mb-2"></i> Instalaciones contra incendio</h5>
-            <p class="card-text">Implementación de sistemas de detección, alarmas y extinción de incendios, asegurando la protección de personas y bienes.</p>
+      <div class="col-md-4">
+        <div class="service-card p-4 h-100">
+          <div class="icon-box mb-3">
+            <i class="bi bi-shield-check fs-2"></i>
           </div>
+          <h5 class="card-title fw-bold">Instalaciones contra incendio</h5>
+          <p class="card-text text-muted small">Sistemas de detección, alarmas y extinción de incendios para protección
+            de bienes.</p>
         </div>
       </div>
 
-      <!-- CARD 4 -->
-      <div class="col-md-4 mb-4">
-        <div class="card h-100">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title"><i class="bi bi-file-text fs-1 text-primary mb-2"></i>  Informes</h5>
-            <p class="card-text">Elaboración de informes técnicos detallados sobre inspecciones, estudios de factibilidad y evaluación de proyectos.</p>
+      <div class="col-md-4">
+        <div class="service-card p-4 h-100">
+          <div class="icon-box mb-3">
+            <i class="bi bi-file-text fs-2"></i>
           </div>
+          <h5 class="card-title fw-bold">Informes Técnicos</h5>
+          <p class="card-text text-muted small">Elaboración de informes técnicos detallados, estudios de factibilidad y
+            evaluación.</p>
         </div>
       </div>
 
-      <!-- CARD 5 -->
-      <div class="col-md-4 mb-4">
-        <div class="card h-100">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title"><i class="bi bi-diagram-3 fs-1 text-primary mb-2"></i>  Planos conforme a obra</h5>
-            <p class="card-text">Creación de planos actualizados que reflejan fielmente la ejecución de la obra y los cambios realizados durante la construcción.</p>
+      <div class="col-md-4">
+        <div class="service-card p-4 h-100">
+          <div class="icon-box mb-3">
+            <i class="bi bi-diagram-3 fs-2"></i>
           </div>
+          <h5 class="card-title fw-bold">Planos conforme a obra</h5>
+          <p class="card-text text-muted small">Planos actualizados que reflejan fielmente la ejecución de la obra y sus
+            cambios.</p>
         </div>
       </div>
 
-      <!-- CARD 6 -->
-      <div class="col-md-4 mb-4">
-        <div class="card h-100">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title"><i class="bi bi-building fs-1 text-primary mb-2"></i>  Planos municipales</h5>
-            <p class="card-text">Preparación de planos oficiales para presentar en organismos municipales, cumpliendo los requisitos legales y normativos.</p>
+      <div class="col-md-4">
+        <div class="service-card p-4 h-100">
+          <div class="icon-box mb-3">
+            <i class="bi bi-building fs-2"></i>
           </div>
+          <h5 class="card-title fw-bold">Planos municipales</h5>
+          <p class="card-text text-muted small">Preparación de planos oficiales para presentar en organismos
+            municipales.</p>
         </div>
       </div>
 
-      <!-- CARD 7 -->
-      <div class="col-md-4 mb-4">
-        <div class="card h-100">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title"><i class="bi bi-journal-text fs-1 text-primary mb-2"></i>  Planos de licitacion y ejecutivos.</h5>
-            <p class="card-text">Desarrollo de planos precisos para licitaciones y ejecución de obra, facilitando la planificación y la gestión del proyecto.</p>
+      <div class="col-md-4">
+        <div class="service-card p-4 h-100">
+          <div class="icon-box mb-3">
+            <i class="bi bi-journal-text fs-2"></i>
           </div>
+          <h5 class="card-title fw-bold">Planos de licitación</h5>
+          <p class="card-text text-muted small">Desarrollo de planos precisos para licitaciones y ejecución de obra.</p>
         </div>
       </div>
 
-      <!-- CARD 8 -->
-      <div class="col-md-4 mb-4">
-        <div class="card h-100">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title"><i class="bi bi-pencil-square fs-1 text-primary mb-2"></i>  CAD</h5>
-            <p class="card-text">Elaboración de planos y diseños técnicos mediante software CAD (Computer-Aided Design), optimizando precisión y eficiencia.</p>
+      <div class="col-md-4">
+        <div class="service-card p-4 h-100">
+          <div class="icon-box mb-3">
+            <i class="bi bi-pencil-square fs-2"></i>
           </div>
+          <h5 class="card-title fw-bold">Diseño CAD</h5>
+          <p class="card-text text-muted small">Elaboración de planos y diseños técnicos mediante software CAD de alta
+            precisión.</p>
         </div>
       </div>
 
-      <!-- CARD 9 -->
-      <div class="col-md-4 mb-4">
-        <div class="card h-100 shadow-sm rounded">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title"><i class="bi bi-grid-1x2 fs-1 text-primary mb-2"></i>  BIM</h5>
-            <p class="card-text">Modelado y gestión de proyectos mediante BIM (Building Information Modeling), integrando información digital para planificación, construcción y mantenimiento.</p>
+      <div class="col-md-4">
+        <div class="service-card p-4 h-100">
+          <div class="icon-box mb-3">
+            <i class="bi bi-grid-1x2 fs-2"></i>
           </div>
+          <h5 class="card-title fw-bold">Modelado BIM</h5>
+          <p class="card-text text-muted small">Gestión de proyectos mediante Building Information Modeling para
+            planificación integral.</p>
         </div>
       </div>
 
@@ -119,48 +129,52 @@
 </section>
 
 <!-- PROYECTOS / CAROUSEL -->
-<section id="proyectos" class="py-5">
-  <div class="container text-center">
-    <h4 class="mb-4">Proyectos</h4>
-    <div id="carouselExampleCaptions" class="carousel slide mx-auto" style="max-width: 600px;">
+<section id="proyectos" class="py-5 bg-white">
+  <div class="container">
+    
+    <div class="text-center mb-5">
+      <h6 class="text-primary fw-bold text-uppercase ls-2">Nuestro Portfolio</h6>
+      <h2 class="fw-bold section-title">Proyectos Recientes</h2>
+    </div>
+
+    <div id="carouselExampleCaptions" class="carousel slide project-carousel shadow-lg rounded-4 overflow-hidden" data-bs-ride="carousel">
+      
       <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"></button>
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"></button>
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"></button>
+        <button type="button" 
+                *ngFor="let item of carrousel; let i = index"
+                data-bs-target="#carouselExampleCaptions" 
+                [attr.data-bs-slide-to]="i"
+                [class.active]="i === 0"
+                [attr.aria-current]="i === 0 ? 'true' : null"
+                [attr.aria-label]="'Slide ' + (i + 1)">
+        </button>
       </div>
+
       <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="..." class="d-block w-100 rounded" alt="...">
-          <div class="carousel-caption d-none d-md-block">
-            <h5>First slide label</h5>
-            <p>Some representative placeholder content for the first slide.</p>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img src="..." class="d-block w-100 rounded" alt="...">
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Second slide label</h5>
-            <p>Some representative placeholder content for the second slide.</p>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img src="..." class="d-block w-100 rounded" alt="...">
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Third slide label</h5>
-            <p>Some representative placeholder content for the third slide.</p>
+        <div class="carousel-item" *ngFor="let img of carrousel; let i = index" [class.active]="i === 0">
+          
+          <img [src]="img.url" class="d-block w-100 project-img" alt="...">
+          
+          <div class="gradient-overlay"></div>
+
+          <div class="carousel-caption project-caption">
+             <h5 class="fw-bold mb-2 text-white">{{img.nombre}}</h5>
+             <p class="mb-0 text-white-50 description-text">{{img.descripcion}}</p>
           </div>
         </div>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
-        data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+        <span class="control-icon">
+            <i class="bi bi-chevron-left"></i>
+        </span>
       </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
-        data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+        <span class="control-icon">
+            <i class="bi bi-chevron-right"></i>
+        </span>
       </button>
+
     </div>
   </div>
 </section>

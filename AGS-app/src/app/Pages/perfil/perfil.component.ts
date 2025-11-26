@@ -3,6 +3,7 @@ import { UserService } from '../../Services/user.service';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import esLocale from '@fullcalendar/core/locales/es';
+import { ProyectosService } from '../../Services/proyectos.service';
 
 @Component({
   selector: 'app-perfil',
@@ -32,8 +33,11 @@ export class PerfilComponent implements OnInit {
   openOptions = false;
   selectedDate: any;
 
-  proyecto: any;
-  horas: any;  
+  proyectoCalendar: any;
+  horas: any;
+  horasYAECHAS: any;
+
+  proyectos: any
 
   calendarOptions = {
     intinialView: 'dayGridMonth',
@@ -47,19 +51,20 @@ export class PerfilComponent implements OnInit {
     dateClick: (info: any) => this.handleDateClick(info),
   }
 
-  events: any[]=[];
+  events: any[] = [];
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private proyectoService: ProyectosService) { }
 
   ngOnInit(): void {
-    console.log(this.userId)
+    // console.log(this.userId)
     this.getUser()
+    this.getProyectos()
   }
 
   getUser() {
     this.userService.GetUserById(this.userId).subscribe(x => {
       this.user = x
-      console.log(x)
+      // console.log(x)
       this.nombre = this.user.nombre
       this.apellido = this.user.apellido
       this.mail = this.user.mail
@@ -114,23 +119,63 @@ export class PerfilComponent implements OnInit {
 
   // calendario
   handleDateClick(info: any) {
-    // alert('Fecha seleccionada: ' + arg.dateStr)
     this.selectedDate = info.dateStr
     this.openOptions = true
     // console.log
   }
 
+  getHoras(id: any) {
+    return this.proyectoService.getProjectId(id);
+  }
+
+
   // calendario
   createEvent() {
-    const event = {
-      title: `${this.proyecto} - ${this.horas} hs`,
-      date: this.selectedDate      
-    };
-    console.log(event)
+    let proyecto: any
+    this.getHoras(this.proyectoCalendar.id).subscribe(x => {
+      proyecto = x
+      console.log(proyecto.id)
+      const horasActuales = proyecto.horas
+      const nuevasHoras = Number(horasActuales) + Number(this.horas);
+      console.log("horas nuevas", nuevasHoras)
 
-    this.openOptions = false;
+      // SOLO ME FALTA HACER ESTE METODO Y HACER QUE PUEDA ACTUALIZAR SOLO LAS HORAS
+      //this.updateProject(proyecto.id, nuevasHoras);
+      const event = {
+        title: `${this.proyectoCalendar.nombre} - ${this.horas} hs`,
+        date: this.selectedDate
+      };
+      console.log("evento: ", event)
 
-    this.events = [...this.events, event];
+      this.events = [...this.events, event];
+      this.openOptions = false;
+    })
+
   }
+
+  updateProject(id:any, nuevasHoras:any) {
+    let proj = {
+
+    } 
+
+    // this.proyectoService.editProject(id,proj)
+  }
+
+  // traer proyectos
+  getProyectos() {
+    this.proyectoService.getProject().subscribe(x => {
+      this.proyectos = x
+      // console.log(x)
+    })
+  }
+
+
+  // updateProject(id: number, nuevasHoras: number) {
+  //   this.se.put(`http://tu-backend/api/proyectos/${id}`, { horas: nuevasHoras })
+  //     .subscribe({
+  //       next: () => console.log('Proyecto actualizado con éxito'),
+  //       error: (err) => console.error('Error al actualizar', err)
+  //     });
+  // }
 
 }

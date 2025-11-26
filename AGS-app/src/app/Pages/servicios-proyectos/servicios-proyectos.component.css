@@ -1,3 +1,4 @@
+/* NAVBAR SERVICIOS / PROYECTOS */
 .navbar-custom {
   background-color: #fff;
   border-radius: 10px;
@@ -24,6 +25,7 @@
   padding: 8px 18px;
 }
 
+/* FORM */
 .custom-file-upload label {
   cursor: pointer;
 }
@@ -43,4 +45,181 @@
 
 .text-primary {
   color: #4858e8 !important;
+}
+
+/* CARDS PROYECTO */
+.project-card {
+  height: 380px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Imagen arriba */
+.project-img {
+  height: 65%;
+  overflow: hidden;
+}
+
+.project-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Contenedor del texto */
+.project-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  padding-top: 6px;  
+  padding-bottom: 12px;
+}
+
+/* Nombre */
+.project-title {
+  margin: 0;
+  font-size: 1.1rem;
+  text-align: center;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px;
+  padding-top: 10px;
+}
+
+/* Descripción */
+.project-desc {
+  margin: 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* HORAS */
+.project-hours {
+  display: inline-block;
+  background-color: #eef3ff;
+  color: #2330cc;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-top: 6px;
+}
+
+/* ESTADO — estilos base */
+.project-status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-top: 6px;
+}
+
+/* ESTADOS según tipo */
+.project-status.finalizado {
+  background-color: #e6ffe9;
+  color: #1e8b33;
+}
+
+.project-status.pendiente {
+  background-color: #fff3cd;
+  color: #b38300;
+}
+
+.project-status.en-progreso {
+  background-color: #e0f0ff;
+  color: #285dad;
+}
+
+.project-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+}
+
+.project-dates {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #444;
+  margin-top: 6px;
+  font-weight: bold;
+}
+
+.project-date {
+  margin: 0;
+}
+
+/* ===== MODAL EDITAR PROYECTO — ESTILO LINDO ===== */
+
+.modal-edit {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.modal-edit-header {
+  background: linear-gradient(135deg, #4858e8, #3c48d0);
+  color: white;
+}
+
+.modal-label {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+/* Inputs y selects */
+.modal-input,
+.modal-select {
+  border-radius: 10px;
+  border: 1px solid #d0d7de;
+  padding: 8px 12px;
+  transition: 0.2s ease-in-out;
+  background-color: #fafafa;
+}
+
+.modal-input:focus,
+.modal-select:focus {
+  border-color: #4858e8;
+  box-shadow: 0 0 0 0.15rem rgba(72, 88, 232, 0.15);
+  background-color: #fff;
+}
+
+/* Caja de upload */
+.modal-upload-box {
+  border: 1px dashed #c9d2e6 !important;
+  background-color: #f9fbff !important;
+}
+
+.modal-upload-btn {
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+/* Select "Mostrar al público" */
+.public-wrapper {
+  max-width: 180px;
+}
+
+.public-select {
+  border-radius: 10px !important;
+  background-color: #f2f4ff;
+  border: 1px solid #c9cfee;
+  transition: 0.2s;
+}
+
+.public-select:hover {
+  background-color: #e6e9ff;
+}
+
+.public-select:focus {
+  border-color: #4858e8;
+  box-shadow: 0 0 0 0.15rem rgba(72, 88, 232, 0.15);
 }
