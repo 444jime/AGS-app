@@ -67,11 +67,11 @@
 
         <div class="mb-3">
             <label class="form-label">Seleccionar proyecto</label>
-            <select class="form-select" [(ngModel)]="proyectoCalendar" name="proyecto">
-                <option value="" disabled selected>Elegí un proyecto</option>
-                <option value="Proyecto 1">Proyecto 1</option>
-                <option value="Proyecto 2">Proyecto 2</option>
-                <option value="Proyecto 3">Proyecto 3</option>
+            <select class="form-select" [(ngModel)]="proyectoCalendar" name="proyecto" >
+                <option value="null" disabled selected>Elegí un proyecto</option>
+                <option *ngFor="let p of proyectos" [ngValue]="p">{{p.nombre}}</option>
+                <!-- <option value="Proyecto 2">Proyecto 2</option>
+                <option value="Proyecto 3">Proyecto 3</option> -->
             </select>
         </div>
 

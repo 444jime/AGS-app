@@ -34,9 +34,10 @@ export class PerfilComponent implements OnInit {
   selectedDate: any;
 
   proyectoCalendar: any;
-  horas: any;  
+  horas: any;
+  horasYAECHAS: any;
 
-  proyectos:any
+  proyectos: any
 
   calendarOptions = {
     intinialView: 'dayGridMonth',
@@ -50,12 +51,12 @@ export class PerfilComponent implements OnInit {
     dateClick: (info: any) => this.handleDateClick(info),
   }
 
-  events: any[]=[];
+  events: any[] = [];
 
   constructor(private userService: UserService, private proyectoService: ProyectosService) { }
 
   ngOnInit(): void {
-    console.log(this.userId)
+    // console.log(this.userId)
     this.getUser()
     this.getProyectos()
   }
@@ -123,25 +124,58 @@ export class PerfilComponent implements OnInit {
     // console.log
   }
 
+  getHoras(id: any) {
+    return this.proyectoService.getProjectId(id);
+  }
+
+
   // calendario
   createEvent() {
-    const event = {
-      title: `${this.proyectoCalendar} - ${this.horas} hs`,
-      date: this.selectedDate      
-    };
-    console.log(event)
+    let proyecto: any
+    this.getHoras(this.proyectoCalendar.id).subscribe(x => {
+      proyecto = x
+      console.log(proyecto.id)
+      const horasActuales = proyecto.horas
+      const nuevasHoras = Number(horasActuales) + Number(this.horas);
+      console.log("horas nuevas", nuevasHoras)
 
-    this.openOptions = false;
+      // SOLO ME FALTA HACER ESTE METODO Y HACER QUE PUEDA ACTUALIZAR SOLO LAS HORAS
+      //this.updateProject(proyecto.id, nuevasHoras);
+      const event = {
+        title: `${this.proyectoCalendar.nombre} - ${this.horas} hs`,
+        date: this.selectedDate
+      };
+      console.log("evento: ", event)
 
-    this.events = [...this.events, event];
+      this.events = [...this.events, event];
+      this.openOptions = false;
+    })
+
+  }
+
+  updateProject(id:any, nuevasHoras:any) {
+    let proj = {
+
+    } 
+
+    // this.proyectoService.editProject(id,proj)
   }
 
   // traer proyectos
-  getProyectos(){
-    this.proyectoService.getProject().subscribe(x =>{
+  getProyectos() {
+    this.proyectoService.getProject().subscribe(x => {
       this.proyectos = x
-      console.log(x)
+      // console.log(x)
     })
   }
+
+
+  // updateProject(id: number, nuevasHoras: number) {
+  //   this.se.put(`http://tu-backend/api/proyectos/${id}`, { horas: nuevasHoras })
+  //     .subscribe({
+  //       next: () => console.log('Proyecto actualizado con éxito'),
+  //       error: (err) => console.error('Error al actualizar', err)
+  //     });
+  // }
 
 }
