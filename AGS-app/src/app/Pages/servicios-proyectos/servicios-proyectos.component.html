@@ -34,7 +34,7 @@
       <label class="form-label d-block">Imagen del proyecto</label>
       <div class="custom-file-upload text-center p-4 border rounded-3 bg-white shadow-sm">
         <input type="file" id="formFile" class="d-none" accept="image/*" name="imagen"
-          (change)="onFileSelected($event)">
+          (change)="onFileSelected($event, 'proyecto')">
         <label for="formFile" class="btn btn-outline-primary px-4 py-2">
           <i class="bi bi-upload"></i> Subir imagen
         </label>
@@ -48,7 +48,7 @@
 </section>
 
 <!-- SECTOR DE PROYECTOS -->
-<section id="servicios" class="py-5">
+<section *ngIf="showProyects" id="servicios" class="py-5">
   <div class="container text-center">
     <h4 class="mb-4">Proyectos actuales:</h4>
 
@@ -109,7 +109,7 @@
 <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content border-0 shadow-lg modal-edit">
-      
+
       <div class="modal-header modal-edit-header">
         <h5 class="modal-title" id="modalEditarLabel">Actualizar proyecto</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
@@ -145,7 +145,7 @@
           <label class="form-label modal-label d-block">Imagen del proyecto</label>
           <div class="custom-file-upload text-center p-4 border rounded-3 bg-white shadow-sm modal-upload-box">
             <input type="file" id="formFile" class="d-none" accept="image/*" name="imagen"
-              (change)="onFileSelected($event)">
+              (change)="onFileSelected($event, 'proyecto')">
             <label for="formFile" class="btn btn-outline-primary px-4 py-2 modal-upload-btn">
               <i class="bi bi-upload"></i> Subir imagen
             </label>
@@ -202,17 +202,121 @@
   <h2 class="mb-4 text-center fw-bold text-primary">Agregar Nuevo Servicio</h2>
   <p class="text-center mb-4">Completa la información del servicio que deseas agregar.</p>
 
-  <form class="mx-auto" style="max-width: 600px;">
+  <form (ngSubmit)="crearServicio()" class="mx-auto" style="max-width: 600px;">
     <div class="mb-3">
       <label class="form-label">Nombre del servicio</label>
-      <input type="text" class="form-control" placeholder="Ejemplo: Desarrollo Web">
+      <input type="text" class="form-control" placeholder="Ejemplo: Desarrollo Web" name="nombreServicio"
+        [(ngModel)]="nombreServicio">
     </div>
     <div class="mb-3">
       <label class="form-label">Descripción del servicio</label>
-      <textarea class="form-control" rows="3" placeholder="Describe brevemente el servicio..."></textarea>
+      <textarea class="form-control" rows="3" placeholder="Describe brevemente el servicio..." name="descServicio"
+        [(ngModel)]="descServicio"></textarea>
     </div>
     <div class="text-center mt-4">
       <button type="submit" class="btn btn-primary btn-lg px-5">Confirmar servicio</button>
     </div>
   </form>
 </section>
+
+<!-- SECTOR DE SERVICIOS -->
+<section *ngIf="showServices" id="servicios" class="py-5">
+  <div class="container text-center">
+    <h4 class="mb-4">Servicios actuales:</h4>
+
+    <div class="row justify-content-center g-4">
+
+      <div class="col-12 col-md-6 col-lg-4 col-xl-4" *ngFor="let s of servicios">
+        <div class="card h-100 project-card shadow-sm">
+
+          <div class="project-body d-flex flex-column">
+
+            <h5 class="project-title">{{ s.nombre }}</h5>
+            <p class="project-desc">{{ s.descripcion }}</p>
+
+            <!-- BOTONES FIJADOS ABAJO -->
+            <div class="mt-auto pt-3 text-center">
+              <button class="btn btn-link text-primary p-0 me-3" data-bs-toggle="modal"
+                data-bs-target="#modalEditarServicio" (click)="EditServiceValues(s)" title="Editar">
+                <i class="bi bi-pencil fs-5"></i>
+              </button>
+
+              <button class="btn btn-link text-danger p-0" data-bs-toggle="modal"
+                data-bs-target="#modalEliminarServicio" (click)="DeleteServiceValues(s.id)" title="Eliminar">
+                <i class="bi bi-trash fs-5"></i>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- Modal EDITAR PROYECTO-->
+<div class="modal fade" id="modalEditarServicio" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content border-0 shadow-lg modal-edit">
+
+      <div class="modal-header modal-edit-header">
+        <h5 class="modal-title" id="modalEditarLabel">Actualizar servicio</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <form class="form-editar">
+
+          <!-- Nombre -->
+          <div class="mb-3">
+            <label class="form-label modal-label">Nombre</label>
+            <input type="text" class="form-control modal-input" [(ngModel)]="nombreServicioEdit" name="nombre" />
+          </div>
+
+
+          <!-- Descripción -->
+          <div class="mb-3">
+            <label class="form-label modal-label">Descripción</label>
+            <textarea class="form-control" rows="3" placeholder="Describe brevemente el servicio..." name="descServicio"
+              [(ngModel)]="descripcionServicioEdit"></textarea>
+          </div>
+
+        </form>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button class="btn btn-primary" (click)="editarServicio()">Guardar cambios</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal FINALIZAR PROYECTO -->
+<div class="modal fade" id="modalEliminarServicio" tabindex="-1" aria-labelledby="modalEliminarLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg rounded-3">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="modalEliminarLabel">Eliminar servicio</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p class="mb-4 fs-5">¿Esta seguro de querer eliminar el servicio?</p>
+        <div class="d-flex justify-content-center gap-3">
+          <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
+            Cancelar
+          </button>
+          <button type="button" class="btn btn-danger px-4" (click)="deleteService()">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
