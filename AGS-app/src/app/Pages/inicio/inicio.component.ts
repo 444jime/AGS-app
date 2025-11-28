@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProyectosService } from '../../Services/proyectos.service';
 import { ImagenesService } from '../../Services/imagenes.service';
+import { ServiciosEmpresaService } from '../../Services/servicios-empresa.service';
 
 @Component({
   selector: 'app-inicio',
@@ -14,12 +15,14 @@ export class InicioComponent implements OnInit{
   imagenHeader:any;
   imagesCarrousel:any;
   carrousel:any[]=[];
+  servicios:any;
 
-  constructor(private imagenesSercive:ImagenesService, private proyectosService: ProyectosService) {}
+  constructor(private imagenesSercive:ImagenesService, private proyectosService: ProyectosService, private ServiciosService: ServiciosEmpresaService) {}
 
   ngOnInit(): void {
     this.getImages()
     this.getProyectos()
+    this.getServicios()
   }
 
   getImages(){
@@ -42,6 +45,13 @@ export class InicioComponent implements OnInit{
         this.carrousel.push(i)
       }
       console.log(this.carrousel)
+    })
+  }
+
+  getServicios() {
+    this.ServiciosService.getServices().subscribe( x => {
+      this.servicios = x
+      console.log(x)
     })
   }
   
