@@ -32,13 +32,32 @@
     </div>
     <div class="mb-3">
       <label class="form-label d-block">Imagen del proyecto</label>
-      <div class="custom-file-upload text-center p-4 border rounded-3 bg-white shadow-sm">
+      <div class="custom-file-upload text-center p-4 border rounded-3 bg-white shadow-sm position-relative">
+
         <input type="file" id="formFile" class="d-none" accept="image/*" name="imagen"
-          (change)="onFileSelected($event, 'proyecto')">
-        <label for="formFile" class="btn btn-outline-primary px-4 py-2">
-          <i class="bi bi-upload"></i> Subir imagen
-        </label>
-        <p id="fileName" class="mt-2 text-muted small">Ningún archivo seleccionado</p>
+          (change)="onFileSelected($event)">
+
+        <div *ngIf="!imagenPrevia">
+          <label for="formFile" class="btn btn-outline-primary px-4 py-2">
+            <i class="bi bi-upload"></i> Subir imagen
+          </label>
+          <p class="mt-2 text-muted small">{{ nombreArchivo }}</p>
+        </div>
+
+        <div *ngIf="imagenPrevia" class="animate__animated animate__fadeIn">
+          <div class="mb-3 position-relative d-inline-block">
+            <img [src]="imagenPrevia" alt="Vista previa" class="img-fluid rounded-3 shadow-sm"
+              style="max-height: 200px; object-fit: cover; border: 1px solid #dee2e6;">
+          </div>
+
+          <div>
+            <p class="fw-bold text-dark small mb-2">{{ nombreArchivo }}</p>
+            <label for="formFile" class="btn btn-sm btn-outline-secondary">
+              <i class="bi bi-arrow-repeat"></i> Cambiar imagen
+            </label>
+          </div>
+        </div>
+
       </div>
     </div>
     <div class="text-center mt-4">
@@ -55,48 +74,51 @@
     <div class="row justify-content-center g-4">
 
       <div class="col-12 col-md-6 col-lg-4 col-xl-3" *ngFor="let p of proyectos">
-        <div class="card h-100 project-card shadow-sm">
+        <div class="card project-card">
 
           <div class="project-img">
             <img [src]="p.url" alt="imagen del proyecto">
           </div>
 
-          <div class="project-body d-flex flex-column">
-
-            <h5 class="project-title">{{ p.nombre }}</h5>
-            <p class="project-desc">{{ p.descripcion }}.</p>
-
-            <div class="d-flex justify-content-center gap-2 mt-2">
-              <p class="project-hours">Horas: {{ p.horas }}</p>
-
-              <p class="project-status" [ngClass]="{
-              'finalizado': p.estado === 'Finalizado',
-              'pendiente': p.estado === 'Pendiente',
-              'en-progreso': p.estado === 'En progreso'
-              }">
+          <div class="project-body">
+            <div>
+              <span class="project-status-badge" [ngClass]="{
+            'status-finalizado': p.estado === 'Finalizado',
+            'status-pendiente': p.estado === 'Pendiente',
+            'status-en-progreso': p.estado === 'En progreso'
+            }">
                 {{ p.estado }}
-              </p>
-            </div>
-            <div class="project-dates mt-2">
-              <p class="project-date">Inicio: {{ p.fecha_inicio }}</p>
-              <p class="project-date">Fin: {{ p.fecha_fin }}</p>
+              </span>
             </div>
 
-            <!-- BOTONES FIJADOS ABAJO -->
-            <div class="mt-auto pt-3 text-center">
-              <button class="btn btn-link text-primary p-0 me-3" data-bs-toggle="modal" data-bs-target="#modalEditar"
-                (click)="EditValues(p)" title="Editar">
+            <h5 class="project-title" title="{{ p.nombre }}">{{ p.nombre }}</h5>
+            <p class="project-desc" title="{{ p.descripcion }}">{{ p.descripcion }}.</p>
+
+            <div class="project-meta">
+              <div class="meta-item" title="Horas dedicadas">
+                <i class="bi bi-clock"></i> {{ p.horas }} hs
+              </div>
+              <div class="meta-item" title="Fecha de inicio">
+                <i class="bi bi-calendar-plus"></i> {{ p.fecha_inicio }}
+              </div>
+              <div class="meta-item" title="Fecha de fin">
+                <i class="bi bi-calendar-check"></i> {{ p.fecha_fin }}
+              </div>
+            </div>
+
+            <div class="card-actions">
+              <button class="btn-action btn-edit" data-bs-toggle="modal" data-bs-target="#modalEditar"
+                (click)="EditValues(p)" title="Editar Proyecto">
                 <i class="bi bi-pencil fs-5"></i>
               </button>
 
-              <button class="btn btn-link text-success p-0" data-bs-toggle="modal" data-bs-target="#modalEliminar"
-                (click)="DeleteValues(p.id)" title="Eliminar">
-                <i class="bi bi-check2-square fs-5"></i>
+              <button class="btn-action btn-finish" data-bs-toggle="modal" data-bs-target="#modalEliminar"
+                (click)="DeleteValues(p.id)" title="Finalizar Proyecto">
+                <i class="bi bi-check2-circle fs-5"></i>
               </button>
             </div>
 
           </div>
-
         </div>
       </div>
 
@@ -142,23 +164,44 @@
           </div>
 
           <!-- Imagen -->
-          <label class="form-label modal-label d-block">Imagen del proyecto</label>
-          <div class="custom-file-upload text-center p-4 border rounded-3 bg-white shadow-sm modal-upload-box">
-            <input type="file" id="formFile" class="d-none" accept="image/*" name="imagen"
-              (change)="onFileSelected($event, 'proyecto')">
-            <label for="formFile" class="btn btn-outline-primary px-4 py-2 modal-upload-btn">
-              <i class="bi bi-upload"></i> Subir imagen
-            </label>
-            <p id="fileName" class="mt-2 text-muted small">Ningún archivo seleccionado</p>
-          </div>
+          <div class="mb-3">
+            <label class="form-label modal-label d-block">Imagen del proyecto</label>
 
-          <!-- Mostrar al público -->
-          <div class="mb-3 mt-3 public-wrapper">
-            <label class="form-label modal-label small">¿Mostrar al público?</label>
-            <select class="form-select form-select-sm public-select" name="mostrar">
-              <option [value]="true">Sí</option>
-              <option [value]="false">No</option>
-            </select>
+            <div
+              class="custom-file-upload text-center p-4 border rounded-3 bg-white shadow-sm modal-upload-box position-relative">
+
+              <input type="file" id="formFileEdit" class="d-none" accept="image/*" name="imagen"
+                (change)="onFileSelectedEdit($event)">
+
+              <div *ngIf="!imagenPreviaEdit">
+                <label for="formFileEdit" class="btn btn-outline-primary px-4 py-2 modal-upload-btn">
+                  <i class="bi bi-upload"></i> Subir imagen
+                </label>
+                <p class="mt-2 text-muted small">{{ nombreArchivoEdit }}</p>
+              </div>
+
+              <div *ngIf="imagenPreviaEdit" class="animate__animated animate__fadeIn">
+                <div class="mb-3 position-relative d-inline-block">
+
+                  <img [src]="imagenPreviaEdit" alt="Vista previa" class="img-fluid rounded-3 shadow-sm"
+                    style="max-height: 200px; object-fit: cover; border: 1px solid #dee2e6;">
+
+                  <span *ngIf="fileProyectoEdit"
+                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark border border-light shadow-sm">
+                    Nueva
+                  </span>
+                </div>
+
+                <div>
+                  <p class="fw-bold text-dark small mb-2">{{ nombreArchivoEdit }}</p>
+
+                  <label for="formFileEdit" class="btn btn-sm btn-outline-secondary modal-upload-btn">
+                    <i class="bi bi-arrow-repeat"></i> Cambiar por otra
+                  </label>
+                </div>
+              </div>
+
+            </div>
           </div>
 
         </form>
@@ -174,25 +217,45 @@
   </div>
 </div>
 
-
 <!-- Modal FINALIZAR PROYECTO -->
 <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content border-0 shadow-lg rounded-3">
-      <div class="modal-header bg-success text-white">
-        <h5 class="modal-title" id="modalEliminarLabel">Marcar como finalizado el proyecto</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+    <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden px-3">
+
+      <div class="modal-header border-0 pb-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
-      <div class="modal-body text-center">
-        <p class="mb-4 fs-5">¿Finalizar proyecto?</p>
-        <p>La fecha de finalizacion quedara como: <strong> {{fechaActual}} </strong> </p>
-        <div class="d-flex justify-content-center gap-3">
-          <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
-            Cancelar
-          </button>
-          <button type="button" class="btn btn-success px-4" (click)="deleteProject()">Finalizar</button>
+
+      <div class="modal-body text-center pt-0">
+        <div class="mb-4 text-success animate__animated animate__bounceIn">
+          <i class="bi bi-check-circle-fill" style="font-size: 4rem;"></i>
         </div>
+
+        <h4 class="fw-bold mb-3 text-dark ls-1">¿Finalizar este proyecto?</h4>
+
+        <p class="text-muted mb-4">
+          Al confirmar, el proyecto se marcará como completado y se registrará la fecha de hoy:
+        </p>
+
+        <div
+          class="d-inline-block bg-light-success text-success fw-bold px-4 py-2 rounded-pill mb-4 fs-5 border border-success-subtle">
+          <i class="bi bi-calendar-event me-2"></i> {{fechaActual}}
+        </div>
+
+        <div class="d-flex justify-content-center gap-3 mt-2">
+          <button type="button" class="btn btn-light text-muted px-4 fw-medium rounded-pill border-0"
+            data-bs-dismiss="modal" style="background-color: #f0f2f5;">
+            Ahora no
+          </button>
+          <button type="button"
+            class="btn btn-success px-5 fw-bold rounded-pill shadow-sm d-flex align-items-center gap-2"
+            (click)="deleteProject()">
+            <i class="bi bi-check2-circle fs-5"></i> Sí, finalizar
+          </button>
+        </div>
+
       </div>
+      <div class="pb-4"></div>
     </div>
   </div>
 </div>
@@ -227,22 +290,28 @@
     <div class="row justify-content-center g-4">
 
       <div class="col-12 col-md-6 col-lg-4 col-xl-4" *ngFor="let s of servicios">
-        <div class="card h-100 project-card shadow-sm">
 
-          <div class="project-body d-flex flex-column">
+        <div class="card project-card service-card-adjust">
 
-            <h5 class="project-title">{{ s.nombre }}</h5>
+          <div class="service-card-header">
+            <div class="service-icon-box">
+              <i class="bi bi-gear-wide-connected"></i>
+            </div>
+            <h5 class="project-title mb-0">{{ s.nombre }}</h5>
+          </div>
+
+          <div class="project-body pt-3">
+
             <p class="project-desc">{{ s.descripcion }}</p>
 
-            <!-- BOTONES FIJADOS ABAJO -->
-            <div class="mt-auto pt-3 text-center">
-              <button class="btn btn-link text-primary p-0 me-3" data-bs-toggle="modal"
-                data-bs-target="#modalEditarServicio" (click)="EditServiceValues(s)" title="Editar">
+            <div class="card-actions">
+              <button class="btn-action btn-edit" data-bs-toggle="modal" data-bs-target="#modalEditarServicio"
+                (click)="EditServiceValues(s)" title="Editar Servicio">
                 <i class="bi bi-pencil fs-5"></i>
               </button>
 
-              <button class="btn btn-link text-danger p-0" data-bs-toggle="modal"
-                data-bs-target="#modalEliminarServicio" (click)="DeleteServiceValues(s.id)" title="Eliminar">
+              <button class="btn-action btn-delete" data-bs-toggle="modal" data-bs-target="#modalEliminarServicio"
+                (click)="DeleteServiceValues(s.id)" title="Eliminar Servicio">
                 <i class="bi bi-trash fs-5"></i>
               </button>
             </div>
@@ -257,7 +326,7 @@
 </section>
 
 
-<!-- Modal EDITAR PROYECTO-->
+<!-- Modal EDITAR SERVICIO-->
 <div class="modal fade" id="modalEditarServicio" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content border-0 shadow-lg modal-edit">
@@ -299,23 +368,41 @@
 </div>
 
 
-<!-- Modal FINALIZAR PROYECTO -->
+<!-- Modal ELIMINAR SERVICIO -->
 <div class="modal fade" id="modalEliminarServicio" tabindex="-1" aria-labelledby="modalEliminarLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content border-0 shadow-lg rounded-3">
-      <div class="modal-header bg-danger text-white">
-        <h5 class="modal-title" id="modalEliminarLabel">Eliminar servicio</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+    <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden px-3">
+
+      <div class="modal-header border-0 pb-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
-      <div class="modal-body text-center">
-        <p class="mb-4 fs-5">¿Esta seguro de querer eliminar el servicio?</p>
-        <div class="d-flex justify-content-center gap-3">
-          <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
+
+      <div class="modal-body text-center pt-0">
+        <div class="mx-auto mb-4 d-flex align-items-center justify-content-center bg-danger-subtle rounded-circle"
+          style="width: 80px; height: 80px;">
+          <i class="bi bi-exclamation-triangle text-danger" style="font-size: 2.5rem;"></i>
+        </div>
+
+        <h4 class="fw-bold mb-3 text-dark">¿Eliminar este servicio?</h4>
+
+        <p class="text-muted mb-4 px-4">
+          Esta acción borrará el servicio permanentemente y no se podrá recuperar. ¿Estás seguro de continuar?
+        </p>
+
+        <div class="d-flex justify-content-center gap-3 mt-3 mb-3">
+          <button type="button" class="btn btn-light text-muted px-4 fw-medium rounded-pill border-0"
+            data-bs-dismiss="modal" style="background-color: #f0f2f5;">
             Cancelar
           </button>
-          <button type="button" class="btn btn-danger px-4" (click)="deleteService()">Eliminar</button>
+
+          <button type="button"
+            class="btn btn-danger px-5 fw-bold rounded-pill shadow-sm d-flex align-items-center gap-2"
+            (click)="deleteService()">
+            <i class="bi bi-trash3"></i> Eliminar
+          </button>
         </div>
+
       </div>
     </div>
   </div>

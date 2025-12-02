@@ -10,7 +10,6 @@ import { ServiciosEmpresaService } from '../../Services/servicios-empresa.servic
 })
 export class ServiciosProyectosComponent implements OnInit {
 
-  // CAMBIAR DESPUES
   showProyects = false;
   showServices = true;
 
@@ -18,6 +17,8 @@ export class ServiciosProyectosComponent implements OnInit {
   nombre: any;
   descripcion: any;
   fileProyecto!: File;
+  nombreArchivo: string = 'Ningún archivo seleccionado';
+  imagenPrevia: string | ArrayBuffer | null = null;
 
   selectedProject: any;
   id: any
@@ -28,6 +29,9 @@ export class ServiciosProyectosComponent implements OnInit {
   estadoEdit: any;
   fechaInicioEdit: any;
   fechaFinEdit: any;
+  fileProyectoEdit: File | null = null;
+  imagenPreviaEdit: any = null;
+  nombreArchivoEdit: string = 'Imagen actual del proyecto';
 
   idDelete: any;
   fechaActual: string = "";
@@ -35,14 +39,13 @@ export class ServiciosProyectosComponent implements OnInit {
   servicios: any;
   nombreServicio: any;
   descServicio: any;
-  fileServicio!: File;
 
   selectedService: any;
   idServicio: any;
   nombreServicioEdit: any;
   descripcionServicioEdit: any;
 
-  idDeleteService:any;
+  idDeleteService: any;
 
 
   constructor(private proyectosService: ProyectosService, private serviciosService: ServiciosEmpresaService) { }
@@ -79,13 +82,32 @@ export class ServiciosProyectosComponent implements OnInit {
     })
   }
 
-  onFileSelected(event: any, tipo: 'proyecto' | 'servicio') {
+  onFileSelected(event: any) {
     const archivo = event.target.files[0];
-
-    if (tipo === 'proyecto') {
+    if (archivo) {
       this.fileProyecto = archivo;
-    } else if (tipo === 'servicio') {
-      this.fileServicio = archivo;
+      this.nombreArchivo = archivo.name;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagenPrevia = reader.result;
+      };
+      reader.readAsDataURL(archivo);
+
+    }
+  }
+
+  onFileSelectedEdit(event: any) {
+    const archivo = event.target.files[0];
+    if (archivo) {
+      this.fileProyectoEdit = archivo;
+      this.nombreArchivoEdit = archivo.name;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagenPreviaEdit = reader.result; 
+      };
+      reader.readAsDataURL(archivo);
     }
   }
 
@@ -98,7 +120,9 @@ export class ServiciosProyectosComponent implements OnInit {
     this.estadoEdit = project.estado
     this.fechaInicioEdit = project.fecha_inicio
     this.fechaFinEdit = project.fecha_fin
-    this.fileEdit = null
+    this.imagenPreviaEdit = project.url; 
+    this.fileProyectoEdit = null;        
+    this.nombreArchivoEdit = "Imagen actual del proyecto";;
     // console.log(this.fechaInicioEdit )
     // console.log(this.fechaFinEdit )    
   }
@@ -144,11 +168,12 @@ export class ServiciosProyectosComponent implements OnInit {
   }
 
   crearServicio() {
-    const formData = new FormData()
-    formData.append("nombre", this.nombreServicio)
-    formData.append("descripcion", this.descServicio)
-    // console.log(servicio)
-    this.serviciosService.postService(formData).subscribe({
+    let obj = {
+      "nombre": this.nombreServicio,
+      "descripcion": this.descServicio
+    }
+
+    this.serviciosService.postService(obj).subscribe({
       next: () => location.reload(),
       error: err => console.error(err)
     })
@@ -162,17 +187,12 @@ export class ServiciosProyectosComponent implements OnInit {
   }
 
   editarServicio() {
-    const formData = new FormData()
-
-    formData.append("nombre", this.nombreServicioEdit)
-    formData.append("descripcion", this.descripcionServicioEdit)
-
-    if (this.fileEdit) {
-      formData.append("imagenFile", this.fileEdit
-      )
+    let obj = {
+      "nombre": this.nombreServicioEdit,
+      "descripcion": this.descripcionServicioEdit
     }
 
-    this.serviciosService.editServices(this.idServicio, formData).subscribe({
+    this.serviciosService.editServices(this.idServicio, obj).subscribe({
       next: () => location.reload(),
       error: err => console.error(err)
     })

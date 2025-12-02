@@ -17,6 +17,18 @@ export class InicioComponent implements OnInit{
   carrousel:any[]=[];
   servicios:any;
 
+  iconos: string[] = [
+    'bi-droplet',
+    'bi-fire',
+    'bi-shield-check',
+    'bi-file-text',
+    'bi-diagram-3',
+    'bi-building',
+    'bi-journal-text',
+    'bi-pencil-square',
+    'bi-grid-1x2'
+  ];
+
   constructor(private imagenesSercive:ImagenesService, private proyectosService: ProyectosService, private ServiciosService: ServiciosEmpresaService) {}
 
   ngOnInit(): void {
@@ -44,14 +56,14 @@ export class InicioComponent implements OnInit{
         // console.log(i)
         this.carrousel.push(i)
       }
-      console.log(this.carrousel)
+      // console.log(this.carrousel)
     })
   }
 
   getServicios() {
     this.ServiciosService.getServices().subscribe( x => {
       this.servicios = x
-      console.log(x)
+      // console.log(x)
     })
   }
   
