@@ -14,11 +14,17 @@ export class ServiciosProyectosComponent implements OnInit {
   showServices = true;
 
   proyectos: any;
+  textoMensaje: string = "";
+
   nombre: any;
   descripcion: any;
+  fechaInicio: any;
+  estado: any;
+  horas: any;
   fileProyecto!: File;
   nombreArchivo: string = 'Ningún archivo seleccionado';
   imagenPrevia: string | ArrayBuffer | null = null;
+  mensajeExito: boolean = false;
 
   selectedProject: any;
   id: any
@@ -28,7 +34,7 @@ export class ServiciosProyectosComponent implements OnInit {
   horasEdit: any;
   estadoEdit: any;
   fechaInicioEdit: any;
-  fechaFinEdit: any;
+  fechaFinEdit: any; //LA TENGO Q SACAR
   fileProyectoEdit: File | null = null;
   imagenPreviaEdit: any = null;
   nombreArchivoEdit: string = 'Imagen actual del proyecto';
@@ -63,6 +69,15 @@ export class ServiciosProyectosComponent implements OnInit {
     this.showServices = tipo === 'servicios';
   }
 
+  mostrarExito(mensaje: string) {
+    this.textoMensaje = mensaje;
+    this.mensajeExito = true;
+
+    setTimeout(() => {
+      this.mensajeExito = false;
+    }, 3000);
+  }
+
   // PROYECTOS
   getProyectos() {
     this.proyectosService.getProject().subscribe(x => {
@@ -74,12 +89,31 @@ export class ServiciosProyectosComponent implements OnInit {
     const formData = new FormData()
     formData.append("nombre", this.nombre)
     formData.append("descripcion", this.descripcion)
+    formData.append("fecha_inicio", this.fechaInicio)
+    formData.append("estado", this.estado)
+    formData.append("horas", this.horas)
     formData.append("imagenFile", this.fileProyecto)
 
     this.proyectosService.postProject(formData).subscribe({
-      next: res => console.log("creadooo ", res),
+      next: () => {
+        this.getProyectos();
+        this.resetFormulario();
+
+        this.mostrarExito("El proyecto se ha creado correctamente.");
+      },
       error: err => console.error(err)
     })
+  }
+
+  resetFormulario() {
+    this.nombre = '';
+    this.descripcion = '';
+    this.fechaInicio = '';
+    this.estado = undefined;
+    this.horas = '';
+    this.fileProyecto = null;
+    this.imagenPrevia = null;
+    this.nombreArchivo = 'Ningún archivo seleccionado';
   }
 
   onFileSelected(event: any) {
@@ -93,7 +127,6 @@ export class ServiciosProyectosComponent implements OnInit {
         this.imagenPrevia = reader.result;
       };
       reader.readAsDataURL(archivo);
-
     }
   }
 
@@ -105,7 +138,7 @@ export class ServiciosProyectosComponent implements OnInit {
 
       const reader = new FileReader();
       reader.onload = () => {
-        this.imagenPreviaEdit = reader.result; 
+        this.imagenPreviaEdit = reader.result;
       };
       reader.readAsDataURL(archivo);
     }
@@ -119,12 +152,10 @@ export class ServiciosProyectosComponent implements OnInit {
     this.horasEdit = project.horas
     this.estadoEdit = project.estado
     this.fechaInicioEdit = project.fecha_inicio
-    this.fechaFinEdit = project.fecha_fin
-    this.imagenPreviaEdit = project.url; 
-    this.fileProyectoEdit = null;        
+    this.fechaFinEdit = project.fecha_fin //TENGO Q SACAR
+    this.imagenPreviaEdit = project.url;
+    this.fileProyectoEdit = null;
     this.nombreArchivoEdit = "Imagen actual del proyecto";;
-    // console.log(this.fechaInicioEdit )
-    // console.log(this.fechaFinEdit )    
   }
 
   editarProyecto() {
@@ -143,7 +174,13 @@ export class ServiciosProyectosComponent implements OnInit {
     }
 
     this.proyectosService.editProject(this.id, formData).subscribe({
-      next: () => location.reload(),
+      next: () => {
+        this.getProyectos();
+        const btn = document.getElementById('btnCerrarEditarP');
+        if (btn) btn.click();
+
+        this.mostrarExito("Los cambios del proyecto fueron guardados.");
+      },
       error: err => console.error(err)
     })
   }
@@ -152,19 +189,29 @@ export class ServiciosProyectosComponent implements OnInit {
     this.idDelete = id;
   }
 
-  // poner msj
   deleteProject() {
-    console.log(this.idDelete)
     this.proyectosService.deleteProject(this.idDelete).subscribe({
-      next: () => location.reload(),
+      next: () => {
+        this.getProyectos();
+        const btn = document.getElementById('btnCerrarFinalizarP');
+        if (btn) btn.click();
+
+        this.mostrarExito("La fecha de finalizacion fue actualizada correctamente.");
+      },
       error: err => console.error(err)
     })
   }
 
+  // SERVICIOS
   getServicios() {
     this.serviciosService.getServices().subscribe(x => {
       this.servicios = x
     })
+  }
+
+  resetFormularioServicios() {
+    this.nombreServicio = '';
+    this.descServicio = '';
   }
 
   crearServicio() {
@@ -174,7 +221,12 @@ export class ServiciosProyectosComponent implements OnInit {
     }
 
     this.serviciosService.postService(obj).subscribe({
-      next: () => location.reload(),
+      next: () => {
+        this.getServicios();
+        this.resetFormularioServicios();
+
+        this.mostrarExito("El servicio se ha creado correctamente.");
+      },
       error: err => console.error(err)
     })
   }
@@ -193,7 +245,13 @@ export class ServiciosProyectosComponent implements OnInit {
     }
 
     this.serviciosService.editServices(this.idServicio, obj).subscribe({
-      next: () => location.reload(),
+      next: () => {
+        this.getServicios();
+        const btn = document.getElementById('btnCerrarEditarS');
+        if (btn) btn.click();
+
+        this.mostrarExito("Los cambios del servicio fueron guardados.");
+      },
       error: err => console.error(err)
     })
   }
@@ -202,11 +260,15 @@ export class ServiciosProyectosComponent implements OnInit {
     this.idDeleteService = id;
   }
 
-  // poner msj
   deleteService() {
-    console.log(this.idDeleteService)
     this.serviciosService.deleteServices(this.idDeleteService).subscribe({
-      next: () => location.reload(),
+      next: () => {
+        this.getServicios();
+        const btn = document.getElementById('btnCerrarEliminarS');
+        if (btn) btn.click();
+
+        this.mostrarExito("El servicio fue eliminado exitosamente.");
+      },
       error: err => console.error(err)
     })
   }
