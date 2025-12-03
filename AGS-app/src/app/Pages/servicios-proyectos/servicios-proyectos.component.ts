@@ -10,14 +10,21 @@ import { ServiciosEmpresaService } from '../../Services/servicios-empresa.servic
 })
 export class ServiciosProyectosComponent implements OnInit {
 
-  // CAMBIAR DESPUES
   showProyects = false;
   showServices = true;
 
   proyectos: any;
+  textoMensaje: string = "";
+
   nombre: any;
   descripcion: any;
+  fechaInicio: any;
+  estado: any;
+  horas: any;
   fileProyecto!: File;
+  nombreArchivo: string = 'Ningún archivo seleccionado';
+  imagenPrevia: string | ArrayBuffer | null = null;
+  mensajeExito: boolean = false;
 
   selectedProject: any;
   id: any
@@ -27,7 +34,10 @@ export class ServiciosProyectosComponent implements OnInit {
   horasEdit: any;
   estadoEdit: any;
   fechaInicioEdit: any;
-  fechaFinEdit: any;
+  fechaFinEdit: any; //LA TENGO Q SACAR
+  fileProyectoEdit: File | null = null;
+  imagenPreviaEdit: any = null;
+  nombreArchivoEdit: string = 'Imagen actual del proyecto';
 
   idDelete: any;
   fechaActual: string = "";
@@ -35,14 +45,13 @@ export class ServiciosProyectosComponent implements OnInit {
   servicios: any;
   nombreServicio: any;
   descServicio: any;
-  fileServicio!: File;
 
   selectedService: any;
   idServicio: any;
   nombreServicioEdit: any;
   descripcionServicioEdit: any;
 
-  idDeleteService:any;
+  idDeleteService: any;
 
 
   constructor(private proyectosService: ProyectosService, private serviciosService: ServiciosEmpresaService) { }
@@ -60,6 +69,15 @@ export class ServiciosProyectosComponent implements OnInit {
     this.showServices = tipo === 'servicios';
   }
 
+  mostrarExito(mensaje: string) {
+    this.textoMensaje = mensaje;
+    this.mensajeExito = true;
+
+    setTimeout(() => {
+      this.mensajeExito = false;
+    }, 3000);
+  }
+
   // PROYECTOS
   getProyectos() {
     this.proyectosService.getProject().subscribe(x => {
@@ -71,21 +89,58 @@ export class ServiciosProyectosComponent implements OnInit {
     const formData = new FormData()
     formData.append("nombre", this.nombre)
     formData.append("descripcion", this.descripcion)
+    formData.append("fecha_inicio", this.fechaInicio)
+    formData.append("estado", this.estado)
+    formData.append("horas", this.horas)
     formData.append("imagenFile", this.fileProyecto)
 
     this.proyectosService.postProject(formData).subscribe({
-      next: res => console.log("creadooo ", res),
+      next: () => {
+        this.getProyectos();
+        this.resetFormulario();
+
+        this.mostrarExito("El proyecto se ha creado correctamente.");
+      },
       error: err => console.error(err)
     })
   }
 
-  onFileSelected(event: any, tipo: 'proyecto' | 'servicio') {
-    const archivo = event.target.files[0];
+  resetFormulario() {
+    this.nombre = '';
+    this.descripcion = '';
+    this.fechaInicio = '';
+    this.estado = undefined;
+    this.horas = '';
+    this.fileProyecto = null;
+    this.imagenPrevia = null;
+    this.nombreArchivo = 'Ningún archivo seleccionado';
+  }
 
-    if (tipo === 'proyecto') {
+  onFileSelected(event: any) {
+    const archivo = event.target.files[0];
+    if (archivo) {
       this.fileProyecto = archivo;
-    } else if (tipo === 'servicio') {
-      this.fileServicio = archivo;
+      this.nombreArchivo = archivo.name;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagenPrevia = reader.result;
+      };
+      reader.readAsDataURL(archivo);
+    }
+  }
+
+  onFileSelectedEdit(event: any) {
+    const archivo = event.target.files[0];
+    if (archivo) {
+      this.fileProyectoEdit = archivo;
+      this.nombreArchivoEdit = archivo.name;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagenPreviaEdit = reader.result;
+      };
+      reader.readAsDataURL(archivo);
     }
   }
 
@@ -97,10 +152,10 @@ export class ServiciosProyectosComponent implements OnInit {
     this.horasEdit = project.horas
     this.estadoEdit = project.estado
     this.fechaInicioEdit = project.fecha_inicio
-    this.fechaFinEdit = project.fecha_fin
-    this.fileEdit = null
-    // console.log(this.fechaInicioEdit )
-    // console.log(this.fechaFinEdit )    
+    this.fechaFinEdit = project.fecha_fin //TENGO Q SACAR
+    this.imagenPreviaEdit = project.url;
+    this.fileProyectoEdit = null;
+    this.nombreArchivoEdit = "Imagen actual del proyecto";;
   }
 
   editarProyecto() {
@@ -119,7 +174,13 @@ export class ServiciosProyectosComponent implements OnInit {
     }
 
     this.proyectosService.editProject(this.id, formData).subscribe({
-      next: () => location.reload(),
+      next: () => {
+        this.getProyectos();
+        const btn = document.getElementById('btnCerrarEditarP');
+        if (btn) btn.click();
+
+        this.mostrarExito("Los cambios del proyecto fueron guardados.");
+      },
       error: err => console.error(err)
     })
   }
@@ -128,28 +189,44 @@ export class ServiciosProyectosComponent implements OnInit {
     this.idDelete = id;
   }
 
-  // poner msj
   deleteProject() {
-    console.log(this.idDelete)
     this.proyectosService.deleteProject(this.idDelete).subscribe({
-      next: () => location.reload(),
+      next: () => {
+        this.getProyectos();
+        const btn = document.getElementById('btnCerrarFinalizarP');
+        if (btn) btn.click();
+
+        this.mostrarExito("La fecha de finalizacion fue actualizada correctamente.");
+      },
       error: err => console.error(err)
     })
   }
 
+  // SERVICIOS
   getServicios() {
     this.serviciosService.getServices().subscribe(x => {
       this.servicios = x
     })
   }
 
+  resetFormularioServicios() {
+    this.nombreServicio = '';
+    this.descServicio = '';
+  }
+
   crearServicio() {
-    const formData = new FormData()
-    formData.append("nombre", this.nombreServicio)
-    formData.append("descripcion", this.descServicio)
-    // console.log(servicio)
-    this.serviciosService.postService(formData).subscribe({
-      next: () => location.reload(),
+    let obj = {
+      "nombre": this.nombreServicio,
+      "descripcion": this.descServicio
+    }
+
+    this.serviciosService.postService(obj).subscribe({
+      next: () => {
+        this.getServicios();
+        this.resetFormularioServicios();
+
+        this.mostrarExito("El servicio se ha creado correctamente.");
+      },
       error: err => console.error(err)
     })
   }
@@ -162,18 +239,19 @@ export class ServiciosProyectosComponent implements OnInit {
   }
 
   editarServicio() {
-    const formData = new FormData()
-
-    formData.append("nombre", this.nombreServicioEdit)
-    formData.append("descripcion", this.descripcionServicioEdit)
-
-    if (this.fileEdit) {
-      formData.append("imagenFile", this.fileEdit
-      )
+    let obj = {
+      "nombre": this.nombreServicioEdit,
+      "descripcion": this.descripcionServicioEdit
     }
 
-    this.serviciosService.editServices(this.idServicio, formData).subscribe({
-      next: () => location.reload(),
+    this.serviciosService.editServices(this.idServicio, obj).subscribe({
+      next: () => {
+        this.getServicios();
+        const btn = document.getElementById('btnCerrarEditarS');
+        if (btn) btn.click();
+
+        this.mostrarExito("Los cambios del servicio fueron guardados.");
+      },
       error: err => console.error(err)
     })
   }
@@ -182,11 +260,15 @@ export class ServiciosProyectosComponent implements OnInit {
     this.idDeleteService = id;
   }
 
-  // poner msj
   deleteService() {
-    console.log(this.idDeleteService)
     this.serviciosService.deleteServices(this.idDeleteService).subscribe({
-      next: () => location.reload(),
+      next: () => {
+        this.getServicios();
+        const btn = document.getElementById('btnCerrarEliminarS');
+        if (btn) btn.click();
+
+        this.mostrarExito("El servicio fue eliminado exitosamente.");
+      },
       error: err => console.error(err)
     })
   }
