@@ -1,14 +1,20 @@
+<!-- CARTEL REQUIERE CAMBIO CONTRASEÑA -->
 <div *ngIf="change_pass" class="alerta-pass mt-3 mb-4 text-center">
     <h2>¡Requiere cambio de contraseña!</h2>
     <p>Es tu primer inicio de sesión. Por seguridad, te recomendamos cambiar la contraseña.</p>
 </div>
+
 <!-- Sección de perfil -->
-<section class="perfil-container container-fluid py-4 border-bottom">
+<section class="perfil-container container-fluid py-3 border-bottom">
     <div class="row align-items-center">
         <!-- Título -->
         <div class="col-md-6">
             <h1 class="fw-bold text-dark mb-1">Mi perfil</h1>
-            <p class="text-muted mb-0">Gestioná tu información personal y credenciales de acceso</p>
+            <p class="text-muted mb-0">
+                <i class="bi bi-hourglass-split fs-3 " style="color: #4858e8;"></i> Horas este mes:
+                <span class="fs-4 fw-bold" style="color: #4858e8;">{{ horasMesActual }}</span>
+            </p>
+
         </div>
 
         <!-- Info del usuario -->
@@ -27,38 +33,49 @@
     </div>
 </section>
 
-<div class="row mt-4 contenido-principal">
+
+<!-- CALENDARIO Y PROYECTOS -->
+<div class="row mt-5 align-items-stretch contenedor-general">
 
     <!-- CALENDARIO -->
-    <div class="col-lg-7">
-        <div class="calendar-wrapper">
+    <div class="col-md-8 p-0 pe-md-2">
+        <div class="calendar-wrapper h-100">
             <full-calendar [events]="events" [options]="calendarOptions"></full-calendar>
         </div>
     </div>
 
     <!-- PROYECTOS -->
-    <div class="col-lg-5 proyectos-wrapper">
-        <h1 class="titulo-proyectos">Proyectos disponibles</h1>
+    <div class="col-md-4 p-0 ps-md-2 mt-3 mt-md-0">
+        <div class="proyectos-wrapper h-100">
 
-        <div class="card proyecto-card" *ngFor="let p of proyectos">
-            <div class="card-header titulo-proyecto"> {{p.nombre}} </div>
-
-            <div class="card-body">
-                <p class="desc-proyecto"> {{p.descripcion}} </p>
-                <p class="horas-proyecto">Horas: {{p.horas}}</p>
-                <span class="estado-proyecto" [ngClass]="{
-                'finalizado': p.estado === 'Finalizado',
-                'pendiente': p.estado === 'Pendiente',
-                'en-progreso': p.estado === 'En progreso'
-                }">
-                    {{ p.estado }}
-                </span>
+            <div class="header-proyectos">
+                <h1 class="titulo-proyectos">Proyectos disponibles</h1>
+                <span class="badge-contador">{{ cantidadActivos }}</span>
             </div>
-        </div>       
 
+            <div class="scroll-container">
+                <div class="card proyecto-card" *ngFor="let p of proyectos">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span class="fw-bold text-truncate">{{p.nombre}}</span>
+                        <span class="estado-proyecto" [ngClass]="{
+                            'en-progreso': p.estado === 'En progreso',
+                            'pendiente': p.estado === 'Pendiente'
+                        }">{{ p.estado }}</span>
+                    </div>
+
+                    <div class="card-body">
+                        <p class="desc-proyecto text-muted">{{p.descripcion}}</p>
+                        <div class="d-flex align-items-center text-small">
+                            <i class="bi bi-clock me-2"></i> <strong>{{p.horas}} hs</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-</div>
 
+</div>
 
 <!-- MODAL CALENDARIO -->
 <div *ngIf="openOptions" class="custom-modal-overlay">
@@ -67,11 +84,9 @@
 
         <div class="mb-3">
             <label class="form-label">Seleccionar proyecto</label>
-            <select class="form-select" [(ngModel)]="proyectoCalendar" name="proyecto" >
+            <select class="form-select" [(ngModel)]="proyectoCalendar" name="proyecto">
                 <option value="null" disabled selected>Elegí un proyecto</option>
                 <option *ngFor="let p of proyectos" [ngValue]="p">{{p.nombre}}</option>
-                <!-- <option value="Proyecto 2">Proyecto 2</option>
-                <option value="Proyecto 3">Proyecto 3</option> -->
             </select>
         </div>
 
@@ -89,37 +104,52 @@
 
 <!-- MODAL CAMBIO CONTRASEÑA -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content border-0 shadow">
-            <div class="modal-header border-0">
-                <h5 class="modal-title fw-bold" style="color: #4858e8;">Cambiar contraseña</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content custom-modal-style border-0 shadow-lg">
+
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold">Cambiar contraseña</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+
+            <div class="modal-body pt-4">
                 <form>
-                    <div class="mb-3">
-                        <label class="form-label">Correo</label>
+                    <div class="mb-4">
+                        <label class="form-label">Correo asociado</label>
                         <input type="text" class="form-control" [value]="mail" disabled>
                     </div>
-                    <div class="mb-3">
+
+                    <div class="mb-4">
                         <label class="form-label">Nueva contraseña</label>
-                        <input type="password" class="form-control" [(ngModel)]="pass" name="pass">
+                        <input type="password" class="form-control" [(ngModel)]="pass" name="pass"
+                            placeholder="Mínimo 8 caracteres">
                     </div>
-                    <div class="mb-3">
+
+                    <div class="mb-2">
                         <label class="form-label">Repetir contraseña</label>
-                        <input type="password" class="form-control" [(ngModel)]="pass2" name="pass2">
+                        <input type="password" class="form-control" [(ngModel)]="pass2" name="pass2"
+                            placeholder="Repite la contraseña">
                     </div>
                 </form>
             </div>
-            <div class="modal-footer border-0">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn" style="background-color: #4858e8;color:white;"
-                    (click)="changePass()">Guardar</button>
-                <p *ngIf="passMsg" [ngClass]="msg.includes('exitosamente') ? 'success' : 'error'">
-                    {{ msg }}
-                </p>
 
+            <div class="modal-footer border-0 pt-0">
+                <button id="btnCerrarC" type="button" class="btn btn-light px-3"
+                    data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary px-4" (click)="changePass()">Guardar cambios</button>
+                <p *ngIf="passMsg" class="error"> {{ msg }} </p>
             </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- MENSAJE EXITO -->
+<div class="cartel-flotante position-fixed start-50 translate-middle-x p-3" [class.mostrar]="mensajeExito">
+    <div class="alert alert-success d-flex align-items-center shadow-lg border-0 rounded-pill px-4 py-3" role="alert">
+        <i class="bi bi-check-circle-fill fs-4 me-2"></i>
+        <div>
+            <span class="fw-bold">¡Excelente!</span> {{ textoMensaje }}
         </div>
     </div>
 </div>
