@@ -7,16 +7,16 @@
 </div>
 
 <!-- NAVBAR lista/crear -->
-<nav class="navbar-custom py-3">
+<nav class="navbar-custom py-3 mb-4">
   <ul class="nav justify-content-center nav-switch">
     <li class="nav-item">
-      <a href="#" class="nav-link left" [class.active]="showList" (click)="show('lista', $event)">
-        <i class="bi bi-gear"></i> Lista de Usuarios
+      <a href="#" class="nav-link" [class.active]="showList" (click)="show('lista', $event)">
+        <i class="bi bi-list-ul me-2"></i> Lista de Usuarios
       </a>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link right" [class.active]="showCreate" (click)="show('crear', $event)">
-        <i class="bi bi-folder2-open"></i> Crear Usuario
+      <a href="#" class="nav-link" [class.active]="showCreate" (click)="show('crear', $event)">
+        <i class="bi bi-person-plus me-2"></i> Crear Usuario
       </a>
     </li>
   </ul>
@@ -24,42 +24,86 @@
 
 <!-- Tabla de usuarios -->
 <div class="usuarios-wrapper" *ngIf="showList">
-  <div class="usuarios-card shadow-lg">
-    <div class="titulo-container">
-      <h1 class="titulo">Registro de usuarios</h1>
+
+  <div class="usuarios-card">
+
+    <div class="text-center mb-4">
+      <h3 class="fw-bold mb-2" style="color: #4858e8; font-size: 2rem;">Usuarios Registrados</h3>
+      <p class="text-dark fw-medium mb-0">Listado general del sistema</p>
     </div>
 
-    <div class="tabla-container">
-      <table class="table table-hover align-middle">
-        <thead class="table-light">
+    <div class="table-responsive">
+      <table class="table align-middle custom-hover-table">
+        <thead>
           <tr>
-            <th></th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Teléfono</th>
-            <th>Mail</th>
-            <th class="text-center">Acción</th>
+            <th class="ps-4" style="width: 35%;">USUARIO</th>
+            <th style="width: 30%;">CONTACTO</th>
+            <th style="width: 15%;">ROL</th>
+            <th class="text-end pe-4" style="width: 20%;">ACCIONES</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let user of listaUsuarios">
-            <td><i class="bi bi-person-circle me-2 text-primary small-icon"></i></td>
+
+            <td class="ps-4">
+              <div class="d-flex align-items-center">
+
+                <div class="avatar-outline me-3">
+                  <span *ngIf="user.nombre && user.apellido">
+                    {{ user.nombre?.charAt(0) }}{{ user.apellido?.charAt(0) }}
+                  </span>
+                  <span *ngIf="!user.nombre || !user.apellido">
+                    <i class="bi bi-person"></i>
+                  </span>
+                </div>
+
+                <div class="d-flex flex-column">
+                  <span class="fw-bold text-dark fs-5">{{ user.nombre }} {{ user.apellido }}</span>
+                  <span class="text-secondary small fw-medium">ID: #{{ user.id }}</span>
+                </div>
+              </div>
+            </td>
+
             <td>
-              {{ user.nombre }}
+              <div class="d-flex flex-column gap-1">
+                <div class="contact-item">
+                  <i class="bi bi-envelope me-2 text-primary"></i>
+                  <span>{{ user.mail }}</span>
+                </div>
+                <div class="contact-item">
+                  <i class="bi bi-telephone me-2 text-muted"></i>
+                  <span>{{ user.telefono }}</span>
+                </div>
+              </div>
             </td>
-            <td>{{ user.apellido }}</td>
-            <td>{{ user.telefono }}</td>
-            <td>{{ user.mail }}</td>
-            <td class="text-center">
-              <button class="btn btn-link text-primary p-0 me-3" data-bs-toggle="modal" data-bs-target="#modalEditar"
-                (click)="EditValues(user)" title="Editar">
-                <i class="bi bi-pencil-square fs-5"></i>
-              </button>
-              <button class="btn btn-link text-danger p-0" data-bs-toggle="modal" data-bs-target="#modalEliminar"
-                (click)="getId(user.id)" title="Eliminar">
-                <i class="bi bi-trash3 fs-5"></i>
-              </button>
+
+            <td>
+              <span class="rol-minimalista">
+                Admin
+              </span>
             </td>
+
+            <td class="text-end pe-4">
+              <div class="d-flex justify-content-end gap-2">
+
+                <button class="btn-action-outline btn-view" (click)="getUsersById(user.id)" data-bs-toggle="modal"
+                  data-bs-target="#modalDetalles" title="Ver ficha">
+                  <i class="bi bi-eye-fill"></i>
+                </button>
+
+                <button class="btn-action-outline btn-edit" (click)="EditValues(user)" data-bs-toggle="modal"
+                  data-bs-target="#modalEditar" title="Editar">
+                  <i class="bi bi-pencil-fill"></i>
+                </button>
+
+                <button class="btn-action-outline btn-delete" (click)="getId(user.id)" data-bs-toggle="modal"
+                  data-bs-target="#modalEliminar" title="Eliminar">
+                  <i class="bi bi-trash-fill"></i>
+                </button>
+
+              </div>
+            </td>
+
           </tr>
         </tbody>
       </table>
@@ -67,110 +111,218 @@
   </div>
 </div>
 
-<!-- Modal EDITAR -->
-<div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content border-0 shadow-lg">
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title" id="modalEditarLabel">Editar usuario</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+<!-- Modal DETALLES -->
+<div class="modal fade" id="modalDetalles" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+
+      <div class="modal-header border-bottom-0 pb-0">
+        <h5 class="modal-title fw-bold text-primary ms-2">Ficha de Usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-      <div class="modal-body">
-        <form class="form-editar">
-          <div class="mb-3">
-            <label class="form-label">Nombre</label>
-            <input type="text" class="form-control" [(ngModel)]="nombre" name="nombre" />
+
+      <div class="modal-body px-4 pb-4 pt-2">
+
+        <div *ngIf="!detallesUsuario" class="text-center py-5">
+          <div class="spinner-border text-primary" role="status"></div>
+        </div>
+
+        <div *ngIf="detallesUsuario">
+          <div class="d-flex align-items-center mb-4 p-3 bg-light rounded-3 mt-3">
+            <div class="bg-white p-3 rounded-circle shadow-sm me-3 text-primary">
+              <i class="bi bi-person-circle fs-1"></i>
+            </div>
+            <div>
+              <h4 class="mb-0 fw-bold text-dark">{{ detallesUsuario.nombre }} {{ detallesUsuario.apellido }}</h4>
+              <span class="badge rounded-pill"
+                [ngClass]="detallesUsuario.estaEliminado ? 'bg-danger-subtle text-danger' : 'bg-success-subtle text-success'">
+                {{ detallesUsuario.estaEliminado ? 'Eliminado' : 'Activo' }}
+              </span>
+            </div>
           </div>
-          <div class="mb-3">
-            <label class="form-label">Apellido</label>
-            <input type="text" class="form-control" [(ngModel)]="apellido" name="apellido" />
+
+          <div class="row g-3">
+            <div class="col-6">
+              <label class="text-muted small fw-bold text-uppercase">Fecha Alta</label>
+              <p class="mb-0 fw-medium text-dark">{{ detallesUsuario.fechaAlta || '-' }}</p>
+            </div>
+            <div class="col-6">
+              <label class="text-muted small fw-bold text-uppercase">Creado Por</label>
+              <p class="mb-0 fw-medium text-dark">Admin ID: {{ detallesUsuario.creadoPor || '-' }}</p>
+            </div>
+
+            <div class="col-12" *ngIf="detallesUsuario.estaEliminado">
+              <hr class="text-muted opacity-25">
+            </div>
+
+            <div class="col-6" *ngIf="detallesUsuario.estaEliminado">
+              <label class="text-muted small fw-bold text-uppercase">Fecha Baja</label>
+              <p class="mb-0 fw-medium text-danger">{{ detallesUsuario.fechaBaja }}</p>
+            </div>
+            <div class="col-6" *ngIf="detallesUsuario.estaEliminado">
+              <label class="text-muted small fw-bold text-uppercase">Eliminado Por</label>
+              <p class="mb-0 fw-medium text-dark">{{ detallesUsuario.eliminadoPor }}</p>
+            </div>
           </div>
-          <div class="mb-3">
-            <label class="form-label">Mail</label>
-            <input type="email" class="form-control" [(ngModel)]="mail" name="mail" />
+        </div>
+      </div>
+
+      <div class="modal-footer border-top-0 pt-0 pb-4 px-4">
+        <button type="button" class="btn btn-light rounded-pill px-4 w-100" data-bs-dismiss="modal">Cerrar
+          Ficha</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal EDITAR -->
+<div class="modal fade" id="modalEditar" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg rounded-4">
+
+      <div class="modal-header border-bottom-0 pb-0">
+        <h5 class="modal-title fw-bold text-primary ms-2">Editar Datos</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body px-4 pt-4">
+        <form>
+
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label text-muted small text-uppercase fw-bold">Nombre</label>
+              <input type="text" class="form-control bg-light border-0" [(ngModel)]="nombreEdit" name="nombreEdit" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label text-muted small text-uppercase fw-bold">Apellido</label>
+              <input type="text" class="form-control bg-light border-0" [(ngModel)]="apellidoEdit"
+                name="apellidoEdit" />
+            </div>
           </div>
+
           <div class="mb-3">
-            <label class="form-label">Teléfono</label>
-            <input type="text" class="form-control" [(ngModel)]="telefono" name="telefono" />
+            <label class="form-label text-muted small text-uppercase fw-bold">Email</label>
+            <input type="email" class="form-control bg-light border-0" [(ngModel)]="mailEdit" name="mailEdit" />
           </div>
+
+          <div class="mb-3">
+            <label class="form-label text-muted small text-uppercase fw-bold">Teléfono</label>
+            <input type="text" class="form-control bg-light border-0" [(ngModel)]="telefonoEdit" name="telefonoEdit" />
+          </div>
+
         </form>
       </div>
-      <div class="modal-footer">
-        <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button class="btn btn-primary" (click)="editarUser()">Guardar cambios</button>
+
+      <div class="modal-footer border-top-0 pt-0 pb-4 px-4">
+        <button id="btnCerrarEditar" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cancelar</button>
+        <button class="btn btn-primary rounded-pill px-4 shadow-sm" (click)="editarUser()">
+          Guardar Cambios
+        </button>
       </div>
+
     </div>
   </div>
 </div>
 
 <!-- Modal ELIMINAR -->
-<div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
+<div class="modal fade" id="modalEliminar" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content border-0 shadow-lg rounded-3">
-      <div class="modal-header bg-danger text-white">
-        <h5 class="modal-title" id="modalEliminarLabel">Eliminar usuario</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+    <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden px-3">
+
+      <div class="modal-header border-0 pb-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
-      <div class="modal-body text-center">
-        <p class="mb-4 fs-5">¿Está seguro de eliminar este usuario?</p>
-        <div class="d-flex justify-content-center gap-3">
-          <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
+
+      <div class="modal-body text-center pt-0">
+        <div class="mx-auto mb-4 d-flex align-items-center justify-content-center bg-danger-subtle rounded-circle"
+          style="width: 80px; height: 80px;">
+          <i class="bi bi-person-x text-danger" style="font-size: 2.5rem;"></i>
+        </div>
+
+        <h4 class="fw-bold mb-3 text-dark">¿Eliminar Usuario?</h4>
+        <p class="text-muted mb-4 px-2">
+          Esta acción quitará el acceso al sistema para este usuario. ¿Deseas continuar?
+        </p>
+
+        <div class="d-flex justify-content-center gap-3 mt-3 mb-3">
+          <button id="btnCerrarEliminar" type="button"
+            class="btn btn-light text-muted px-4 fw-medium rounded-pill border-0" data-bs-dismiss="modal">
             Cancelar
           </button>
-          <button type="button" class="btn btn-danger px-4" (click)="deleteUser()">Eliminar</button>
+          <button type="button" class="btn btn-danger px-4 fw-bold rounded-pill shadow-sm" (click)="deleteUser()">
+            Eliminar
+          </button>
         </div>
+
       </div>
     </div>
   </div>
 </div>
 
 <!-- Formulario CREAR -->
-<div *ngIf="showCreate" class="form-wrapper d-flex justify-content-center align-items-center py-3">
-  <div class="card shadow-lg border-0 p-4 form-card">
-    <div class="text-center mb-4">
-      <i class="bi bi-person-plus-fill text-primary fs-1"></i>
-      <h2 class="fw-bold text-primary mt-2">Agregar Nuevo Usuario</h2>
-      <p class="text-muted">Completa la información del nuevo integrante de la compañía.</p>
+<section class="py-5 bg-light container shadow-lg rounded-4" *ngIf="showCreate" style="max-width: 800px;">
+
+  <div class="text-center mb-4">
+    <h2 class="fw-bold text-primary">Agregar Nuevo Usuario</h2>
+    <p class="text-muted">Completa los datos para dar de alta un acceso.</p>
+  </div>
+
+  <form (ngSubmit)="createUser()" #formUsuario="ngForm" class="mx-auto" style="max-width: 700px;">
+
+    <div class="row g-3 mb-3">
+      <div class="col-md-6">
+        <label class="form-label">Nombre *</label>
+        <input type="text" class="form-control" placeholder="Ej: Juan" name="nombre" [(ngModel)]="nombre" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Apellido *</label>
+        <input type="text" class="form-control" placeholder="Ej: Pérez" name="apellido" [(ngModel)]="apellido" required>
+      </div>
     </div>
 
-    <form class="mx-auto" style="max-width: 500px;">
-      <div class="mb-3">
-        <label class="form-label fw-semibold"><i class="bi bi-person-fill me-2 text-primary"></i>Nombre</label>
-        <input type="text" class="form-control shadow-sm" [(ngModel)]="nombre" name="nombre">
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label fw-semibold"><i class="bi bi-person-vcard-fill me-2 text-primary"></i>Apellido</label>
-        <input type="text" class="form-control shadow-sm" [(ngModel)]="apellido" name="apellido">
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label fw-semibold"><i class="bi bi-envelope-fill me-2 text-primary"></i>Mail</label>
-        <input type="email" class="form-control shadow-sm" [(ngModel)]="mail" name="mail">
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label fw-semibold"><i class="bi bi-telephone-fill me-2 text-primary"></i>Teléfono</label>
-        <input type="text" class="form-control shadow-sm" [(ngModel)]="telefono" name="telefono">
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label fw-semibold"><i class="bi bi-lock-fill me-2 text-primary"></i>Contraseña</label>
-        <input type="password" class="form-control shadow-sm" [(ngModel)]="contrasena" name="contrasena">
-        <small class="text-muted fst-italic ms-1">Debe tener al menos 8 caracteres</small>
-      </div>
-
-      <div class="text-center mt-4">
-        <button type="submit" class="btn btn-primary btn-lg px-5 shadow-sm" (click)="createUser()">
-          <i class="bi bi-check-circle me-2"></i>Confirmar usuario
-        </button>
-      </div>
-    </form>
-    <div *ngIf="mensajeExito" class="alert alert-success text-center mt-4 shadow-sm">
-      <i class="bi bi-check-circle-fill me-2"></i> Usuario creado correctamente
+    <div class="mb-3">
+      <label class="form-label">Email Corporativo *</label>
+      <input type="email" class="form-control" placeholder="juan.perez@empresa.com" name="mail" [(ngModel)]="mail"
+        required email>
     </div>
-    <div *ngIf="mensajeError" class="alert alert-danger text-center mt-4 shadow-sm">
-      <i class="bi bi-x-circle-fill me-2"></i> Ocurrió un error al crear el usuario
+
+    <div class="row g-3 mb-4">
+      <div class="col-md-6">
+        <label class="form-label">Teléfono *</label>
+        <input type="text" class="form-control" placeholder="Ej: 11 1234 5678" name="telefono" [(ngModel)]="telefono"
+          required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Contraseña *</label>
+        <input type="password" class="form-control" placeholder="******" name="contrasena" [(ngModel)]="contrasena"
+          required minlength="6">
+      </div>
+    </div>
+
+    <div class="text-center mt-4 border-top pt-3">
+      <button type="submit" class="btn btn-primary btn-lg px-5" [disabled]="formUsuario.invalid">
+        Confirmar usuario
+      </button>
+    </div>
+
+  </form>
+
+  <div *ngIf="mensajeExito" class="alert alert-success text-center mt-4 mx-auto" style="max-width: 600px;">
+    <i class="bi bi-check-circle-fill me-2"></i> Usuario creado correctamente
+  </div>
+  <div *ngIf="mensajeError" class="alert alert-danger text-center mt-4 mx-auto" style="max-width: 600px;">
+    <i class="bi bi-exclamation-circle-fill me-2"></i> Ocurrió un error al crear el usuario
+  </div>
+
+</section>
+
+<!-- MENSAJE EXITO -->
+<div class="cartel-flotante position-fixed start-50 translate-middle-x p-3" [class.mostrar]="mensajeExito">
+  <div class="alert alert-success d-flex align-items-center shadow-lg border-0 rounded-pill px-4 py-3" role="alert">
+    <i class="bi bi-check-circle-fill fs-4 me-2"></i>
+    <div>
+      <span class="fw-bold">¡Excelente!</span> {{ textoMensaje }}
     </div>
   </div>
 </div>

@@ -27,7 +27,7 @@ export class UserService {
   }
 
   EditUser(id: any, obj: any) {
-    return this.httpClient.put(`${this.url}/${id}`, obj)
+    return this.httpClient.patch(`${this.url}/${id}`, obj)
   }
 
   DeleteUser(id: any) {
