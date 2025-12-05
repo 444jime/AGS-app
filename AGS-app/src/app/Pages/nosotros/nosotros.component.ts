@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ContactoService } from '../../Services/contacto.service';
 
 @Component({
   selector: 'app-nosotros',
@@ -7,5 +8,58 @@ import { Component } from '@angular/core';
   styleUrl: './nosotros.component.css'
 })
 export class NosotrosComponent {
+
+  // FORMULARIO CONTACTO
+  nombreCompleto: any;
+  email: any;
+  telefono: any;
+  tipoProyecto: any;
+  mensaje: any;
+
+  // CARTELITO
+  mensajeExito: boolean = false;
+  textoMensaje: string = "";
+
+
+  constructor(private contactoService: ContactoService) { }
+
+  // FORMULARIO
+  resetFormulario() {
+    this.nombreCompleto = '';
+    this.email = '';
+    this.telefono = '';
+    this.tipoProyecto = '';
+    this.mensaje = '';
+  }
+
+  // MENSAJE EXITO
+  mostrarExito(mensaje: string) {
+    this.textoMensaje = mensaje;
+    this.mensajeExito = true;
+
+    setTimeout(() => {
+      this.mensajeExito = false;
+    }, 3000);
+  }
+
+  // ENVIAR FORMULARIO CONTACTO
+  enviarForm() {
+    let obj = {
+      nombreCompleto: this.nombreCompleto,
+      email: this.email,
+      telefono: this.telefono,
+      tipoProyecto: this.tipoProyecto,
+      mensaje: this.mensaje
+    }
+
+    this.contactoService.PostCorreo(obj).subscribe({
+      next: () => {
+        this.resetFormulario();
+
+        this.mostrarExito("El formulario fue enviado al correo de la empresa.");
+      },
+      error: err => console.error(err)
+    })
+  }
 
 }
