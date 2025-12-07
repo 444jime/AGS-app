@@ -4,6 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import esLocale from '@fullcalendar/core/locales/es';
 import { ProyectosService } from '../../Services/proyectos.service';
+import { EventosService } from '../../Services/eventos.service';
 
 @Component({
   selector: 'app-perfil',
@@ -15,63 +16,130 @@ import { ProyectosService } from '../../Services/proyectos.service';
 export class PerfilComponent implements OnInit {
   change_pass: boolean = localStorage.getItem("change_pass") === "true"
 
+  // INFO USER
   userId = localStorage.getItem("userId")
   user: any
   nombre: any
   apellido: any
   mail: any
 
-  contrasena: any;
-  contrasena2: any;
-
+  // CAMBIAR CONTRASEÑA
   pass: any;
   pass2: any;
   msg: any;
   passMsg = false;
-  idLoggeado: any
 
+  // EVENTO CALENDARIO
   openOptions = false;
   selectedDate: any;
-
   proyectoCalendar: any;
   horas: any;
-  horasYAECHAS: any;
-
-  proyectos: any
-
+  events: any[] = [];
   calendarOptions = {
     intinialView: 'dayGridMonth',
     plugins: [dayGridPlugin, interactionPlugin],
     editable: true,
     selectable: true,
     locale: esLocale,
-    // events: [
-    //   { title}
-    // ]
     dateClick: (info: any) => this.handleDateClick(info),
   }
 
-  events: any[] = [];
+  // TODO
+  proyectos: any;
+  cantidadActivos:any;
+  horasMesActual:any
+  textoMensaje: string = "";
+  mensajeExito: boolean = false;
 
-  constructor(private userService: UserService, private proyectoService: ProyectosService) { }
+
+  constructor(
+    private userService: UserService, 
+    private proyectoService: ProyectosService, 
+    private eventosService: EventosService) { }
 
   ngOnInit(): void {
-    // console.log(this.userId)
     this.getUser()
     this.getProyectos()
+    this.getEventos()
   }
 
+  // USUARIO
   getUser() {
     this.userService.GetUserById(this.userId).subscribe(x => {
       this.user = x
-      // console.log(x)
       this.nombre = this.user.nombre
       this.apellido = this.user.apellido
       this.mail = this.user.mail
-      // console.log(this.mail,this.nombre,this.apellido)      
     })
   }
 
+  // PROYECTOS SOLO ACTIVOS
+  getProyectos() {
+    this.proyectoService.getProject().subscribe((data:any[]) => {
+      
+      let filtrados = data.filter( p => 
+        p.estado === 'En progreso' || p.estado === 'Pendiente'
+      )
+
+      this.proyectos = filtrados.sort((a,b) => {
+        if (a.estado === 'En progreso' && b.estado !== 'En progreso') return -1;
+        if (a.estado !== 'En progreso' && b.estado === 'En progreso') return 1;
+        return 0;
+      })
+
+      this.cantidadActivos = this.proyectos.length;
+    })
+  }
+
+  // EVENTOS
+  getEventos(){
+    this.eventosService.GetEventos().subscribe({
+      next : (res:any []) => {
+
+        this.events = res.map(item => ({
+          title: `${item.nombre} - ${item.horas} hs`, 
+          date: item.fecha,
+          horas: Number(item.horas)
+        }))
+        this.calcularHorasMesActual()
+      },
+      error: err => console.error(err)
+    })
+  }
+
+  calcularHorasMesActual() {
+    const hoy = new Date();
+    const mesActual = hoy.getMonth()
+    const anioActual = hoy.getFullYear()
+
+    this.horasMesActual = this.events.reduce( (total, evento) => {
+      const fechaEvento = new Date(evento.date + 'T00:00:00')
+
+      if (fechaEvento.getMonth() === mesActual && fechaEvento.getFullYear() === anioActual) {
+        return total + (evento.horas || 0)
+      }
+      return total;
+    }, 0)
+
+  }
+
+  // MENSAJE EXITO
+    mostrarExito(mensaje: string) {
+    this.textoMensaje = mensaje;
+    this.mensajeExito = true;
+
+    setTimeout(() => {
+      this.mensajeExito = false;
+    }, 3000);
+  }
+
+  // FORMULARIO
+  resetFormulario() {
+    this.pass = '';
+    this.pass2 = '';
+  }
+
+  // CAMIAR CONTRASEÑA
   changePass() {
     if (!this.validPass(this.pass, this.pass2)) {
       this.passMsg = true;
@@ -82,17 +150,24 @@ export class PerfilComponent implements OnInit {
       "NewPassword": this.pass,
       "ConfirmNewPassword": this.pass2
     }
-    console.log(passwords)
-    this.userService.ChangePass(passwords, this.userId).subscribe(x => {
-      console.log(x)
-      this.msg = "Contraseña cambiada exitosamente!"
-      this.passMsg = true;
-      localStorage.setItem("change_pass", "false")
-      // window.location.reload();
+
+    // console.log(passwords)
+    this.userService.ChangePass(passwords, this.userId).subscribe({
+      next: () => {
+        this.getProyectos();
+        this.resetFormulario();
+
+        const btn = document.getElementById('btnCerrarC');
+        if (btn) btn.click();
+
+        this.mostrarExito("La contraseña fue cambiada exitosamente.");
+        localStorage.setItem("change_pass", "false")
+      },
+      error: err => console.error(err)
     })
   }
 
-  //cambiar contraseña
+  //VALIDAR contraseña
   validPass(pass: any, pass2: any) {
     if (!pass || !pass2) {
       this.msg = "Debes completar ambos campos de contraseña";
@@ -117,65 +192,58 @@ export class PerfilComponent implements OnInit {
     return true;
   }
 
-  // calendario
+  // INFO DEL CLICK CALENADRIO
   handleDateClick(info: any) {
     this.selectedDate = info.dateStr
     this.openOptions = true
-    // console.log
   }
 
+  // CALENDARIO
   getHoras(id: any) {
     return this.proyectoService.getProjectId(id);
   }
 
-
-  // calendario
+  // CALENDARIO
   createEvent() {
     let proyecto: any
     this.getHoras(this.proyectoCalendar.id).subscribe(x => {
       proyecto = x
-      console.log(proyecto.id)
       const horasActuales = proyecto.horas
       const nuevasHoras = Number(horasActuales) + Number(this.horas);
-      console.log("horas nuevas", nuevasHoras)
 
-      // SOLO ME FALTA HACER ESTE METODO Y HACER QUE PUEDA ACTUALIZAR SOLO LAS HORAS
-      //this.updateProject(proyecto.id, nuevasHoras);
-      const event = {
+      this.updateProject(proyecto.id, nuevasHoras);
+      const eventVisual = {
         title: `${this.proyectoCalendar.nombre} - ${this.horas} hs`,
         date: this.selectedDate
       };
-      console.log("evento: ", event)
 
-      this.events = [...this.events, event];
+      let eventoParaBD = {
+         nombre: this.proyectoCalendar.nombre,
+         horas: this.horas,
+         fecha: this.selectedDate
+      }      
+
+      this.eventosService.PostEvento(eventoParaBD).subscribe({
+        next : res=> console.log(res),
+        error : err => console.log(err)
+      })
+
+      this.events = [...this.events, eventVisual];
+      this.calcularHorasMesActual();
       this.openOptions = false;
+      this.getProyectos()
     })
 
   }
 
-  updateProject(id:any, nuevasHoras:any) {
-    let proj = {
-
-    } 
-
-    // this.proyectoService.editProject(id,proj)
-  }
-
-  // traer proyectos
-  getProyectos() {
-    this.proyectoService.getProject().subscribe(x => {
-      this.proyectos = x
-      // console.log(x)
+  // ACTUALIZAR HORAS PROYECTO
+  updateProject(id: any, nuevasHoras: any) {
+    this.proyectoService.editProjectByHours(id,nuevasHoras).subscribe({
+      next: res => console.log(res),
+      error: err => console.error(err)
     })
+
+    this.getProyectos()
   }
-
-
-  // updateProject(id: number, nuevasHoras: number) {
-  //   this.se.put(`http://tu-backend/api/proyectos/${id}`, { horas: nuevasHoras })
-  //     .subscribe({
-  //       next: () => console.log('Proyecto actualizado con éxito'),
-  //       error: (err) => console.error('Error al actualizar', err)
-  //     });
-  // }
 
 }
