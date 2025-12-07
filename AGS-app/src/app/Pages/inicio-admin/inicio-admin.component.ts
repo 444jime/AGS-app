@@ -8,30 +8,23 @@ import { Router } from '@angular/router';
   styleUrl: './inicio-admin.component.css'
 })
 export class InicioAdminComponent implements OnInit {
-  userId: any
+  userId: any;
 
-  constructor (private router: Router) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-      let user_state = localStorage.getItem("user_state")
-      if (user_state === "true"){
-        const idGuardado = localStorage.getItem("userId")
+    const user_state = localStorage.getItem("user_state");
 
-        if (idGuardado){
-          this.userId = idGuardado
-          // que cargue toda la pag
-        } else {
-          const esperarId = setInterval(() => {
-            const userId = localStorage.getItem("userId")
-            if (userId) {
-              clearInterval(esperarId)
-              this.userId = userId
-              // cargamos los datos del usuario
-            }
-          }, 100);
-        }
-      } else {
-        // this.router.navigate(['AGS/inicio'])
-      }
+    if (user_state !== "true") {
+      this.router.navigate(['AGS/inicio']);
+      return;
+    }
+
+    this.userId = localStorage.getItem("userId");
+
+    if (!this.userId) {
+       this.router.navigate(['AGS/inicio']);
+    }
   }
+
 }

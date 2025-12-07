@@ -1,37 +1,79 @@
 <!-- SOBRE NOSOTROS -->
-<!-- imagen de fondo -->
-<section class="text-center py-5 bg-light">
-  <h1 class="mb-3 fw-bold" style="color: #4858e8;">Sobre nosotros</h1>
-  <p class="mb-4">Somos una empresa constructora que arrancó hace poco, con nuevas ideas, comprometidos con la excelencia y la innovación en cada proyecto.</p>
-  <button class="btn btn-primary btn-lg" onclick="document.getElementById('formulario').scrollIntoView({ behavior: 'smooth' })">Contáctenos</button>
+<section class="hero-section d-flex align-items-center text-center text-white">
+  <div class="hero-overlay"></div>
+  <div class="container position-relative z-index-1">
+    <h1 class="display-3 fw-bold mb-4">Construyendo el futuro, <br> ladrillo a ladrillo.</h1>
+    <button class="btn btn-primary btn-lg rounded-pill px-5 py-3 fw-bold shadow-lg hover-scale"
+      onclick="document.getElementById('formulario').scrollIntoView({ behavior: 'smooth' })">
+      Contáctenos
+    </button>
+  </div>
 </section>
 
 <!-- NUESTRA HISTORIA -->
-<!-- imagen al costado -->
-<section class="py-5 container text-center">
-  <h2 class="mb-3 fw-bold" style="color: #4858e8;">Nuestra Historia</h2>
-  <p>Fundada por ..., nuestra constructora nació con la visión de transformar espacios y crear estructuras que perduren en el tiempo.</p>
-  <p>Usamos herramientas novedosas para crear cosas nuevas y originales.</p>
-  <p class="fw-bold">15+ proyectos completados</p>
-</section>
-
-<!-- MISION Y VISION -->
-<section class="py-5 container">
-  <h2 class="mb-4 text-center fw-bold" style="color: #4858e8;">Misión y Visión</h2>
-  <div class="row justify-content-center g-4">
-    <div class="col-md-5">
-      <div class="card shadow-sm text-center p-3 border-0">
-        <div class="card-body">
-          <h5 class="card-title text-primary">Misión</h5>
-          <p class="card-text">Construir espacios de calidad que superen las expectativas de nuestros clientes, utilizando tecnología de vanguardia y prácticas sostenibles.</p>
+<section class="py-5 py-lg-6">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 order-2 order-lg-1">
+        <h5 class=" fw-bold text-uppercase ls-1 mb-2">Nuestra Historia</h5>
+        <h2 class="fw-bold display-6 mb-4 titulos">Transformando visiones en estructuras reales</h2>
+        <p class="text-muted mb-4">
+          Fundada con la visión de transformar espacios, nuestra constructora nació para crear estructuras que perduren. 
+          No somos solo constructores; somos creadores de entornos.
+        </p>
+        <p class="text-muted mb-4">
+          Utilizamos herramientas novedosas y tecnología BIM para garantizar precisión y originalidad en cada obra.
+        </p>
+        
+        <div class="d-flex align-items-center p-3 bg-light rounded-3 border-start border-4 border-primary" style="max-width: 300px; color: #4858e8;">
+          <h2 class="mb-0 fw-bold me-3" style="color: #406AFF;">15+</h2>
+          <p class="mb-0 lh-sm fw-bold" style="color: #406AFF;">Proyectos completados<br><span class="text-muted fw-normal small">con éxito total</span></p>
+        </div>
+      </div>
+      
+      <div class="col-lg-6 order-1 order-lg-2">
+        <div class="position-relative">
+          <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1000&auto=format&fit=crop" 
+               class="img-fluid rounded-4 shadow-lg" alt="Historia">
         </div>
       </div>
     </div>
-    <div class="col-md-5">
-      <div class="card shadow-sm text-center p-3 border-0">
-        <div class="card-body">
-          <h5 class="card-title text-primary">Visión</h5>
-          <p class="card-text">Ser la empresa constructora líder en la región, reconocida por innovación, calidad y compromiso con el desarrollo sostenible.</p>
+  </div>
+</section>
+
+<!-- MISION Y VISION -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold display-6" style="color: #406AFF;">Nuestro Propósito</h2>
+      <p class="text-muted">La brújula que guía cada una de nuestras decisiones.</p>
+    </div>
+
+    <div class="row justify-content-center g-4">
+      <div class="col-md-5">
+        <div class="card h-100 border-0 shadow-sm card-hover p-4 text-center">
+          <div class="card-body">
+            <div class="icon-circle mx-auto mb-4">
+              <i class="bi bi-bricks fs-2 mision-icon"></i>
+            </div>
+            <h4 class="card-title fw-bold mb-3">Misión</h4>
+            <p class="card-text text-muted">
+              Construir espacios de calidad superior que superen las expectativas, utilizando tecnología de vanguardia y prácticas sostenibles.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="card h-100 border-0 shadow-sm card-hover p-4 text-center">
+          <div class="card-body">
+            <div class="icon-circle mx-auto mb-4">
+              <i class="bi bi-compass fs-2"></i>
+            </div>
+            <h4 class="card-title fw-bold mb-3">Visión</h4>
+            <p class="card-text text-muted">
+              Ser la constructora líder en la región, reconocida indiscutiblemente por nuestra innovación, calidad técnica y compromiso humano.
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -39,36 +81,47 @@
 </section>
 
 <!-- NUESTRO EQUIPO -->
-<section class="py-5 container">
-  <h2 class="mb-4 text-center fw-bold" style="color: #4858e8;">Nuestro Equipo</h2>
+<section class="py-5 py-lg-6 container">
+  <div class="text-center mb-5">
+    <h5 class="fw-bold text-uppercase ls-1">Expertos</h5>
+    <h2 class="titulos fw-bold display-6">Conoce al equipo</h2>
+  </div>
+
   <div class="row justify-content-center g-4">
     <div class="col-md-4">
-      <div class="card border-0 shadow-lg text-center">
-        <img src="..." class="rounded-circle mx-auto mt-3" style="width: 120px; height: 120px; object-fit: cover;" alt="Nombre 1">
+      <div class="card border-0 shadow-hover h-100 text-center py-4">
+        <div class="mx-auto mb-3 p-1 border border-2 rounded-circle" style="width: 130px; height: 130px;">
+           <img src="https://randomuser.me/api/portraits/men/32.jpg" class="rounded-circle w-100 h-100 object-fit-cover" alt="Nombre 1">
+        </div>
         <div class="card-body">
-          <h5 class="card-title">Nombre 1</h5>
-          <p class="text-muted small mb-1">Arquitecto</p>
-          <p class="text-muted small">Graduado de la Universidad de Buenos Aires</p>
+          <h5 class="fw-bold mb-1">Carlos Rodríguez</h5> <span class="badge bg-light titulos mb-3">Arquitecto</span>
+          <p class="text-muted small">Graduado de la UBA con 10 años de experiencia en instalaciones.</p>
         </div>
       </div>
     </div>
+
     <div class="col-md-4">
-      <div class="card border-0 shadow-lg text-center">
-        <img src="..." class="rounded-circle mx-auto mt-3" style="width: 120px; height: 120px; object-fit: cover;" alt="Nombre 2">
+      <div class="card border-0 shadow-hover h-100 text-center py-4">
+        <div class="mx-auto mb-3 p-1 border border-2 rounded-circle" style="width: 130px; height: 130px;">
+           <img src="https://randomuser.me/api/portraits/women/44.jpg" class="rounded-circle w-100 h-100 object-fit-cover" alt="Nombre 2">
+        </div>
         <div class="card-body">
-          <h5 class="card-title">Nombre 2</h5>
-          <p class="text-muted small mb-1">Ingeniero</p>
-          <p class="text-muted small">Experto en estructuras</p>
+          <h5 class="fw-bold mb-1">Ana Martínez</h5>
+          <span class="badge bg-light titulos mb-3">Ingeniera Civil</span>
+          <p class="text-muted small">Experta en cálculo de estructuras y gestión de grandes obras.</p>
         </div>
       </div>
     </div>
+
     <div class="col-md-4">
-      <div class="card border-0 shadow-lg text-center">
-        <img src="..." class="rounded-circle mx-auto mt-3" style="width: 120px; height: 120px; object-fit: cover;" alt="Nombre 3">
+      <div class="card border-0 shadow-hover h-100 text-center py-4">
+        <div class="mx-auto mb-3 p-1 border border-2 rounded-circle" style="width: 130px; height: 130px;">
+           <img src="https://randomuser.me/api/portraits/men/85.jpg" class="rounded-circle w-100 h-100 object-fit-cover" alt="Nombre 3">
+        </div>
         <div class="card-body">
-          <h5 class="card-title">Nombre 3</h5>
-          <p class="text-muted small mb-1">Diseñador</p>
-          <p class="text-muted small">Especialista en interiores</p>
+          <h5 class="fw-bold mb-1">Julián Pérez</h5>
+          <span class="badge bg-light titulos mb-3">Interiorismo</span>
+          <p class="text-muted small">Especialista en crear ambientes funcionales y modernos.</p>
         </div>
       </div>
     </div>
@@ -76,76 +129,123 @@
 </section>
 
 <!-- NUESTROS VALORES -->
-<section class="py-5 container">
-  <h2 class="mb-4 text-center fw-bold" style="color: #4858e8;">Nuestros Valores</h2>
-  <div class="row justify-content-center g-4">
-    <div class="col-md-3">
-      <div class="card shadow-sm text-center p-3 border-0">
-        <div class="card-body">
-          <i class="bi bi-award-fill fs-2 text-primary mb-2"></i>
-          <h5 class="card-title">Calidad</h5>
-          <p class="card-text text-muted">Comprometidos con los más altos estándares en cada proyecto.</p>
-        </div>
-      </div>
+<section class="py-5 bg-light" >
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold">Nuestros Valores Fundamentales</h2>
+      <div class="mx-auto mt-3" style="width: 60px; height: 4px; background-color:#406AFF;"></div>
     </div>
-    <div class="col-md-3">
-      <div class="card shadow-sm text-center p-3 border-0">
-        <div class="card-body">
-          <i class="bi bi-clock-fill fs-2 text-primary mb-2"></i>
-          <h5 class="card-title">Puntualidad</h5>
-          <p class="card-text text-muted">Entregamos todos nuestros proyectos en tiempo y forma.</p>
+
+    <div class="row justify-content-center g-4">
+      <div class="col-md-3 text-center">
+        <div class="mb-3 text-primary">
+          <i class="bi bi-award-fill fs-1 icons" ></i>
         </div>
+        <h5 class="fw-bold">Calidad</h5>
+        <p class="small">Excelencia en cada detalle, sin compromisos.</p>
       </div>
-    </div>
-    <div class="col-md-3">
-      <div class="card shadow-sm text-center p-3 border-0">
-        <div class="card-body">
-          <i class="bi bi-tree-fill fs-2 text-primary mb-2"></i>
-          <h5 class="card-title">Sostenibilidad</h5>
-          <p class="card-text text-muted">Prácticas y materiales eco-amigables en nuestras construcciones.</p>
+      <div class="col-md-3 text-center">
+        <div class="mb-3 text-primary">
+          <i class="bi bi-clock-fill fs-1 icons"></i>
         </div>
+        <h5 class="fw-bold">Puntualidad</h5>
+        <p class="small">Respetamos tu tiempo y cumplimos los plazos.</p>
       </div>
-    </div>
-    <div class="col-md-3">
-      <div class="card shadow-sm text-center p-3 border-0">
-        <div class="card-body">
-          <i class="bi bi-hand-thumbs-up-fill fs-2 text-primary mb-2"></i>
-          <h5 class="card-title">Confianza</h5>
-          <p class="card-text text-muted">Construimos relaciones duraderas con transparencia y honestidad.</p>
+      <div class="col-md-3 text-center">
+        <div class="mb-3 text-primary">
+          <i class="bi bi-tree-fill fs-1 icons"></i>
         </div>
+        <h5 class="fw-bold">Sostenibilidad</h5>
+        <p class="small">Construimos pensando en el futuro del planeta.</p>
+      </div>
+      <div class="col-md-3 text-center">
+        <div class="mb-3 text-primary">
+          <i class="bi bi-hand-thumbs-up-fill fs-1 icons"></i>
+        </div>
+        <h5 class="fw-bold">Confianza</h5>
+        <p class="small">Transparencia total en costos y procesos.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- CONTACTANOS -->
-<section class="py-5 bg-light container shadow-lg" id="formulario">
-  <h2 class="mb-4 text-center fw-bold" style="color: #4858e8;">Contáctanos</h2>
-  <p class="text-center mb-4">¿Tienes un proyecto en mente? Nos encantaría conocer los detalles y ayudarte a convertir tu visión en realidad.</p>
+<section id="formulario" class="section-contacto py-3">
+  <div class="container d-flex justify-content-center">
 
-  <form class="mx-auto" style="max-width: 600px;">
-    <div class="mb-3">
-      <label class="form-label">Nombre completo</label>
-      <input type="text" class="form-control" placeholder="Tu nombre">
+    <div class="card contact-card shadow-lg border-0">
+      <div class="card-body p-4 p-lg-5">
+        <h2 class="text-center fw-bold display-5 titulo-contacto">Contáctanos</h2>
+        <p class="text-center text-muted mb-5 lead">
+          ¿Listo para empezar? Completa el formulario y hablemos.
+        </p>
+
+        <form #f="ngForm" (ngSubmit)="enviarForm()">
+
+          <div class="row g-4 mb-4">
+            <div class="col-md-6">
+              <label class="form-label">Nombre completo</label>
+              <input type="text" class="form-control form-control-lg" placeholder="Ej: Juan Pérez"
+                [(ngModel)]="nombreCompleto" name="nombreCompleto" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Teléfono</label>
+              <input type="tel" class="form-control form-control-lg" placeholder="Ej: 11 1234-5678"
+                [(ngModel)]="telefono" name="telefono" required pattern="^[0-9\-\+\s]+$">
+            </div>
+          </div>
+
+          <div class="row g-4 mb-4">
+            <div class="col-md-6">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control form-control-lg" placeholder="nombre@ejemplo.com"
+                [(ngModel)]="email" name="email" required email #emailCtrl="ngModel">
+
+              <div *ngIf="emailCtrl.invalid && (emailCtrl.dirty || emailCtrl.touched)"
+                class="text-danger mt-1 fw-bold small">
+                <span *ngIf="emailCtrl.errors?.['required']">Email requerido.</span>
+                <span *ngIf="emailCtrl.errors?.['email']">Email inválido.</span>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Tipo de proyecto</label>
+              <select class="form-select form-control-lg" [(ngModel)]="tipoProyecto" name="tipoProyecto" required>
+                <option [ngValue]="undefined" disabled selected>Selecciona una opción...</option>
+                <option value="Residencial">Residencial</option>
+                <option value="Comercial">Comercial</option>
+                <option value="Industrial">Industrial</option>
+                <option value="Otro">Otro</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-5">
+            <label class="form-label">Mensaje</label>
+            <textarea class="form-control form-control-lg" rows="4" placeholder="Cuéntanos tu idea..."
+              [(ngModel)]="mensaje" name="mensaje" required minlength="10"></textarea>
+          </div>
+
+          <div class="d-grid gap-2 col-md-6 mx-auto">
+            <button type="submit" class="btn btn-primary-form btn-lg py-3 rounded-pill fw-bold shadow-sm"
+              [disabled]="f.invalid">
+              ENVIAR CONSULTA
+            </button>
+          </div>
+
+        </form>
+      </div>
     </div>
-    <div class="mb-3">
-      <label class="form-label">Email</label>
-      <input type="email" class="form-control" placeholder="name@example.com">
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Teléfono</label>
-      <input type="tel" class="form-control" placeholder="123-456-7890">
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Tipo de proyecto</label>
-      <input type="text" class="form-control" placeholder="Residencial, Comercial, etc.">
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Mensaje</label>
-      <textarea class="form-control" rows="3"></textarea>
-    </div>
-    <div class="text-center">
-      <button type="submit" class="btn btn-primary btn-lg">Enviar Mensaje</button>
-    </div>
-  </form>
+
+  </div>
 </section>
+
+<!-- MENSAJE EXITO -->
+<div class="cartel-flotante position-fixed start-50 translate-middle-x p-3" [class.mostrar]="mensajeExito">
+  <div class="alert alert-success d-flex align-items-center shadow-lg border-0 rounded-pill px-4 py-3" role="alert">
+    <i class="bi bi-check-circle-fill fs-4 me-2"></i>
+    <div>
+      <span class="fw-bold">¡Excelente!</span> {{ textoMensaje }}
+    </div>
+  </div>
+</div>

@@ -1,24 +1,78 @@
+/* CARDS */
 .admin-card {
   background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border: 1px solid #f0f0f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.admin-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+@media (hover: hover) {
+  .admin-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(64, 106, 255, 0.15);
+    border-color: rgba(64, 106, 255, 0.3);
+  }
+
+  .admin-card:hover .icon-main {
+    transform: scale(1.1);
+  }
 }
 
-.admin-link {
-  display: inline-block;
-  margin-top: 10px;
-  font-weight: 600;
-  color: #4858e8;
+/* ICONOS */
+.icon-main {
+  font-size: 3.5rem;
+  color: #406AFF;
+  transition: transform 0.3s ease;
+}
+
+/* TITULO CARD */
+.card-title {
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+}
+
+/* BOTON ACCEDER */
+.btn-acceder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 24px;
+  color: #406AFF;
+  border: 2px solid #406AFF;
+  border-radius: 50px;
   text-decoration: none;
-  transition: transform 0.2s ease;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
-.admin-link:hover {
+.btn-acceder i {
+  transition: transform 0.3s ease;
+}
+
+/* HOVER BOTON */
+.btn-acceder:hover {
+  background-color: #406AFF;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(64, 106, 255, 0.3);
+}
+
+.btn-acceder:hover i {
   transform: translateX(5px);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .title-responsive {
+    font-size: 1.75rem; 
+  }
+  
+  .icon-main {
+    font-size: 2.8rem; 
+  }
+  
+  .admin-card {
+    padding: 1rem !important;
+  }
 }
