@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ImagenesService } from '../../Services/imagenes.service';
 
@@ -9,17 +9,12 @@ import { ImagenesService } from '../../Services/imagenes.service';
   styleUrl: './navbar.component.css'
 })
 
-export class NavbarComponent implements OnInit {
-
+export class NavbarComponent {
   usuarioRegistrado: boolean = localStorage.getItem("user_state") === "true"
   images: any
-  logo: any
+  logo: string ='/img/LOGO_AGS.png'
 
-  constructor(private router: Router, private servicio: ImagenesService) { }
-
-  ngOnInit(): void {
-    this.getLogo()
-  }
+  constructor(private router: Router) { }
 
   LogOut() {
     localStorage.clear()
@@ -27,14 +22,4 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['AGS/inicio'])
   }
 
-  getLogo() {
-    this.servicio.getImages().subscribe({
-      next: (res) => {
-        this.images = res
-        const logoImage = this.images.find((img: any) => img.nombre === "LOGO AGS 2")
-        this.logo = logoImage ? logoImage.url : ''        
-      },
-      error: (err) => console.error(err)
-    })
-  }
 }
