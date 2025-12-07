@@ -1,167 +1,183 @@
-.card {
-  border-radius: 8px;
-  overflow: hidden;
+/* COLORES */
+:host {
+  --pastel-blue: #a2d2ff;
+  --pastel-blue-text: #184e77;
+
+  --pastel-green: #b7e4c7;
+  --pastel-green-text: #1b4332;
+
+  --pastel-yellow: #ffe5ec;
+  --pastel-yellow-alt: #ffe6a7;
+  --pastel-yellow-text: #5f4304;
+
+  --text-soft: #495057;
 }
 
-/* Estilo para el contenedor de la barra de progreso */
+/* ESTRUCTURA */
+.card {
+  border-radius: 16px;
+  border: none;
+  border: 1px solid rgba(0,0,0, 0.02);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* TEXTOS */
+h5 {
+  font-weight: 700;
+  color: #343a40;
+  letter-spacing: -0.5px;
+}
+
+.text-muted {
+  color: #868e96 !important;
+}
+
+/* BARRAS DE PROGRESO GENERAL */
 .custom-progress-bar {
   position: relative;
-  background-color: #e9ecef;
-  border-radius: 5px;
+  background-color: #f1f3f5;
+  border-radius: 20px;
   overflow: hidden;
-  height: 10px; 
+  height: 10px;
 }
 
-/* Estilo para la barra de progreso interna */
-.custom-progress-bar .progress-bar {
-  border-radius: 5px; 
-  transition: width 0.6s ease;
-  display: flex; 
-  align-items: center;
-  justify-content: flex-end;
-  height: 100%;
+/* BARRA INTERNA */
+.custom-progress-bar .progress-bar,
+.progress-stacked .progress-bar {
+  border-radius: 20px;
+  transition: width 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: none;
 }
 
-.progress-label {
-  position: absolute;
-  right: 0; 
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 0.85em;
-  font-weight: 500;
-  color: #343a40; 
-  padding-left: 10px;
-  z-index: 1; 
-  pointer-events: none; 
-  background-color: transparent; 
-}
+/* COLORES Y ESTADOS */
 
-/* Estado Completado */
-.estado-completado {
-    background-color: #d1e7dd !important;
-    color: #198754 !important;
-}
-
-.estado-progreso {
-    background-color: #cfe2ff !important;
-    color: #0d6efd !important;
-}
-
-
-.estado-planificado {
-    background-color: #fff3cd !important;
-    color: #ffc107 !important; 
-}
-
-.badge {
-    padding: 0.3em 0.6em;
-    font-size: 0.75em;
-    font-weight: 600;
-    border-radius: 0.3rem;
-    line-height: 1;
-}
-
-.bg-success-subtle {
-    background-color: #d1e7dd !important;
-}
+/* FINALIZADO */
+.estado-completado,
+.bg-success,
 .text-success {
-    color: #198754 !important; 
+  background-color: var(--pastel-green) !important;
+  color: var(--pastel-green-text) !important;
 }
 
-.bg-primary-subtle {
-    background-color: #cfe2ff !important;
+p.text-success {
+  background-color: transparent !important;
+  color: #40916c !important;
 }
+
+/* EN PROGRESO */
+.estado-progreso,
+.bg-primary,
 .text-primary {
-    color: #0d6efd !important; 
+  background-color: var(--pastel-blue) !important;
+  color: var(--pastel-blue-text) !important;
 }
 
-.bg-warning-subtle {
-    background-color: #fff3cd !important;
+p.text-primary {
+  background-color: transparent !important;
+  color: #3a86ff !important;
 }
+
+/* PENDIENTES */
+.estado-planificado,
+.bg-warning,
 .text-warning {
-    color: #ffc107 !important;
+  background-color: var(--pastel-yellow-alt) !important;
+  color: var(--pastel-yellow-text) !important;
 }
 
-/* Ajuste de margen para el texto de las horas */
-.custom-progress-bar .progress-label {
-    left: calc(var(--bs-progress-width) + 5px);
-    right: 0;
-    padding-right: 0;
-    padding-left: 10px;
-    min-width: 40px;
-    text-align: right;
+p.text-warning {
+  background-color: transparent !important;
+  color: #d4a373 !important;
 }
 
+/* ETIQUETAS */
+span[class*="estado-"] {
+  padding: 0.4em 0.8em;
+  font-size: 0.75em;
+  font-weight: 700;
+  border-radius: 12px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+/*LISTA PROYECTOS */
 .project-name {
-    font-weight: 500;
-    color: #343a40;
+  font-weight: 600;
+  color: var(--text-soft);
+  font-size: 0.95rem;
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 10px;
 }
 
 .progress-time-label {
-    font-size: 0.9em;
-    font-weight: 500;
-    color: #6c757d; 
-    margin-right: 15px; 
-}
-
-.d-flex.justify-content-between.align-items-center {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.project-name {
-    flex-grow: 1;
-    text-align: left;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-right: 10px; 
-}
-
-/* Estilos para la Leyenda */
-.legend-item {
-  display: inline-flex;
-  align-items: center;
+  font-size: 0.85em;
+  font-weight: 600;
+  color: #adb5bd;
   margin-right: 15px;
-  font-size: 0.9em;
-  color: #6c757d;
+  min-width: 40px;
+  text-align: right;
 }
 
-.legend-box {
-  width: 12px;
-  height: 12px;
-  border-radius: 3px;
-  margin-right: 5px;
+/* PROYECTOS POR MES */
+.progress-stacked {
+  background-color: #f1f3f5;
+  border-radius: 20px;
+  overflow: hidden;
+  height: 30px !important;
+  margin-bottom: 20px !important;
+  display: flex;
 }
 
-/* Estilos para el texto dentro de la barra */
 .progress-stacked .progress-bar {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
-  font-size: 0.75rem;
-  color: white; 
-  min-width: 25px; 
-  overflow: hidden;
+  font-weight: 700;
+  font-size: 0.7rem;
+  min-width: 25px;
+}
+
+.progress-bar-count {
+  opacity: 0.8;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 15px;
+  font-size: 0.85em;
+  font-weight: 500;
+  color: var(--text-soft);
+}
+
+.legend-box {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 6px;
 }
 
 .month-name {
-  font-weight: bold;
+  font-weight: 700;
+  color: var(--text-soft);
 }
 
 .total-projects {
   font-weight: 500;
-  color: #6c757d;
+  font-size: 0.9em;
+  color: #adb5bd;
 }
 
-.col-md-6 .card .d-flex {
-    padding-top: 5px; 
-    padding-bottom: 5px;
-}
-
-.progress-stacked {
-    height: 30px !important;
-    margin-bottom: 20px !important;
+hr {
+  border-top: 1px dashed #dee2e6;
+  opacity: 1;
 }

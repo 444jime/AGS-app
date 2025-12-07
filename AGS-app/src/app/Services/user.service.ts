@@ -10,8 +10,9 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) { }
 
-  GetUsers() {
-    return this.httpClient.get(this.url + "/GetUsers")
+  GetUsers(status:any) {
+    const params = new HttpParams().set('status',status)
+    return this.httpClient.get(this.url, { params: params})
   }
 
   GetUserById(id: any) {
@@ -27,7 +28,7 @@ export class UserService {
   }
 
   EditUser(id: any, obj: any) {
-    return this.httpClient.put(`${this.url}/${id}`, obj)
+    return this.httpClient.patch(`${this.url}/${id}`, obj)
   }
 
   DeleteUser(id: any) {
