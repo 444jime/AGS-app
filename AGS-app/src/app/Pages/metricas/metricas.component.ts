@@ -97,9 +97,7 @@ export class MetricasComponent implements OnInit {
 
     this.proyectos.forEach((p: any) => {
       const fecha = new Date(p.fecha_inicio + 'T00:00:00');
-      console.log(fecha)
       const mesIndex = fecha.getMonth();
-      console.log(mesIndex)
       const mesNombre = meses[mesIndex];
       const estadoNormalizado = p.estado; 
 
@@ -123,10 +121,8 @@ export class MetricasComponent implements OnInit {
         conteo: stats[mes].estados[estado],
         porcentaje: (stats[mes].estados[estado] / total) * 100,
         clase: this.getClaseEstado(estado) 
-
       }));
 
-      // console.log(mes, total)
       return {
         mes: mes,
         total: total,
@@ -155,4 +151,3 @@ export class MetricasComponent implements OnInit {
     });
   }
 }
-

@@ -126,10 +126,9 @@ textarea.form-control {
 /* SECCIÓN HERO */
 .hero-section {
   position: relative;
-  /* IMAGEN DE FONDO CAMBIAR IMAGEN*/
-  background-image: url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1600&auto=format&fit=crop');
+  background-image: url('/img/HEADER_NOSOTROS.png');
   background-size: cover;
-  background-position: center;
+  background-position: center center;
   background-attachment: fixed;
   height: 75vh;
   min-height: 500px;
@@ -152,7 +151,7 @@ textarea.form-control {
   transform: scale(1.05);
 }
 
-/* --- MISION Y VISION --- */
+/* MISION Y VISION */
 .card-hover {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border-top: 4px solid var(--primary-color) !important;
@@ -177,7 +176,7 @@ textarea.form-control {
   color: #406AFF;
 }
 
-/* --- EQUIPO --- */
+/* EQUIPO */
 .shadow-hover {
   transition: all 0.3s ease;
   background: #fff;
