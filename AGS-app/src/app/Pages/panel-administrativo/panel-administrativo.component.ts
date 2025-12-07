@@ -12,11 +12,13 @@ export class PanelAdministrativoComponent implements OnInit {
 
   // TODOS / OTROS
   listaUsuarios: any;
+  estadoActual: 'activo' | 'inactivo' = 'activo'
   showList = true;
   showCreate = false;
-  mensajeError = false; //SACAR
+  mensajeError = false;
   textoMensaje: string = "";
   mensajeExito: boolean = false;
+  textoError:any;
 
   // CREACION
   id: any;
@@ -25,9 +27,6 @@ export class PanelAdministrativoComponent implements OnInit {
   telefono: any;
   mail: any;
   contrasena: any;
-
-  // LOGEADO
-  idLogeado: any;
 
   // EDICION
   selectedUser: any;
@@ -42,7 +41,6 @@ export class PanelAdministrativoComponent implements OnInit {
 
   // DETALLES
   detallesUsuario: any;
-  fechaAlta: any;
   creadoPor: any;
   fechaBaja: any;
   eliminadoPor: any;
@@ -52,11 +50,7 @@ export class PanelAdministrativoComponent implements OnInit {
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
-    this.getUsers()
-    this.idLogeado = localStorage.getItem("userId")
-    // console.log(this.idLogeado)
-    const hoy = new Date()
-    this.fechaAlta = hoy.toLocaleDateString("es-AR")
+    this.getUserByStatus(this.estadoActual)
   }
 
   // NAVBAR
@@ -85,14 +79,28 @@ export class PanelAdministrativoComponent implements OnInit {
     this.contrasena = '';
   }
 
-  // TABLA (listo, faltaria poder ver usuarios eliminados)
-  getUsers() {
-    this.userService.GetUsers().subscribe(x => {
+  // TABLA
+  getUsersActivos() {
+    this.userService.GetUsers('activo').subscribe(x => {
       this.listaUsuarios = x
     })
   }
 
-  // DETALLES (listo)
+  getUserByStatus(status: 'activo' | 'inactivo') {
+    this.estadoActual = status
+
+    this.userService.GetUsers(status).subscribe({
+      next: (x) => {
+        this.listaUsuarios = x
+      },
+      error: (err) => {
+        console.error(err)
+        this.listaUsuarios = []
+      }
+    })
+  }
+
+  // DETALLES
   getUsersById(id: any) {
     this.detallesUsuario = null;
 
@@ -104,7 +112,7 @@ export class PanelAdministrativoComponent implements OnInit {
     })
   }
 
-  // EDITAR (listo)
+  // EDITAR
   EditValues(user: any) {
     this.selectedUser = { ...user }
     this.idEdit = user.id
@@ -114,7 +122,6 @@ export class PanelAdministrativoComponent implements OnInit {
     this.telefonoEdit = user.telefono
   }
 
-  // (listo), sacar el requiere cambio
   editarUser() {
     let user = {
       id: this.idEdit,
@@ -122,12 +129,12 @@ export class PanelAdministrativoComponent implements OnInit {
       apellido: this.apellidoEdit,
       mail: this.mailEdit,
       telefono: this.telefonoEdit,
-      requiere_cambio_contrasena: "false" //MOMENTANEO, SACAR DSP
+      requiere_cambio_contrasena: "false"
     }
 
     this.userService.EditUser(user.id, user).subscribe({
       next: () => {
-        this.getUsers();
+        this.getUsersActivos();
         const btn = document.getElementById('btnCerrarEditar');
         if (btn) btn.click();
 
@@ -137,7 +144,7 @@ export class PanelAdministrativoComponent implements OnInit {
     })
   }
 
-  // ELIMINAR (listo)
+  // ELIMINAR
   getId(id: any) {
     this.idDelete = id
   }
@@ -145,7 +152,7 @@ export class PanelAdministrativoComponent implements OnInit {
   deleteUser() {
     this.userService.DeleteUser(this.idDelete).subscribe({
       next: () => {
-        this.getUsers();
+        this.getUsersActivos();
         const btn = document.getElementById('btnCerrarEliminar');
         if (btn) btn.click();
 
@@ -155,7 +162,7 @@ export class PanelAdministrativoComponent implements OnInit {
     })
   }
 
-  // CREAR (FALTA)
+  // CREAR
   createUser() {
     let user = {
       id: 0,
@@ -164,23 +171,27 @@ export class PanelAdministrativoComponent implements OnInit {
       mail: this.mail,
       contrasena: this.contrasena,
       telefono: this.telefono,
-      requiere_cambio_contrasena: "true", //no debe pedir
-      fechaAlta: this.fechaAlta,
-      creadoPor: this.idLogeado,
-      fechaBaja: null, //no debe pedir
-      eliminadoPor: null, //no debe pedir
-      estaEliminado: false  //no debe pedir
+      requiere_cambio_contrasena: "true"
     }
 
-    console.log(user)
     this.userService.CreateUser(user).subscribe({
-      next: () => {
-        this.getUsers();
-        this.resetFormulario();
+      next: (data: any) => {        
+        if (data.result === true) {
+          this.mensajeError = false
 
-        this.mostrarExito("El usuario ha sido creado correctamente.");
+          this.getUsersActivos();
+          this.resetFormulario();
+          this.mostrarExito("El usuario ha sido creado correctamente.");
+
+        } else {
+          this.mensajeError = true
+          this.textoError = data.message
+          console.warn("El backend rechazó la creación:", data.message);
+        }
       },
-      error: err => console.error(err)
+      error: err => {
+        console.error(err);
+      }
     })
   }
 }

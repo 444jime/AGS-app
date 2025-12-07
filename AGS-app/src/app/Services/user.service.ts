@@ -10,8 +10,9 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) { }
 
-  GetUsers() {
-    return this.httpClient.get(this.url + "/GetUsers")
+  GetUsers(status:any) {
+    const params = new HttpParams().set('status',status)
+    return this.httpClient.get(this.url, { params: params})
   }
 
   GetUserById(id: any) {

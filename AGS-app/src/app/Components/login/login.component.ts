@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit{
       if (this.dataSourceLogin.result == true) {
         localStorage.setItem("user_state", "true")
 
-        this.userService.GetUsers().subscribe( x => {
+        this.userService.GetUsers('activo').subscribe( x => {
           const users = x as any[];
           const user = users.find((n:any) => n.mail === this.mail)
           localStorage.setItem("userId", user.id)

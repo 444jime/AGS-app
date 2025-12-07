@@ -27,9 +27,34 @@
 
   <div class="usuarios-card">
 
-    <div class="text-center mb-4">
-      <h3 class="fw-bold mb-2" style="color: #4858e8; font-size: 2rem;">Usuarios Registrados</h3>
-      <p class="text-dark fw-medium mb-0">Listado general del sistema</p>
+    <div class="d-flex justify-content-between align-items-end mb-4 px-2 border-bottom pb-3">
+
+      <div>
+        <h3 class="fw-bold mb-1" style="color: #406AFF; font-size: 1.75rem;">
+          Usuarios Registrados
+        </h3>
+        <p class="text-secondary small mb-0">
+          Mostrando: <span class="fw-bold text-dark">{{ estadoActual | titlecase }}s</span>
+        </p>
+      </div>
+
+      <div class="switch-container p-1 rounded-pill bg-light border d-flex">
+        <button class="btn btn-sm rounded-pill px-3 fw-medium transition-btn"
+          [class.active-switch]="estadoActual === 'activo'" (click)="getUserByStatus('activo')">
+          Activos
+        </button>
+
+        <button class="btn btn-sm rounded-pill px-3 fw-medium transition-btn"
+          [class.active-switch]="estadoActual === 'inactivo'" (click)="getUserByStatus('inactivo')">
+          Inactivos
+        </button>
+      </div>
+
+    </div>
+
+    <div class="table-responsive">
+      <table class="table align-middle custom-hover-table">
+      </table>
     </div>
 
     <div class="table-responsive">
@@ -91,15 +116,19 @@
                   <i class="bi bi-eye-fill"></i>
                 </button>
 
-                <button class="btn-action-outline btn-edit" (click)="EditValues(user)" data-bs-toggle="modal"
-                  data-bs-target="#modalEditar" title="Editar">
-                  <i class="bi bi-pencil-fill"></i>
-                </button>
+                <ng-container *ngIf="estadoActual === 'activo'">
 
-                <button class="btn-action-outline btn-delete" (click)="getId(user.id)" data-bs-toggle="modal"
-                  data-bs-target="#modalEliminar" title="Eliminar">
-                  <i class="bi bi-trash-fill"></i>
-                </button>
+                  <button class="btn-action-outline btn-edit" (click)="EditValues(user)" data-bs-toggle="modal"
+                    data-bs-target="#modalEditar" title="Editar">
+                    <i class="bi bi-pencil-fill"></i>
+                  </button>
+
+                  <button class="btn-action-outline btn-delete" (click)="getId(user.id)" data-bs-toggle="modal"
+                    data-bs-target="#modalEliminar" title="Eliminar">
+                    <i class="bi bi-trash-fill"></i>
+                  </button>
+
+                </ng-container>
 
               </div>
             </td>
@@ -296,7 +325,7 @@
       <div class="col-md-6">
         <label class="form-label">Contraseña *</label>
         <input type="password" class="form-control" placeholder="******" name="contrasena" [(ngModel)]="contrasena"
-          required minlength="6">
+          required minlength="8">
       </div>
     </div>
 
@@ -308,20 +337,17 @@
 
   </form>
 
-  <div *ngIf="mensajeExito" class="alert alert-success text-center mt-4 mx-auto" style="max-width: 600px;">
-    <i class="bi bi-check-circle-fill me-2"></i> Usuario creado correctamente
-  </div>
   <div *ngIf="mensajeError" class="alert alert-danger text-center mt-4 mx-auto" style="max-width: 600px;">
-    <i class="bi bi-exclamation-circle-fill me-2"></i> Ocurrió un error al crear el usuario
+    <i class="bi bi-exclamation-circle-fill me-2"></i> {{ textoError }}
   </div>
 
 </section>
 
 <!-- MENSAJE EXITO -->
-<div class="cartel-flotante position-fixed start-50 translate-middle-x p-3" [class.mostrar]="mensajeExito">
+<div class="cartel-flotante position-fixed start-50 translate-middle-x" [class.mostrar]="mensajeExito">
   <div class="alert alert-success d-flex align-items-center shadow-lg border-0 rounded-pill px-4 py-3" role="alert">
-    <i class="bi bi-check-circle-fill fs-4 me-2"></i>
-    <div>
+    <i class="bi bi-check-circle-fill fs-4 me-3 flex-shrink-0"></i>
+    <div class="text-truncate-multiline">
       <span class="fw-bold">¡Excelente!</span> {{ textoMensaje }}
     </div>
   </div>
