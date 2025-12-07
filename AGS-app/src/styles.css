@@ -1,9 +1,20 @@
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
 }
-/* Archivo: src/styles.css */
+
+body {
+  padding-top: 65px;
+}
+
+@media (min-width: 768px) {
+  body {
+    padding-top: 60px;
+  }
+}
+
 :root {
   --primary: #4858e8;
   --primary-dark: #3240b5;

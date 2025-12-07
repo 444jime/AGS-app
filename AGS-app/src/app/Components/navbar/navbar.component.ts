@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ImagenesService } from '../../Services/imagenes.service';
 
 @Component({
   selector: 'app-navbar',
@@ -16,8 +17,7 @@ export class NavbarComponent {
   constructor(private router: Router) { }
 
   LogOut() {
-    localStorage.removeItem("user_state")
-    localStorage.removeItem("userId");
+    localStorage.clear()
     this.usuarioRegistrado = false;
     this.router.navigate(['AGS/inicio'])
   }
