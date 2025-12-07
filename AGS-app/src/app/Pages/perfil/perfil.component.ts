@@ -5,7 +5,6 @@ import interactionPlugin from '@fullcalendar/interaction';
 import esLocale from '@fullcalendar/core/locales/es';
 import { ProyectosService } from '../../Services/proyectos.service';
 import { EventosService } from '../../Services/eventos.service';
-import { totalmem } from 'os';
 
 @Component({
   selector: 'app-perfil',
@@ -96,7 +95,6 @@ export class PerfilComponent implements OnInit {
   getEventos(){
     this.eventosService.GetEventos().subscribe({
       next : (res:any []) => {
-        // console.log(res)
 
         this.events = res.map(item => ({
           title: `${item.nombre} - ${item.horas} hs`, 
@@ -123,7 +121,6 @@ export class PerfilComponent implements OnInit {
       return total;
     }, 0)
 
-    console.log("horas", this.horasMesActual)
   }
 
   // MENSAJE EXITO
@@ -213,10 +210,8 @@ export class PerfilComponent implements OnInit {
       proyecto = x
       const horasActuales = proyecto.horas
       const nuevasHoras = Number(horasActuales) + Number(this.horas);
-      // console.log("horas nuevas", nuevasHoras)
 
-      // SOLO ME FALTA HACER ESTE METODO Y HACER QUE PUEDA ACTUALIZAR SOLO LAS HORAS
-      //this.updateProject(proyecto.id, nuevasHoras);
+      this.updateProject(proyecto.id, nuevasHoras);
       const eventVisual = {
         title: `${this.proyectoCalendar.nombre} - ${this.horas} hs`,
         date: this.selectedDate
@@ -228,24 +223,22 @@ export class PerfilComponent implements OnInit {
          fecha: this.selectedDate
       }      
 
-      // NECESITO Q ME MODIFIQUE EL CREAR EVENTOS DEL BACK
-      // this.eventosService.PostEvento(eventoParaBD).subscribe({
-      //   next : res=> console.log(res),
-      //   error : err => console.log(err)
-      // })
-
-      console.log("evento: ", eventoParaBD)
+      this.eventosService.PostEvento(eventoParaBD).subscribe({
+        next : res=> console.log(res),
+        error : err => console.log(err)
+      })
 
       this.events = [...this.events, eventVisual];
       this.calcularHorasMesActual();
       this.openOptions = false;
+      this.getProyectos()
     })
 
   }
 
-  // ACTUALIZAR HORAS PROYECTO, NECESITO DEL BACK
+  // ACTUALIZAR HORAS PROYECTO
   updateProject(id: any, nuevasHoras: any) {
-    this.proyectoService.editProject(id,nuevasHoras).subscribe({
+    this.proyectoService.editProjectByHours(id,nuevasHoras).subscribe({
       next: res => console.log(res),
       error: err => console.error(err)
     })

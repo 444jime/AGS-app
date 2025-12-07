@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -27,6 +27,11 @@ export class ProyectosService {
 
   deleteProject(id:any){
     return this.httpClient.delete(`${this.url}/${id}`)
+  }
+
+  editProjectByHours(id:any,horas:number){
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.httpClient.patch(`${this.url}/${id}/horas`, horas, { headers });
   }
   
 }

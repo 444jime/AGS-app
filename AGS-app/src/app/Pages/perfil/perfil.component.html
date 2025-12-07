@@ -33,7 +33,6 @@
     </div>
 </section>
 
-
 <!-- CALENDARIO Y PROYECTOS -->
 <div class="row mt-5 align-items-stretch contenedor-general">
 
@@ -145,11 +144,11 @@
 </div>
 
 <!-- MENSAJE EXITO -->
-<div class="cartel-flotante position-fixed start-50 translate-middle-x p-3" [class.mostrar]="mensajeExito">
+<div class="cartel-flotante position-fixed start-50 translate-middle-x" [class.mostrar]="mensajeExito">
     <div class="alert alert-success d-flex align-items-center shadow-lg border-0 rounded-pill px-4 py-3" role="alert">
-        <i class="bi bi-check-circle-fill fs-4 me-2"></i>
-        <div>
+        <i class="bi bi-check-circle-fill fs-4 me-3 flex-shrink-0"></i>
+        <div class="text-truncate-multiline">
             <span class="fw-bold">¡Excelente!</span> {{ textoMensaje }}
-        </div>
+        </div>        
     </div>
 </div>

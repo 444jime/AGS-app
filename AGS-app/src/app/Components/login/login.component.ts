@@ -56,8 +56,7 @@ export class LoginComponent implements OnInit{
             localStorage.setItem("change_pass", this.dataSourceLogin.contrasena)  
             this.router.navigate(["AGS/perfil"])      
           }
-        })
-
+        }) 
         this.router.navigate(["AGS/admin"])
 
       }
