@@ -10,12 +10,15 @@ import { ServiciosEmpresaService } from '../../Services/servicios-empresa.servic
 })
 export class ServiciosProyectosComponent implements OnInit {
 
+  // TODO
   showProyects = false;
   showServices = true;
-
   proyectos: any;
-  textoMensaje: string = "";
 
+  mensajeExito: boolean = false;
+  textoMensaje: string = "";
+  
+  // CREAR PROYECTO
   nombre: any;
   descripcion: any;
   fechaInicio: any;
@@ -24,8 +27,8 @@ export class ServiciosProyectosComponent implements OnInit {
   fileProyecto!: File;
   nombreArchivo: string = 'Ningún archivo seleccionado';
   imagenPrevia: string | ArrayBuffer | null = null;
-  mensajeExito: boolean = false;
 
+  // EDITAR PROYECTO
   selectedProject: any;
   id: any
   nombreEdit: any;
@@ -39,22 +42,28 @@ export class ServiciosProyectosComponent implements OnInit {
   imagenPreviaEdit: any = null;
   nombreArchivoEdit: string = 'Imagen actual del proyecto';
 
+  // FINALIZAR PROYECTO
   idDelete: any;
   fechaActual: string = "";
 
+  // CREAR SERVICIO
   servicios: any;
   nombreServicio: any;
   descServicio: any;
 
+  // EDITAR SERVICIO
   selectedService: any;
   idServicio: any;
   nombreServicioEdit: any;
   descripcionServicioEdit: any;
 
+  // ELIMINAR SERVICIO
   idDeleteService: any;
 
 
-  constructor(private proyectosService: ProyectosService, private serviciosService: ServiciosEmpresaService) { }
+  constructor(
+    private proyectosService: ProyectosService, 
+    private serviciosService: ServiciosEmpresaService) { }
 
   ngOnInit(): void {
     this.getProyectos()
@@ -63,12 +72,14 @@ export class ServiciosProyectosComponent implements OnInit {
     this.getServicios()
   }
 
+  // NAVBAR
   show(tipo: 'proyectos' | 'servicios', event: Event) {
     event.preventDefault();
     this.showProyects = tipo === 'proyectos';
     this.showServices = tipo === 'servicios';
   }
 
+  // MENSAJE EXITO
   mostrarExito(mensaje: string) {
     this.textoMensaje = mensaje;
     this.mensajeExito = true;
@@ -85,6 +96,7 @@ export class ServiciosProyectosComponent implements OnInit {
     })
   }
 
+  // CREAR PROYECTO
   crearProyecto() {
     const formData = new FormData()
     formData.append("nombre", this.nombre)
@@ -105,6 +117,7 @@ export class ServiciosProyectosComponent implements OnInit {
     })
   }
 
+  // FORMULARIO
   resetFormulario() {
     this.nombre = '';
     this.descripcion = '';
@@ -116,6 +129,7 @@ export class ServiciosProyectosComponent implements OnInit {
     this.nombreArchivo = 'Ningún archivo seleccionado';
   }
 
+  // IMAGEN
   onFileSelected(event: any) {
     const archivo = event.target.files[0];
     if (archivo) {
@@ -130,6 +144,7 @@ export class ServiciosProyectosComponent implements OnInit {
     }
   }
 
+  // EDITAR IMAGEN
   onFileSelectedEdit(event: any) {
     const archivo = event.target.files[0];
     if (archivo) {
@@ -144,6 +159,7 @@ export class ServiciosProyectosComponent implements OnInit {
     }
   }
 
+  // EDITAR
   EditValues(project: any) {
     this.selectedProject = { ...project }
     this.id = project.id
@@ -152,7 +168,6 @@ export class ServiciosProyectosComponent implements OnInit {
     this.horasEdit = project.horas
     this.estadoEdit = project.estado
     this.fechaInicioEdit = project.fecha_inicio
-    this.fechaFinEdit = project.fecha_fin //TENGO Q SACAR
     this.imagenPreviaEdit = project.url;
     this.fileProyectoEdit = null;
     this.nombreArchivoEdit = "Imagen actual del proyecto";;
@@ -164,7 +179,6 @@ export class ServiciosProyectosComponent implements OnInit {
     formData.append("nombre", this.nombreEdit)
     formData.append("descripcion", this.descripcionEdit)
     formData.append("fecha_inicio", this.fechaInicioEdit)
-    formData.append("fecha_fin", this.fechaFinEdit)
     formData.append("estado", this.estadoEdit)
     formData.append("horas", this.horasEdit)
 
@@ -185,6 +199,7 @@ export class ServiciosProyectosComponent implements OnInit {
     })
   }
 
+  // FINALIZAR PROYECTO
   DeleteValues(id: any) {
     this.idDelete = id;
   }
@@ -209,11 +224,13 @@ export class ServiciosProyectosComponent implements OnInit {
     })
   }
 
+  // FORMULARIO
   resetFormularioServicios() {
     this.nombreServicio = '';
     this.descServicio = '';
   }
 
+  // CREAR SERVICIO
   crearServicio() {
     let obj = {
       "nombre": this.nombreServicio,
@@ -231,6 +248,7 @@ export class ServiciosProyectosComponent implements OnInit {
     })
   }
 
+  // EDITAR SERVICIO
   EditServiceValues(service: any) {
     this.selectedService = { ...service }
     this.idServicio = service.id
@@ -256,6 +274,7 @@ export class ServiciosProyectosComponent implements OnInit {
     })
   }
 
+  // ELIMINAR SERVICIO
   DeleteServiceValues(id: any) {
     this.idDeleteService = id;
   }

@@ -1,92 +1,94 @@
-<!-- HERO -->
-<section class="hero d-flex align-items-center text-center">
-  <div class="hero-bg" [ngStyle]="{'background-image': 'url(' + imagenHeader +')'}"></div>
+<div class="fade-in-up">
+  <!-- HERO -->
+  <section class="hero d-flex align-items-center text-center">
+    <div class="hero-bg" [ngStyle]="{'background-image': 'url(' + imagenHeader +')'}"></div>
 
-  <div class="container hero-content">
-    <h1 class="hero-title">AGS Web</h1>
-    <p class="hero-subtitle">
-      Construimos soluciones con compromiso, innovación y calidad. <br>
-      Un equipo joven, decidido a transformar cada proyecto en realidad.
-    </p>
-    <div class="d-flex gap-3 justify-content-center">
-      <a href="#proyectos" class="btn btn-primary-custom">Ver proyectos</a>
-      <a href="AGS/nosotros/#formulario" class="btn btn-outline-light-custom">Contáctanos</a>
-    </div>
-  </div>
-</section>
-
-<!-- SERVICIOS -->
-<section id="servicios" class="py-5 bg-light-minimal">
-  <div class="container">
-    <div class="text-center mb-5">
-      <h6 class="text-primary fw-bold text-uppercase ls-2">Lo que hacemos</h6>
-      <h2 class="fw-bold section-title">Nuestros Servicios</h2>
-    </div>
-
-    <div class="row g-4">
-
-      <div class="col-md-4" *ngFor="let servicio of servicios; let i = index">
-
-        <div class="service-card p-4 h-100">
-          <div class="icon-box mb-3">
-            <i class="bi {{ iconos[i] || 'bi-star' }} fs-2"></i>
-          </div>
-
-          <h5 class="card-title fw-bold">{{ servicio.nombre }}</h5>
-          <p class="card-text text-muted small">{{ servicio.descripcion }}</p>
-        </div>
-
+    <div class="container hero-content">
+      <h1 class="hero-title">AGS Web</h1>
+      <p class="hero-subtitle">
+        Construimos soluciones con compromiso, innovación y calidad. <br>
+        Un equipo joven, decidido a transformar cada proyecto en realidad.
+      </p>
+      <div class="d-flex gap-3 justify-content-center">
+        <a routerLink="." fragment="proyectos" class="btn btn-primary-custom">Ver proyectos</a>
+        <a routerLink="/AGS/nosotros" fragment="formulario" class="btn btn-outline-light-custom">Contáctanos</a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- PROYECTOS / CAROUSEL -->
-<section id="proyectos" class="py-5 bg-white">
-  <div class="container">
+  <!-- SERVICIOS -->
+  <section id="servicios" class="py-5 bg-light-minimal">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h6 class="text-primary fw-bold text-uppercase ls-2">Lo que hacemos</h6>
+        <h2 class="fw-bold section-title">Nuestros Servicios</h2>
+      </div>
 
-    <div class="text-center mb-5">
-      <h6 class="text-primary fw-bold text-uppercase ls-2">Nuestro Portfolio</h6>
-      <h2 class="fw-bold section-title">Proyectos Recientes</h2>
+      <div class="row g-4">
+
+        <div class="col-md-4" *ngFor="let servicio of servicios; let i = index">
+
+          <div class="service-card p-4 h-100">
+            <div class="icon-box mb-3">
+              <i class="bi {{ iconos[i] || 'bi-star' }} fs-2"></i>
+            </div>
+
+            <h5 class="card-title fw-bold">{{ servicio.nombre }}</h5>
+            <p class="card-text text-muted small">{{ servicio.descripcion }}</p>
+          </div>
+
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div id="carouselExampleCaptions" class="carousel slide project-carousel shadow-lg rounded-4 overflow-hidden"
-      data-bs-ride="carousel">
+  <!-- PROYECTOS / CAROUSEL -->
+  <section id="proyectos" class="py-5 bg-white">
+    <div class="container">
 
-      <div class="carousel-indicators">
-        <button type="button" *ngFor="let item of carrousel; let i = index" data-bs-target="#carouselExampleCaptions"
-          [attr.data-bs-slide-to]="i" [class.active]="i === 0" [attr.aria-current]="i === 0 ? 'true' : null"
-          [attr.aria-label]="'Slide ' + (i + 1)">
+      <div class="text-center mb-5">
+        <h6 class="text-primary fw-bold text-uppercase ls-2">Nuestro Portfolio</h6>
+        <h2 class="fw-bold section-title">Proyectos Recientes</h2>
+      </div>
+
+      <div id="carouselExampleCaptions" class="carousel slide project-carousel shadow-lg rounded-4 overflow-hidden"
+        data-bs-ride="carousel">
+
+        <div class="carousel-indicators">
+          <button type="button" *ngFor="let item of carrousel; let i = index" data-bs-target="#carouselExampleCaptions"
+            [attr.data-bs-slide-to]="i" [class.active]="i === 0" [attr.aria-current]="i === 0 ? 'true' : null"
+            [attr.aria-label]="'Slide ' + (i + 1)">
+          </button>
+        </div>
+
+        <div class="carousel-inner">
+          <div class="carousel-item" *ngFor="let img of carrousel; let i = index" [class.active]="i === 0">
+
+            <img [src]="img.url" class="d-block w-100 project-img" alt="...">
+
+            <div class="gradient-overlay"></div>
+
+            <div class="carousel-caption project-caption">
+              <h5 class="fw-bold mb-2 text-white">{{img.nombre}}</h5>
+              <p class="mb-0 text-white-50 description-text">{{img.descripcion}}</p>
+            </div>
+          </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="prev">
+          <span class="control-icon">
+            <i class="bi bi-chevron-left"></i>
+          </span>
         </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="next">
+          <span class="control-icon">
+            <i class="bi bi-chevron-right"></i>
+          </span>
+        </button>
+
       </div>
-
-      <div class="carousel-inner">
-        <div class="carousel-item" *ngFor="let img of carrousel; let i = index" [class.active]="i === 0">
-
-          <img [src]="img.url"  class="d-block w-100 project-img" alt="...">
-
-          <div class="gradient-overlay"></div>
-
-          <div class="carousel-caption project-caption">
-            <h5 class="fw-bold mb-2 text-white">{{img.nombre}}</h5>
-            <p class="mb-0 text-white-50 description-text">{{img.descripcion}}</p>
-          </div>
-        </div>
-      </div>
-
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
-        data-bs-slide="prev">
-        <span class="control-icon">
-          <i class="bi bi-chevron-left"></i>
-        </span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
-        data-bs-slide="next">
-        <span class="control-icon">
-          <i class="bi bi-chevron-right"></i>
-        </span>
-      </button>
-
     </div>
-  </div>
-</section>
+  </section>
+</div>

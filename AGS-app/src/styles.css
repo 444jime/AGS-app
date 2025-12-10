@@ -5,19 +5,39 @@ body {
   padding: 0;
 }
 
-body {
-  padding-top: 65px;
+html {
+  scroll-behavior: smooth;
+}
+
+.main-con-padding {
+  padding-top: 80px;
 }
 
 @media (min-width: 768px) {
-  body {
-    padding-top: 60px;
+  .main-con-padding {
+    padding-top: 70px;
   }
 }
 
 :root {
-  --primary: #4858e8;
+  --primary: #406AFF;
   --primary-dark: #3240b5;
   --text-dark: #222;
   --bg-light: #f9faff;
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

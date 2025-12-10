@@ -116,13 +116,22 @@
 .icon-box {
   width: 65px;
   height: 65px;
-  background: var(--primary);
-  border-radius: 16px; 
+  background: transparent;
+  border: 2px solid var(--primary); 
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
   transform: rotate(-3deg);
+  color: var(--primary);
+}
+
+.icon-box:hover {
+  background: var(--primary);
+  color: white;
+  transform: rotate(0deg) scale(1.05);
+  box-shadow: 0 4px 15px rgba(72, 88, 232, 0.3);
 }
 
 .service-card:hover .icon-box {

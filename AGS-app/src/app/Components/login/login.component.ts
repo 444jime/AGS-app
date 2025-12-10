@@ -62,12 +62,11 @@ export class LoginComponent implements OnInit {
           localStorage.setItem("token", this.dataSourceLogin.token)
           localStorage.setItem("user_state", "true")
 
-          this.userService.GetUsers().subscribe((res: any[]) => {
+          this.userService.GetUsers('activo').subscribe((res: any[]) => {
             const user = res.find((n: any) => n.mail === this.mail);
 
             if (user) {
               localStorage.setItem("userId", user.id)
-              console.log("id login", user.id)
 
               if (this.dataSourceLogin.contrasena == true) {
                 localStorage.setItem("change_pass", "true")
