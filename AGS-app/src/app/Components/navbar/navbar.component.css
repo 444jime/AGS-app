@@ -55,7 +55,7 @@
   background-color: #406AFF;
 }
 
-.btn-admin:hover span, 
+.btn-admin:hover span,
 .btn-admin:hover i {
   color: #fff !important;
 }
@@ -96,4 +96,12 @@
   padding-left: 16px;
   margin-bottom: 5px;
   letter-spacing: 1px;
+}
+
+.logo-image {
+  height: 95px;
+  width: auto;  
+  margin-top: -25px;
+  margin-bottom: -25px;  
+  object-fit: contain;
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withInterceptors, withFetch } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -41,6 +41,7 @@ import { authInterceptor } from './Interceptors/auth.interceptor';
     FullCalendarModule
   ],
   providers: [
+    provideHttpClient(withFetch()),
     provideClientHydration(withEventReplay()),
     provideHttpClient(withInterceptors([authInterceptor]))
   ],

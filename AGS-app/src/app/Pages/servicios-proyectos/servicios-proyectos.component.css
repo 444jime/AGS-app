@@ -1,11 +1,6 @@
 /* NAVBAR SERVICIOS / PROYECTOS */
-.navbar-custom {
-  background-color: #fff;
-  border-radius: 10px;
-}
-
 .nav-link {
-  color: #4858e8;
+  color: #406AFF;
   font-weight: 500;
   font-size: 1.1rem;
   margin: 0 15px;
@@ -20,7 +15,7 @@
 
 .nav-link.active {
   color: #fff;
-  background-color: #4858e8;
+  background-color: #406AFF;
   border-radius: 30px;
   padding: 8px 18px;
 }
@@ -35,7 +30,7 @@
 }
 
 .btn-primary {
-  background-color: #4858e8;
+  background-color: #406AFF;
   border: none;
 }
 
@@ -44,7 +39,7 @@
 }
 
 .text-primary {
-  color: #4858e8 !important;
+  color: #406AFF !important;
 }
 
 /* CARDS PROYECTO */
@@ -66,7 +61,7 @@
     box-shadow: 0 12px 24px rgba(72, 88, 232, 0.15);
 }
 
-/* Imagen */
+/* IMAGEN */
 .project-img {
     height: 220px; 
     overflow: hidden;
@@ -91,7 +86,7 @@
     transform: scale(1.05);
 }
 
-/* Cuerpo de la Card */
+/* CUERPO CARD */
 .project-body {
     flex: 1;
     display: flex;
@@ -100,7 +95,7 @@
     text-align: left; 
 }
 
-/* Título */
+/* TITULO */
 .project-title {
     margin: 0 0 10px 0;
     font-size: 1.25rem;
@@ -114,7 +109,7 @@
     overflow: hidden;
 }
 
-/* Descripción */
+/* DESCRIPCION */
 .project-desc {
     margin: 0 0 15px 0;
     font-size: 0.95rem;
@@ -128,7 +123,7 @@
     overflow: hidden;
 }
 
-/* Horas, Fechas */
+/* HORAS / FECHAS */
 .project-meta {
     display: flex;
     flex-wrap: wrap;
@@ -149,10 +144,10 @@
 }
 
 .meta-item i {
-    color: #4858e8; 
+    color: #406AFF 
 }
 
-/* Estado  */
+/* ESTADO  */
 .project-status-badge {
     display: inline-block;
     padding: 6px 14px;
@@ -164,13 +159,13 @@
     margin-bottom: 15px;
 }
 
-/* Colores de estado */
+/* COLORES DE ESTADO */
 .status-finalizado { background-color: #d4edda; color: #155724; }
 .status-pendiente { background-color: #fff3cd; color: #856404; }
 .status-en-progreso { background-color: #cce5ff; color: #004085; }
 
 
-/* Botones */
+/* BOTONES */
 .card-actions {
     margin-top: auto;
     padding-top: 15px;
@@ -196,8 +191,8 @@
     transform: scale(1.1);
 }
 
-.btn-edit { color: #4858e8; }
-.btn-edit:hover { background-color: #4858e8; color: white; }
+.btn-edit { color: #406AFF; }
+.btn-edit:hover { background-color: #406AFF; color: white; }
 
 .btn-finish { color: #198754; }
 .btn-finish:hover { background-color: #198754; color: white; }
@@ -217,7 +212,7 @@
 .service-icon-box {
     width: 50px; height: 50px;
     background-color: #eef0ff;
-    color: #4858e8;
+    color: #406AFF;
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -255,19 +250,27 @@
 
 .hover-effect:hover {
     background-color: #f8f9fa !important;
-    border-color: #4858e8 !important;
+    border-color: #406AFF !important;
     cursor: pointer;
 }
 
 /* MENSAJE EXITO */
 .cartel-flotante {
-  z-index: 2000; 
+  z-index: 2000;
   bottom: -150px;
-  transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); 
-  opacity: 0; 
+  transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  opacity: 0;
+  min-width: 300px;
+  width: fit-content;
+  max-width: 90vw;
 }
 
 .cartel-flotante.mostrar {
-  bottom: 30px; 
+  bottom: 30px;
   opacity: 1;
+}
+
+.cartel-flotante .alert {
+  width: 100%;
+  margin-bottom: 0;
 }

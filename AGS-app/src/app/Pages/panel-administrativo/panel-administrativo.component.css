@@ -183,11 +183,6 @@
 }
 
 /* NAVBAR (listar/crear) */
-.navbar-custom {
-  background-color: #fff;
-  border-radius: 10px;
-}
-
 .nav-link {
   color: #406AFF;
   font-weight: 500;

@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -5,7 +6,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ContactoService {
-  url = "https://localhost:7198/AGS/Contacto/enviar"
+  private url = environment.apiUrl + "/Contacto/enviar";
 
   constructor(private httpClient: HttpClient) { }
 

@@ -36,7 +36,7 @@ export class PerfilComponent implements OnInit {
   horas: any;
   events: any[] = [];
   calendarOptions = {
-    intinialView: 'dayGridMonth',
+    initialView: 'dayGridMonth',
     plugins: [dayGridPlugin, interactionPlugin],
     editable: true,
     selectable: true,
@@ -46,15 +46,15 @@ export class PerfilComponent implements OnInit {
 
   // TODO
   proyectos: any;
-  cantidadActivos:any;
-  horasMesActual:any
+  cantidadActivos: any;
+  horasMesActual: any
   textoMensaje: string = "";
   mensajeExito: boolean = false;
 
 
   constructor(
-    private userService: UserService, 
-    private proyectoService: ProyectosService, 
+    private userService: UserService,
+    private proyectoService: ProyectosService,
     private eventosService: EventosService) { }
 
   ngOnInit(): void {
@@ -75,13 +75,13 @@ export class PerfilComponent implements OnInit {
 
   // PROYECTOS SOLO ACTIVOS
   getProyectos() {
-    this.proyectoService.getProject().subscribe((data:any[]) => {
-      
-      let filtrados = data.filter( p => 
+    this.proyectoService.getProject().subscribe((data: any[]) => {
+
+      let filtrados = data.filter(p =>
         p.estado === 'En progreso' || p.estado === 'Pendiente'
       )
 
-      this.proyectos = filtrados.sort((a,b) => {
+      this.proyectos = filtrados.sort((a, b) => {
         if (a.estado === 'En progreso' && b.estado !== 'En progreso') return -1;
         if (a.estado !== 'En progreso' && b.estado === 'En progreso') return 1;
         return 0;
@@ -92,12 +92,12 @@ export class PerfilComponent implements OnInit {
   }
 
   // EVENTOS
-  getEventos(){
+  getEventos() {
     this.eventosService.GetEventos().subscribe({
-      next : (res:any []) => {
+      next: (res: any[]) => {
 
         this.events = res.map(item => ({
-          title: `${item.nombre} - ${item.horas} hs`, 
+          title: `${item.nombre} - ${item.horas} hs`,
           date: item.fecha,
           horas: Number(item.horas)
         }))
@@ -112,7 +112,7 @@ export class PerfilComponent implements OnInit {
     const mesActual = hoy.getMonth()
     const anioActual = hoy.getFullYear()
 
-    this.horasMesActual = this.events.reduce( (total, evento) => {
+    this.horasMesActual = this.events.reduce((total, evento) => {
       const fechaEvento = new Date(evento.date + 'T00:00:00')
 
       if (fechaEvento.getMonth() === mesActual && fechaEvento.getFullYear() === anioActual) {
@@ -124,7 +124,7 @@ export class PerfilComponent implements OnInit {
   }
 
   // MENSAJE EXITO
-    mostrarExito(mensaje: string) {
+  mostrarExito(mensaje: string) {
     this.textoMensaje = mensaje;
     this.mensajeExito = true;
 
@@ -151,10 +151,9 @@ export class PerfilComponent implements OnInit {
       "ConfirmNewPassword": this.pass2
     }
 
-    // console.log(passwords)
     this.userService.ChangePass(passwords, this.userId).subscribe({
       next: () => {
-        this.getProyectos();
+        this.getUser();
         this.resetFormulario();
 
         const btn = document.getElementById('btnCerrarC');
@@ -218,27 +217,27 @@ export class PerfilComponent implements OnInit {
       };
 
       let eventoParaBD = {
-         nombre: this.proyectoCalendar.nombre,
-         horas: this.horas,
-         fecha: this.selectedDate
-      }      
+        nombre: this.proyectoCalendar.nombre,
+        horas: this.horas,
+        fecha: this.selectedDate
+      }
 
       this.eventosService.PostEvento(eventoParaBD).subscribe({
-        next : res=> console.log(res),
-        error : err => console.log(err)
+        next: res => console.log(res),
+        error: err => console.log(err)
       })
 
       this.events = [...this.events, eventVisual];
       this.calcularHorasMesActual();
       this.openOptions = false;
-      this.getProyectos()
+      this.getProyectos();
     })
 
   }
 
   // ACTUALIZAR HORAS PROYECTO
   updateProject(id: any, nuevasHoras: any) {
-    this.proyectoService.editProjectByHours(id,nuevasHoras).subscribe({
+    this.proyectoService.editProjectByHours(id, nuevasHoras).subscribe({
       next: res => console.log(res),
       error: err => console.error(err)
     })

@@ -203,9 +203,17 @@ textarea.form-control {
   bottom: -150px;
   transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
   opacity: 0;
+  min-width: 300px;
+  width: fit-content;
+  max-width: 90vw;
 }
 
 .cartel-flotante.mostrar {
   bottom: 30px;
   opacity: 1;
+}
+
+.cartel-flotante .alert {
+  width: 100%;
+  margin-bottom: 0;
 }

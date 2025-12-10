@@ -1,145 +1,147 @@
-<!-- TEXTO ENTRADA -->
-<div class="text-center p-4">
-  <h1 class="fw-bold text-primary mb-2">
-    <i class="bi bi-speedometer2 me-2"></i> Panel Administrativo
-  </h1>
-  <p class="text-muted fs-5 mb-0">Gestiona los usuarios del sistema</p>
-</div>
+<div class="fade-in-up">
+  <!-- TEXTO ENTRADA -->
+  <div class="text-center p-4">
+    <h1 class="fw-bold text-primary mb-2">
+      <i class="bi bi-speedometer2 me-2"></i> Panel Administrativo
+    </h1>
+    <p class="text-muted fs-5 mb-0">Gestiona los usuarios del sistema</p>
+  </div>
 
-<!-- NAVBAR lista/crear -->
-<nav class="navbar-custom py-3 mb-4">
-  <ul class="nav justify-content-center nav-switch">
-    <li class="nav-item">
-      <a href="#" class="nav-link" [class.active]="showList" (click)="show('lista', $event)">
-        <i class="bi bi-list-ul me-2"></i> Lista de Usuarios
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="#" class="nav-link" [class.active]="showCreate" (click)="show('crear', $event)">
-        <i class="bi bi-person-plus me-2"></i> Crear Usuario
-      </a>
-    </li>
-  </ul>
-</nav>
+  <!-- NAVBAR lista/crear -->
+  <nav class="py-3 mb-4">
+    <ul class="nav justify-content-center nav-switch">
+      <li class="nav-item">
+        <a href="#" class="nav-link" [class.active]="showList" (click)="show('lista', $event)">
+          <i class="bi bi-list-ul me-2"></i> Lista de Usuarios
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link" [class.active]="showCreate" (click)="show('crear', $event)">
+          <i class="bi bi-person-plus me-2"></i> Crear Usuario
+        </a>
+      </li>
+    </ul>
+  </nav>
 
-<!-- Tabla de usuarios -->
-<div class="usuarios-wrapper" *ngIf="showList">
+  <!-- TABLA DE USUARIOS -->
+  <div class="usuarios-wrapper" *ngIf="showList">
 
-  <div class="usuarios-card">
+    <div class="usuarios-card">
 
-    <div class="d-flex justify-content-between align-items-end mb-4 px-2 border-bottom pb-3">
+      <div class="d-flex justify-content-between align-items-end mb-4 px-2 border-bottom pb-3">
 
-      <div>
-        <h3 class="fw-bold mb-1" style="color: #406AFF; font-size: 1.75rem;">
-          Usuarios Registrados
-        </h3>
-        <p class="text-secondary small mb-0">
-          Mostrando: <span class="fw-bold text-dark">{{ estadoActual | titlecase }}s</span>
-        </p>
+        <div>
+          <h3 class="fw-bold mb-1" style="color: #406AFF; font-size: 1.75rem;">
+            Usuarios Registrados
+          </h3>
+          <p class="text-secondary small mb-0">
+            Mostrando: <span class="fw-bold text-dark">{{ estadoActual | titlecase }}s</span>
+          </p>
+        </div>
+
+        <div class="switch-container p-1 rounded-pill bg-light border d-flex">
+          <button class="btn btn-sm rounded-pill px-3 fw-medium transition-btn"
+            [class.active-switch]="estadoActual === 'activo'" (click)="getUserByStatus('activo')">
+            Activos
+          </button>
+
+          <button class="btn btn-sm rounded-pill px-3 fw-medium transition-btn"
+            [class.active-switch]="estadoActual === 'inactivo'" (click)="getUserByStatus('inactivo')">
+            Inactivos
+          </button>
+        </div>
+
       </div>
 
-      <div class="switch-container p-1 rounded-pill bg-light border d-flex">
-        <button class="btn btn-sm rounded-pill px-3 fw-medium transition-btn"
-          [class.active-switch]="estadoActual === 'activo'" (click)="getUserByStatus('activo')">
-          Activos
-        </button>
-
-        <button class="btn btn-sm rounded-pill px-3 fw-medium transition-btn"
-          [class.active-switch]="estadoActual === 'inactivo'" (click)="getUserByStatus('inactivo')">
-          Inactivos
-        </button>
+      <div class="table-responsive">
+        <table class="table align-middle custom-hover-table">
+        </table>
       </div>
 
-    </div>
+      <div class="table-responsive">
+        <table class="table align-middle custom-hover-table">
+          <thead>
+            <tr>
+              <th class="ps-4" style="width: 35%;">USUARIO</th>
+              <th style="width: 30%;">CONTACTO</th>
+              <th style="width: 15%;">ROL</th>
+              <th class="text-end pe-4" style="width: 20%;">ACCIONES</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of listaUsuarios">
 
-    <div class="table-responsive">
-      <table class="table align-middle custom-hover-table">
-      </table>
-    </div>
+              <td class="ps-4">
+                <div class="d-flex align-items-center">
 
-    <div class="table-responsive">
-      <table class="table align-middle custom-hover-table">
-        <thead>
-          <tr>
-            <th class="ps-4" style="width: 35%;">USUARIO</th>
-            <th style="width: 30%;">CONTACTO</th>
-            <th style="width: 15%;">ROL</th>
-            <th class="text-end pe-4" style="width: 20%;">ACCIONES</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let user of listaUsuarios">
+                  <div class="avatar-outline me-3">
+                    <span *ngIf="user.nombre && user.apellido">
+                      {{ user.nombre?.charAt(0) }}{{ user.apellido?.charAt(0) }}
+                    </span>
+                    <span *ngIf="!user.nombre || !user.apellido">
+                      <i class="bi bi-person"></i>
+                    </span>
+                  </div>
 
-            <td class="ps-4">
-              <div class="d-flex align-items-center">
-
-                <div class="avatar-outline me-3">
-                  <span *ngIf="user.nombre && user.apellido">
-                    {{ user.nombre?.charAt(0) }}{{ user.apellido?.charAt(0) }}
-                  </span>
-                  <span *ngIf="!user.nombre || !user.apellido">
-                    <i class="bi bi-person"></i>
-                  </span>
+                  <div class="d-flex flex-column">
+                    <span class="fw-bold text-dark fs-5">{{ user.nombre }} {{ user.apellido }}</span>
+                    <span class="text-secondary small fw-medium">ID: #{{ user.id }}</span>
+                  </div>
                 </div>
+              </td>
 
-                <div class="d-flex flex-column">
-                  <span class="fw-bold text-dark fs-5">{{ user.nombre }} {{ user.apellido }}</span>
-                  <span class="text-secondary small fw-medium">ID: #{{ user.id }}</span>
+              <td>
+                <div class="d-flex flex-column gap-1">
+                  <div class="contact-item">
+                    <i class="bi bi-envelope me-2 text-primary"></i>
+                    <span>{{ user.mail }}</span>
+                  </div>
+                  <div class="contact-item">
+                    <i class="bi bi-telephone me-2 text-muted"></i>
+                    <span>{{ user.telefono }}</span>
+                  </div>
                 </div>
-              </div>
-            </td>
+              </td>
 
-            <td>
-              <div class="d-flex flex-column gap-1">
-                <div class="contact-item">
-                  <i class="bi bi-envelope me-2 text-primary"></i>
-                  <span>{{ user.mail }}</span>
-                </div>
-                <div class="contact-item">
-                  <i class="bi bi-telephone me-2 text-muted"></i>
-                  <span>{{ user.telefono }}</span>
-                </div>
-              </div>
-            </td>
+              <td>
+                <span class="rol-minimalista">
+                  Admin
+                </span>
+              </td>
 
-            <td>
-              <span class="rol-minimalista">
-                Admin
-              </span>
-            </td>
+              <td class="text-end pe-4">
+                <div class="d-flex justify-content-end gap-2">
 
-            <td class="text-end pe-4">
-              <div class="d-flex justify-content-end gap-2">
-
-                <button class="btn-action-outline btn-view" (click)="getUsersById(user.id)" data-bs-toggle="modal"
-                  data-bs-target="#modalDetalles" title="Ver ficha">
-                  <i class="bi bi-eye-fill"></i>
-                </button>
-
-                <ng-container *ngIf="estadoActual === 'activo'">
-
-                  <button class="btn-action-outline btn-edit" (click)="EditValues(user)" data-bs-toggle="modal"
-                    data-bs-target="#modalEditar" title="Editar">
-                    <i class="bi bi-pencil-fill"></i>
+                  <button class="btn-action-outline btn-view" (click)="getUsersById(user.id)" data-bs-toggle="modal"
+                    data-bs-target="#modalDetalles" title="Ver ficha">
+                    <i class="bi bi-eye-fill"></i>
                   </button>
 
-                  <button class="btn-action-outline btn-delete" (click)="getId(user.id)" data-bs-toggle="modal"
-                    data-bs-target="#modalEliminar" title="Eliminar">
-                    <i class="bi bi-trash-fill"></i>
-                  </button>
+                  <ng-container *ngIf="estadoActual === 'activo'">
 
-                </ng-container>
+                    <button class="btn-action-outline btn-edit" (click)="EditValues(user)" data-bs-toggle="modal"
+                      data-bs-target="#modalEditar" title="Editar">
+                      <i class="bi bi-pencil-fill"></i>
+                    </button>
 
-              </div>
-            </td>
+                    <button class="btn-action-outline btn-delete" (click)="getId(user.id)" data-bs-toggle="modal"
+                      data-bs-target="#modalEliminar" title="Eliminar">
+                      <i class="bi bi-trash-fill"></i>
+                    </button>
 
-          </tr>
-        </tbody>
-      </table>
+                  </ng-container>
+
+                </div>
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-</div>
 
+</div>
 <!-- Modal DETALLES -->
 <div class="modal fade" id="modalDetalles" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">

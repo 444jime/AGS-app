@@ -1,27 +1,52 @@
-/* PERFIL */
-.perfil-container {
-  border-color: #dee2e6 !important;
-  padding: 60px;
+/* FONDO GENERAL */
+.main-content-wrapper {
+  min-height: 100vh;
+  padding-top: 20px;
+  padding-bottom: 40px;
+  background-color: #f4f6f9; 
+}
+
+/* TARJETA DE PERFIL */
+.card {
   background: white;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
 }
 
-.perfil-icon {
-  font-size: 3.5rem;
-  color: #406AFF;
+/* TIRA DE ALERTA*/
+.alert-strip {
+  background: linear-gradient(90deg, #dc3545, #ef5350); 
+  color: white;
+  animation: slideDown 0.5s ease-out;
 }
 
-/* BOTON CAMBIAR CONTRASEÑA */
-.btn-outline-primary {
-  border-color: #406AFF;
-  color: #406AFF;
-  transition: all 0.3s ease;
+@keyframes slideDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
-/* BOTON CAMBIAR CONTRASEÑA */
-.btn-outline-primary:hover {
+/* CAJA DE HORAS */
+.bg-light-blue {
+  background-color: rgba(64, 106, 255, 0.08);
+}
+
+/* TEXTO PANEL DE USUARIO */
+.tracking-wide {
+  letter-spacing: 1.5px;
+  font-size: 0.75rem;
+}
+
+/* AVATAR CIRCULAR */
+.avatar-circle {
+  width: 60px;
+  height: 60px;
   background-color: #406AFF;
-  color: #fff;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  box-shadow: 0 4px 10px rgba(64, 106, 255, 0.3);
 }
 
 /* MENSAJE ERROR CONTRASEÑA */
@@ -172,61 +197,6 @@
   }
 }
 
-/* ALERTA CAMBIAR CONTRASEÑA */
-.alerta-pass {
-  border: 2px solid #dc3545;
-  background-color: rgba(220, 53, 69, 0.12);
-  color: #b02a37;
-  padding: 18px 22px;
-  border-radius: 10px;
-  animation: alertaPulse 1.8s infinite ease-in-out;
-  max-width: 900px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.alerta-pass h2 {
-  font-size: 1.4rem;
-  margin-bottom: 8px;
-  font-weight: 700;
-}
-
-/* BOTÓN ROJO MOLESTO */
-.btn-pass-alerta {
-  background-color: #dc3545 !important;
-  border-color: #dc3545 !important;
-  color: #fff !important;
-  animation: vibrar 0.25s infinite;
-}
-
-/* ANIMACION MOLESTA */
-@keyframes vibrar {
-  0% {
-    transform: translateX(0);
-  }
-
-  25% {
-    transform: translateX(-2px);
-  }
-
-  50% {
-    transform: translateX(2px);
-  }
-
-  75% {
-    transform: translateX(-2px);
-  }
-
-  100% {
-    transform: translateX(0);
-  }
-}
-
-.btn-pass-alerta:hover {
-  background-color: #bb2d3b !important;
-  border-color: #bb2d3b !important;
-}
-
 /* CALENDARIO Y PROYECTOS */
 .calendar-wrapper,
 .proyectos-wrapper {
@@ -372,8 +342,9 @@
 
 /* SECCION PROYECTOS / CALENDARIO */
 .contenedor-general {
-  margin: 80px;
-  margin-bottom: 20px;
+  margin: 0 !important;
+  margin-top: 20px !important;
+  width: 100%;
 }
 
 /* CONTENEDOR PROYECTOS */
@@ -568,7 +539,6 @@
 .custom-modal-style .form-control:focus {
   background-color: #ffffff;
   border-color: #406AFF;
-  /* Tu azul */
   box-shadow: 0 4px 15px rgba(72, 88, 232, 0.15);
 }
 

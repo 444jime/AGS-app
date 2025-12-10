@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -5,7 +6,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class EventosService {
-  url = "https://localhost:7198/AGS/Evento"
+  private url = environment.apiUrl + "/Evento";
 
   constructor(private httpClient: HttpClient) { }
 

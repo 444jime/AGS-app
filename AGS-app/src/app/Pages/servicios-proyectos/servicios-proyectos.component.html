@@ -1,180 +1,351 @@
-<!-- NAVBAR -->
-<nav class="navbar-custom py-3 mb-4">
-  <ul class="nav justify-content-center">
-    <li class="nav-item">
-      <a href="#" class="nav-link" [class.active]="showServices" (click)="show('servicios', $event)">
-        <i class="bi bi-gear"></i> Servicios
-      </a>
-    </li>
+<div class="fade-in-up">
 
-    <li class="nav-item">
-      <a href="#" class="nav-link" [class.active]="showProyects" (click)="show('proyectos', $event)">
-        <i class="bi bi-folder2-open"></i> Proyectos
-      </a>
-    </li>
-  </ul>
-</nav>
+  <!-- INTRO -->
+  <header class="text-center pt-4">
+    <div class="container">
+      <h1 class="fw-bold text-primary display-5 ">Gestión de Contenidos</h1>
+      <p class="text-muted mx-auto lead fs-6" style="max-width: 650px;">
+        Administra el portafolio digital. 
+      </p>
+    </div>
+  </header>
 
-<!-- FORMULARIO DE PROYECTOS -->
-<section class="py-5 bg-light container shadow-lg rounded-4" id="proyecto" *ngIf="showProyects">
+  <!-- NAVBAR -->
+  <nav class="py-3 mb-4">
+    <ul class="nav justify-content-center">
+      <li class="nav-item">
+        <a href="#" class="nav-link" [class.active]="showServices" (click)="show('servicios', $event)">
+          <i class="bi bi-gear"></i> Servicios
+        </a>
+      </li>
 
-  <div class="text-center mb-4">
-    <h2 class="text-primary">Agregar Nuevo Proyecto</h2>
-    <p class="text-muted">Completa la información del proyecto que deseas agregar.</p>
-  </div>
+      <li class="nav-item">
+        <a href="#" class="nav-link" [class.active]="showProyects" (click)="show('proyectos', $event)">
+          <i class="bi bi-folder2-open"></i> Proyectos
+        </a>
+      </li>
+    </ul>
+  </nav>
 
-  <form (ngSubmit)="crearProyecto()" #formProyecto="ngForm" class="mx-auto" style="max-width: 800px;">
+  <!-- FORMULARIO DE PROYECTOS -->
+  <section class="py-5 bg-light container shadow-lg rounded-4" id="proyecto" *ngIf="showProyects">
 
-    <div class="row g-3 mb-3">
-
-      <div class="col-md-8">
-        <label class="form-label">Nombre del proyecto *</label>
-        <input type="text" class="form-control" placeholder="Ejemplo: Sitio Web de Fotografía" name="nombre"
-          [(ngModel)]="nombre" required>
-      </div>
-
-      <div class="col-md-4">
-        <label class="form-label">Estado *</label>
-        <select class="form-select" [(ngModel)]="estado" name="estado" required>
-          <option [ngValue]="undefined" disabled selected>Seleccionar...</option>
-          <option value="Pendiente">Pendiente</option>
-          <option value="En progreso">En progreso</option>
-        </select>
-      </div>
-
+    <div class="text-center mb-4">
+      <h2 class="fw-bold text-primary">Agregar Nuevo Proyecto</h2>
+      <p class="text-muted">Completa la información del proyecto que deseas agregar.</p>
     </div>
 
-    <div class="row g-3 mb-3">
+    <form (ngSubmit)="crearProyecto()" #formProyecto="ngForm" class="mx-auto" style="max-width: 800px;">
 
-      <div class="col-md-6">
-        <label class="form-label">Fecha de inicio *</label>
-        <input type="date" class="form-control" name="fechaInicio" [(ngModel)]="fechaInicio" required>
-      </div>
+      <div class="row g-3 mb-3">
 
-      <div class="col-md-6">
-        <label class="form-label">Horas estimadas *</label>
-        <input type="number" class="form-control" placeholder="0" name="horas" [(ngModel)]="horas" required>
-      </div>
-
-    </div>
-
-    <div class="mb-4">
-      <label class="form-label">Breve descripción *</label>
-      <textarea class="form-control" rows="3" placeholder="Describe brevemente el proyecto..." name="descripcion"
-        [(ngModel)]="descripcion" required></textarea>
-    </div>
-
-    <div class="mb-4">
-      <label class="form-label d-block">Imagen del proyecto *</label>
-
-      <div
-        class="custom-file-upload text-center p-3 border border-2 border-dashed rounded-3 bg-white position-relative hover-effect"
-        [class.border-danger]="formProyecto.submitted && !imagenPrevia">
-
-        <input type="file" id="formFile" class="d-none" accept="image/*" name="imagen"
-          (change)="onFileSelected($event)">
-
-        <div *ngIf="!imagenPrevia" class="py-2">
-          <label for="formFile" class="btn btn-outline-primary px-4 py-2">
-            Subir imagen
-          </label>
-          <p class="mt-2 text-muted small mb-0">{{ nombreArchivo }}</p>
+        <div class="col-md-8">
+          <label class="form-label">Nombre del proyecto *</label>
+          <input type="text" class="form-control" placeholder="Ejemplo: Sitio Web de Fotografía" name="nombre"
+            [(ngModel)]="nombre" required>
         </div>
 
-        <div *ngIf="imagenPrevia"
-          class="animate__animated animate__fadeIn d-flex align-items-center justify-content-center gap-3">
-          <div class="position-relative">
-            <img [src]="imagenPrevia" alt="Vista previa" class="rounded-3 shadow-sm"
-              style="height: 80px; width: 120px; object-fit: cover; border: 1px solid #dee2e6;">
-          </div>
+        <div class="col-md-4">
+          <label class="form-label">Estado *</label>
+          <select class="form-select" [(ngModel)]="estado" name="estado" required>
+            <option [ngValue]="undefined" disabled selected>Seleccionar...</option>
+            <option value="Pendiente">Pendiente</option>
+            <option value="En progreso">En progreso</option>
+          </select>
+        </div>
 
-          <div class="text-start">
-            <p class="text-dark small mb-1 text-truncate" style="max-width: 200px;">{{ nombreArchivo }}</p>
-            <label for="formFile" class="btn btn-sm btn-light text-primary border-0">
-              Cambiar imagen
+      </div>
+
+      <div class="row g-3 mb-3">
+
+        <div class="col-md-6">
+          <label class="form-label">Fecha de inicio *</label>
+          <input type="date" class="form-control" name="fechaInicio" [(ngModel)]="fechaInicio" required>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Horas estimadas *</label>
+          <input type="number" class="form-control" placeholder="0" name="horas" [(ngModel)]="horas" required>
+        </div>
+
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">Breve descripción *</label>
+        <textarea class="form-control" rows="3" placeholder="Describe brevemente el proyecto..." name="descripcion"
+          [(ngModel)]="descripcion" required></textarea>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label d-block">Imagen del proyecto *</label>
+
+        <div
+          class="custom-file-upload text-center p-3 border border-2 border-dashed rounded-3 bg-white position-relative hover-effect"
+          [class.border-danger]="formProyecto.submitted && !imagenPrevia">
+
+          <input type="file" id="formFile" class="d-none" accept="image/*" name="imagen"
+            (change)="onFileSelected($event)">
+
+          <div *ngIf="!imagenPrevia" class="py-2">
+            <label for="formFile" class="btn btn-outline-primary px-4 py-2">
+              Subir imagen
             </label>
+            <p class="mt-2 text-muted small mb-0">{{ nombreArchivo }}</p>
           </div>
+
+          <div *ngIf="imagenPrevia"
+            class="animate__animated animate__fadeIn d-flex align-items-center justify-content-center gap-3">
+            <div class="position-relative">
+              <img [src]="imagenPrevia" alt="Vista previa" class="rounded-3 shadow-sm"
+                style="height: 80px; width: 120px; object-fit: cover; border: 1px solid #dee2e6;">
+            </div>
+
+            <div class="text-start">
+              <p class="text-dark small mb-1 text-truncate" style="max-width: 200px;">{{ nombreArchivo }}</p>
+              <label for="formFile" class="btn btn-sm btn-light text-primary border-0">
+                Cambiar imagen
+              </label>
+            </div>
+          </div>
+
         </div>
-
       </div>
-    </div>
 
-    <div class="text-center mt-4 border-top pt-3">
-      <button type="submit" class="btn btn-primary btn-lg px-5" [disabled]="formProyecto.invalid || !imagenPrevia">
-        Confirmar proyecto
-      </button>
-    </div>
+      <div class="text-center mt-4 border-top pt-3">
+        <button type="submit" class="btn btn-primary btn-lg px-5" [disabled]="formProyecto.invalid || !imagenPrevia">
+          Confirmar proyecto
+        </button>
+      </div>
 
-  </form>
-</section>
+    </form>
+  </section>
 
-<!-- SECTOR DE PROYECTOS -->
-<section *ngIf="showProyects" id="servicios" class="py-5">
-  <div class="container text-center">
-    <h4 class="mb-4">Proyectos actuales:</h4>
+  <!-- SECTOR DE PROYECTOS -->
+  <section *ngIf="showProyects" id="servicios" class="py-5">
+    <div class="container text-center">
+      <h4 class="mb-4">Proyectos actuales:</h4>
 
-    <div class="row justify-content-center g-4">
+      <div class="row justify-content-center g-4">
 
-      <div class="col-12 col-md-6 col-lg-4 col-xl-3" *ngFor="let p of proyectos">
-        <div class="card project-card">
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3" *ngFor="let p of proyectos">
+          <div class="card project-card">
 
-          <div class="project-img">
-            <img [src]="p.url" alt="imagen del proyecto">
-          </div>
+            <div class="project-img">
+              <img [src]="p.url" alt="imagen del proyecto">
+            </div>
 
-          <div class="project-body">
-            <div>
-              <span class="project-status-badge" [ngClass]="{
+            <div class="project-body">
+              <div>
+                <span class="project-status-badge" [ngClass]="{
             'status-finalizado': p.estado === 'Finalizado',
             'status-pendiente': p.estado === 'Pendiente',
             'status-en-progreso': p.estado === 'En progreso'
             }">
-                {{ p.estado }}
-              </span>
+                  {{ p.estado }}
+                </span>
+              </div>
+
+              <h5 class="project-title" title="{{ p.nombre }}">{{ p.nombre }}</h5>
+              <p class="project-desc" title="{{ p.descripcion }}">{{ p.descripcion }}.</p>
+
+              <div class="project-meta">
+                <div class="meta-item" title="Horas dedicadas">
+                  <i class="bi bi-clock"></i> {{ p.horas }} hs
+                </div>
+                <div class="meta-item" title="Fecha de inicio">
+                  <i class="bi bi-calendar-plus"></i> {{ p.fecha_inicio }}
+                </div>
+                <div class="meta-item" title="Fecha de fin">
+                  <i class="bi bi-calendar-check"></i> {{ p.fecha_fin }}
+                </div>
+              </div>
+
+              <div class="card-actions">
+
+                <button class="btn-action btn-edit" data-bs-toggle="modal" data-bs-target="#modalEditar"
+                  (click)="EditValues(p)" title="Editar Proyecto">
+                  <i class="bi bi-pencil fs-5"></i>
+                </button>
+
+                <button *ngIf="p.estado !== 'Finalizado'" class="btn-action btn-finish" data-bs-toggle="modal"
+                  data-bs-target="#modalEliminar" (click)="DeleteValues(p.id)" title="Finalizar Proyecto">
+                  <i class="bi bi-check2-circle fs-5"></i>
+                </button>
+
+                <button *ngIf="p.estado === 'Finalizado'" class="btn-action"
+                  style="cursor: default; background-color: #e9ecef; color: #198754;"
+                  title="Este proyecto ya está finalizado">
+                  <i class="bi bi-check-circle-fill fs-5"></i>
+                </button>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULARIO DE SERVICIOS -->
+  <section class="py-5 bg-light container shadow-lg rounded-4" id="servicios" *ngIf="showServices">
+
+    <div class="text-center mb-4">
+      <h2 class="fw-bold text-primary">Agregar Nuevo Servicio</h2>
+      <p class="text-muted">Completa la información del servicio que deseas agregar.</p>
+    </div>
+
+    <form (ngSubmit)="crearServicio()" #formServicio="ngForm" class="mx-auto" style="max-width: 600px;">
+
+      <div class="mb-3">
+        <label class="form-label">Nombre del servicio *</label>
+        <input type="text" class="form-control" placeholder="Ejemplo: Desarrollo Web" name="nombreServicio"
+          [(ngModel)]="nombreServicio" required>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">Descripción del servicio *</label>
+        <textarea class="form-control" rows="3" placeholder="Describe brevemente el servicio..." name="descServicio"
+          [(ngModel)]="descServicio" required></textarea>
+      </div>
+
+      <div class="text-center mt-4 border-top pt-3">
+        <button type="submit" class="btn btn-primary btn-lg px-5" [disabled]="formServicio.invalid">
+          Confirmar servicio
+        </button>
+      </div>
+
+    </form>
+  </section>
+
+  <!-- SECTOR DE SERVICIOS -->
+  <section *ngIf="showServices" id="servicios" class="py-5">
+    <div class="container text-center">
+      <h4 class="mb-4">Servicios actuales:</h4>
+
+      <div class="row justify-content-center g-4">
+
+        <div class="col-12 col-md-6 col-lg-4 col-xl-4" *ngFor="let s of servicios">
+
+          <div class="card project-card service-card-adjust">
+
+            <div class="service-card-header">
+              <div class="service-icon-box">
+                <i class="bi bi-gear-wide-connected"></i>
+              </div>
+              <h5 class="project-title mb-0">{{ s.nombre }}</h5>
             </div>
 
-            <h5 class="project-title" title="{{ p.nombre }}">{{ p.nombre }}</h5>
-            <p class="project-desc" title="{{ p.descripcion }}">{{ p.descripcion }}.</p>
+            <div class="project-body pt-3">
 
-            <div class="project-meta">
-              <div class="meta-item" title="Horas dedicadas">
-                <i class="bi bi-clock"></i> {{ p.horas }} hs
+              <p class="project-desc">{{ s.descripcion }}</p>
+
+              <div class="card-actions">
+                <button class="btn-action btn-edit" data-bs-toggle="modal" data-bs-target="#modalEditarServicio"
+                  (click)="EditServiceValues(s)" title="Editar Servicio">
+                  <i class="bi bi-pencil fs-5"></i>
+                </button>
+
+                <button class="btn-action btn-delete" data-bs-toggle="modal" data-bs-target="#modalEliminarServicio"
+                  (click)="DeleteServiceValues(s.id)" title="Eliminar Servicio">
+                  <i class="bi bi-trash fs-5"></i>
+                </button>
               </div>
-              <div class="meta-item" title="Fecha de inicio">
-                <i class="bi bi-calendar-plus"></i> {{ p.fecha_inicio }}
-              </div>
-              <div class="meta-item" title="Fecha de fin">
-                <i class="bi bi-calendar-check"></i> {{ p.fecha_fin }}
-              </div>
-            </div>
-
-            <div class="card-actions">
-
-              <button class="btn-action btn-edit" data-bs-toggle="modal" data-bs-target="#modalEditar"
-                (click)="EditValues(p)" title="Editar Proyecto">
-                <i class="bi bi-pencil fs-5"></i>
-              </button>
-
-              <button *ngIf="p.estado !== 'Finalizado'" class="btn-action btn-finish" data-bs-toggle="modal"
-                data-bs-target="#modalEliminar" (click)="DeleteValues(p.id)" title="Finalizar Proyecto">
-                <i class="bi bi-check2-circle fs-5"></i>
-              </button>
-
-              <button *ngIf="p.estado === 'Finalizado'" class="btn-action"
-                style="cursor: default; background-color: #e9ecef; color: #198754;"
-                title="Este proyecto ya está finalizado">
-                <i class="bi bi-check-circle-fill fs-5"></i>
-              </button>
 
             </div>
 
           </div>
         </div>
+
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Modal EDITAR SERVICIO -->
+<div class="modal fade" id="modalEditarServicio" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+
+      <div class="modal-header border-bottom-0 pb-0">
+        <h4 class="modal-title fw-bold text-primary ms-2" id="modalEditarLabel">Editar Servicio</h4>
+        <button type="button" id="btnCerrarEditarServicio" class="btn-close" data-bs-dismiss="modal"
+          aria-label="Cerrar"></button>
+      </div>
+
+      <div class="modal-body px-4 pt-4">
+        <form class="form-editar">
+
+          <!-- Nombre -->
+          <div class="mb-4">
+            <label class="form-label text-muted small text-uppercase fw-bold">Nombre del servicio</label>
+            <input type="text" class="form-control form-control-lg bg-light border-0" [(ngModel)]="nombreServicioEdit"
+              name="nombre" placeholder="Ej: Consultoría BIM" />
+          </div>
+
+          <!-- Descripción -->
+          <div class="mb-3">
+            <label class="form-label text-muted small text-uppercase fw-bold">Descripción detallada</label>
+            <textarea class="form-control bg-light border-0" rows="5" [(ngModel)]="descripcionServicioEdit"
+              name="descServicio" placeholder="Escribe aquí..."></textarea>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="modal-footer border-top-0 pt-0 pb-4 px-4">
+        <button id="btnCerrarEditarS" class="btn btn-light px-4 rounded-pill" data-bs-dismiss="modal">Cancelar</button>
+        <button class="btn btn-primary px-4 rounded-pill shadow-sm" (click)="editarServicio()">
+          Guardar Cambios
+        </button>
       </div>
 
     </div>
   </div>
-</section>
+</div>
+
+<!-- Modal ELIMINAR SERVICIO -->
+<div class="modal fade" id="modalEliminarServicio" tabindex="-1" aria-labelledby="modalEliminarLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden px-3">
+
+      <div class="modal-header border-0 pb-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+
+      <div class="modal-body text-center pt-0">
+        <div class="mx-auto mb-4 d-flex align-items-center justify-content-center bg-danger-subtle rounded-circle"
+          style="width: 80px; height: 80px;">
+          <i class="bi bi-exclamation-triangle text-danger" style="font-size: 2.5rem;"></i>
+        </div>
+
+        <h4 class="fw-bold mb-3 text-dark">¿Eliminar este servicio?</h4>
+
+        <p class="text-muted mb-4 px-4">
+          Esta acción borrará el servicio permanentemente y no se podrá recuperar. ¿Estás seguro de continuar?
+        </p>
+
+        <div class="d-flex justify-content-center gap-3 mt-3 mb-3">
+          <button id="btnCerrarEliminarS" type="button"
+            class="btn btn-light text-muted px-4 fw-medium rounded-pill border-0" data-bs-dismiss="modal"
+            style="background-color: #f0f2f5;">
+            Cancelar
+          </button>
+
+          <button type="button"
+            class="btn btn-danger px-5 fw-bold rounded-pill shadow-sm d-flex align-items-center gap-2"
+            (click)="deleteService()">
+            <i class="bi bi-trash3"></i> Eliminar
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Modal EDITAR PROYECTO-->
 <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
@@ -289,10 +460,10 @@
 </div>
 
 <!-- MENSAJE EXITO -->
-<div class="cartel-flotante position-fixed start-50 translate-middle-x p-3" [class.mostrar]="mensajeExito">
+<div class="cartel-flotante position-fixed start-50 translate-middle-x" [class.mostrar]="mensajeExito">
   <div class="alert alert-success d-flex align-items-center shadow-lg border-0 rounded-pill px-4 py-3" role="alert">
-    <i class="bi bi-check-circle-fill fs-4 me-2"></i>
-    <div>
+    <i class="bi bi-check-circle-fill fs-4 me-3 flex-shrink-0"></i>
+    <div class="text-truncate-multiline">
       <span class="fw-bold">¡Excelente!</span> {{ textoMensaje }}
     </div>
   </div>
@@ -338,163 +509,6 @@
 
       </div>
       <div class="pb-4"></div>
-    </div>
-  </div>
-</div>
-
-<!-- FORMULARIO DE SERVICIOS -->
-<section class="py-5 bg-light container shadow-lg rounded-4" id="servicios" *ngIf="showServices">
-
-  <div class="text-center mb-4">
-    <h2 class="fw-bold text-primary">Agregar Nuevo Servicio</h2>
-    <p class="text-muted">Completa la información del servicio que deseas agregar.</p>
-  </div>
-
-  <form (ngSubmit)="crearServicio()" #formServicio="ngForm" class="mx-auto" style="max-width: 600px;">
-
-    <div class="mb-3">
-      <label class="form-label">Nombre del servicio *</label>
-      <input type="text" class="form-control" placeholder="Ejemplo: Desarrollo Web" name="nombreServicio"
-        [(ngModel)]="nombreServicio" required>
-    </div>
-
-    <div class="mb-4">
-      <label class="form-label">Descripción del servicio *</label>
-      <textarea class="form-control" rows="3" placeholder="Describe brevemente el servicio..." name="descServicio"
-        [(ngModel)]="descServicio" required></textarea>
-    </div>
-
-    <div class="text-center mt-4 border-top pt-3">
-      <button type="submit" class="btn btn-primary btn-lg px-5" [disabled]="formServicio.invalid">
-        Confirmar servicio
-      </button>
-    </div>
-
-  </form>
-</section>
-
-<!-- SECTOR DE SERVICIOS -->
-<section *ngIf="showServices" id="servicios" class="py-5">
-  <div class="container text-center">
-    <h4 class="mb-4">Servicios actuales:</h4>
-
-    <div class="row justify-content-center g-4">
-
-      <div class="col-12 col-md-6 col-lg-4 col-xl-4" *ngFor="let s of servicios">
-
-        <div class="card project-card service-card-adjust">
-
-          <div class="service-card-header">
-            <div class="service-icon-box">
-              <i class="bi bi-gear-wide-connected"></i>
-            </div>
-            <h5 class="project-title mb-0">{{ s.nombre }}</h5>
-          </div>
-
-          <div class="project-body pt-3">
-
-            <p class="project-desc">{{ s.descripcion }}</p>
-
-            <div class="card-actions">
-              <button class="btn-action btn-edit" data-bs-toggle="modal" data-bs-target="#modalEditarServicio"
-                (click)="EditServiceValues(s)" title="Editar Servicio">
-                <i class="bi bi-pencil fs-5"></i>
-              </button>
-
-              <button class="btn-action btn-delete" data-bs-toggle="modal" data-bs-target="#modalEliminarServicio"
-                (click)="DeleteServiceValues(s.id)" title="Eliminar Servicio">
-                <i class="bi bi-trash fs-5"></i>
-              </button>
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- Modal EDITAR SERVICIO -->
-<div class="modal fade" id="modalEditarServicio" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
-    
-      <div class="modal-header border-bottom-0 pb-0">
-        <h4 class="modal-title fw-bold text-primary ms-2" id="modalEditarLabel">Editar Servicio</h4>
-        <button type="button" id="btnCerrarEditarServicio" class="btn-close" data-bs-dismiss="modal"
-          aria-label="Cerrar"></button>
-      </div>
-
-      <div class="modal-body px-4 pt-4">
-        <form class="form-editar">
-
-          <!-- Nombre -->
-          <div class="mb-4">
-            <label class="form-label text-muted small text-uppercase fw-bold">Nombre del servicio</label>
-            <input type="text" class="form-control form-control-lg bg-light border-0" [(ngModel)]="nombreServicioEdit"
-              name="nombre" placeholder="Ej: Consultoría BIM" />
-          </div>
-
-          <!-- Descripción -->
-          <div class="mb-3">
-            <label class="form-label text-muted small text-uppercase fw-bold">Descripción detallada</label>
-            <textarea class="form-control bg-light border-0" rows="5" [(ngModel)]="descripcionServicioEdit"
-              name="descServicio" placeholder="Escribe aquí..."></textarea>
-          </div>
-
-        </form>
-      </div>
-
-      <div class="modal-footer border-top-0 pt-0 pb-4 px-4">
-        <button id="btnCerrarEditarS" class="btn btn-light px-4 rounded-pill" data-bs-dismiss="modal">Cancelar</button>
-        <button class="btn btn-primary px-4 rounded-pill shadow-sm" (click)="editarServicio()">
-          Guardar Cambios
-        </button>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- Modal ELIMINAR SERVICIO -->
-<div class="modal fade" id="modalEliminarServicio" tabindex="-1" aria-labelledby="modalEliminarLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden px-3">
-
-      <div class="modal-header border-0 pb-0">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-
-      <div class="modal-body text-center pt-0">
-        <div class="mx-auto mb-4 d-flex align-items-center justify-content-center bg-danger-subtle rounded-circle"
-          style="width: 80px; height: 80px;">
-          <i class="bi bi-exclamation-triangle text-danger" style="font-size: 2.5rem;"></i>
-        </div>
-
-        <h4 class="fw-bold mb-3 text-dark">¿Eliminar este servicio?</h4>
-
-        <p class="text-muted mb-4 px-4">
-          Esta acción borrará el servicio permanentemente y no se podrá recuperar. ¿Estás seguro de continuar?
-        </p>
-
-        <div class="d-flex justify-content-center gap-3 mt-3 mb-3">
-          <button id="btnCerrarEliminarS" type="button"
-            class="btn btn-light text-muted px-4 fw-medium rounded-pill border-0" data-bs-dismiss="modal"
-            style="background-color: #f0f2f5;">
-            Cancelar
-          </button>
-
-          <button type="button"
-            class="btn btn-danger px-5 fw-bold rounded-pill shadow-sm d-flex align-items-center gap-2"
-            (click)="deleteService()">
-            <i class="bi bi-trash3"></i> Eliminar
-          </button>
-        </div>
-
-      </div>
     </div>
   </div>
 </div>

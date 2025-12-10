@@ -1,0 +1,15 @@
+/* PARA TELEFONO */
+.espacio-navbar {
+  padding-top: 78px;
+}
+
+/* PARA ESCRITORIO */
+@media (min-width: 768px) {
+  .espacio-navbar {
+    padding-top: 70px;
+  }
+}
+
+.page-container {
+  background-color: #f4f6f9;
+}

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
-import { ImagenesService } from '../../Services/imagenes.service';
+
 
 @Component({
   selector: 'app-navbar',
@@ -9,17 +10,25 @@ import { ImagenesService } from '../../Services/imagenes.service';
   styleUrl: './navbar.component.css'
 })
 
-export class NavbarComponent {
-  usuarioRegistrado: boolean = localStorage.getItem("user_state") === "true"
+export class NavbarComponent implements OnInit {
+  usuarioRegistrado: boolean = false;
   images: any
-  logo: string ='/img/LOGO_AGS.png'
+  logo: string ='/img/LOGO_AGS_LETRAS.png'
 
-  constructor(private router: Router) { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private router: Router) { }
+
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.usuarioRegistrado = localStorage.getItem("user_state") === "true";
+    }
+  }
 
   LogOut() {
-    localStorage.clear()
-    this.usuarioRegistrado = false;
-    this.router.navigate(['AGS/inicio'])
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.clear();
+      this.usuarioRegistrado = false;
+      this.router.navigate(['AGS/inicio']);
+    }
   }
 
 }

@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment.development';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -5,7 +6,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ImagenesService {
-  url = "https://localhost:7198/AGS/Carousel"
+  private url = environment.apiUrl + "/Carousel";
 
   constructor(private httpClient: HttpClient ) { }
 
