@@ -11,8 +11,8 @@ import { MetricasComponent } from './Pages/metricas/metricas.component';
 import { ServiciosProyectosComponent } from './Pages/servicios-proyectos/servicios-proyectos.component';
 
 const routes: Routes = [
-  { path: "", component: InicioComponent },
-  { path: "login", component: LoginComponent },
+  { path: '', redirectTo:'AGS/inicio', pathMatch: 'full'},
+  { path: "login", component: LoginComponent},
   { path: "AGS", component: ContainerComponent,
     children: [
       { path: "inicio", component: InicioComponent },

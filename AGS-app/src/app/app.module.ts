@@ -9,7 +9,6 @@ import { ContainerComponent } from './Components/container/container.component';
 import { InicioComponent } from './Pages/inicio/inicio.component';
 import { NosotrosComponent } from './Pages/nosotros/nosotros.component';
 import { LoginComponent } from './Components/login/login.component';
-import { LockedComponent } from './Components/locked/locked.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { InicioAdminComponent } from './Pages/inicio-admin/inicio-admin.component';
 import { FooterComponent } from './Components/footer/footer.component';
@@ -26,13 +25,16 @@ import { authInterceptor } from './Interceptors/auth.interceptor';
     InicioComponent,
     NosotrosComponent,
     LoginComponent,
-    LockedComponent,
     NavbarComponent,
+    InicioAdminComponent,
+    FooterComponent,
+    PerfilComponent,
     PanelAdministrativoComponent,
     MetricasComponent,
     ServiciosProyectosComponent
   ],
   imports: [
+    BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
