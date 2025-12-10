@@ -1,32 +1,50 @@
-import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment.development';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  url = "https://localhost:7198/AGS/users"
-  private userId:any
+  private url = environment.apiUrl +  "/users";  
+  private userId: any
 
   constructor(private httpClient: HttpClient) { }
 
-  CreateUser(obj:any){
+  GetUsers(status:any) {
+    const params = new HttpParams().set('status',status)
+    return this.httpClient.get(this.url, { params: params})
+  }
+
+  GetUserById(id: any) {
+    return this.httpClient.get(`${this.url}/${id}`)
+  }
+
+  CreateUser(obj: any) {
     return this.httpClient.post(this.url + "/CreateUser", obj)
   }
 
-  Login(obj:any){
+  Login(obj: any) {
     return this.httpClient.post(this.url + "/Login", obj)
   }
 
-  GetUsers(){
-    return this.httpClient.get(this.url + "/GetUsers")
+  EditUser(id: any, obj: any) {
+    return this.httpClient.patch(`${this.url}/${id}`, obj)
   }
 
-  getUserId(){
+  DeleteUser(id: any) {
+    return this.httpClient.delete(`${this.url}/${id}`)
+  }
+
+  ChangePass(obj: any, id: any) {
+    return this.httpClient.post(`${this.url}/ChangePass/${id}`, obj)
+  }
+
+  getUserId() {
     return this.userId
   }
 
-  setUserId(id:any){
+  setUserId(id: any) {
     this.userId = id
   }
 }

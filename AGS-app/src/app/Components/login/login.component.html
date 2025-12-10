@@ -1,27 +1,41 @@
-<div class=" d-flex align-items-center justify-content-center vh-100">
-  <div class="card shadow-lg p-4 border-0 rounded-4" style="width: 100%; max-width: 400px; background-color: #dfdbdb;">
-    
-    <div class="text-center mb-3">
-      <h1 class="fw-bold mb-0" style="color: rgb(24, 3, 255);">AGS web</h1>
+<div class="login-container d-flex align-items-center justify-content-center min-vh-100 py-5">
+  <div class="card login-card shadow-lg border-0">
+
+    <div class="card-body p-4 p-md-5">
+
+      <div class="text-center mb-4">
+        <h1 class="fw-bold mb-1 login-title">AGS web</h1>
+        <p class="text-muted small">Bienvenido de nuevo</p>
+      </div>
+
+      <h4 class="text-center mb-4 fw-bold" style="color: #333;">Iniciar Sesión</h4>
+
+      <div class="mb-4">
+        <label class="form-label">
+          <i class="bi bi-envelope me-2 text-primary"></i>Correo electrónico
+        </label>
+        <input type="email" class="form-control" placeholder="ejemplo@gmail.com" [(ngModel)]="mail" (keyup.enter)="Login()" required>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">
+          <i class="bi bi-lock me-2 text-primary"></i>Contraseña
+        </label>
+        <input type="password" class="form-control" placeholder="Ingresa tu contraseña" [(ngModel)]="pass" (keyup.enter)="Login()" required>
+      </div>
+
+      <div class="d-grid mb-3">
+        <button class="btn btn-primary btn-lg login-btn" (click)="Login()">Entrar</button>
+      </div>
+
+      <div class="text-center mt-3" *ngIf="msg">
+        <div class="alert alert-danger d-flex align-items-center p-2" [class.error-animation]="showErrorAnimation"
+          role="alert">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          <div class="small fw-bold flex-fill">{{msg}}</div>
+        </div>
+      </div>
+
     </div>
-
-    <h4 class="text-center mb-4 fw-semibold" style="color: rgb(24, 3, 255);">Iniciar Sesión</h4>
-
-    <div class="mb-3">
-      <label class="form-label text-dark">Correo electronico</label>
-      <input type="text" class="form-control border-secondary" placeholder="ejemplo@gmail.com" 
-      [(ngModel)]="mail" required>
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label text-dark">Contraseña</label>
-      <input type="password" class="form-control border-secondary" placeholder="Ingresa tu contraseña" 
-      [(ngModel)]="pass" required>
-    </div>
-
-    <div class="d-grid">
-      <button class="btn" style="background-color:  rgb(24, 3, 255); color: white;" (click)="Login()">Entrar</button>
-    </div>
-
   </div>
 </div>

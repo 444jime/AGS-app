@@ -1,0 +1,103 @@
+<div class="container my-5 fade-in-up">
+
+  <!-- INTRODUCCION -->
+  <div class="mb-5 text-center">
+    <h2 class="fw-bold" style="color: #406AFF;">Panel de Métricas</h2>
+    <p class="text-muted fs-5 mx-auto">
+      Controla el avance de los proyectos y la gestión del tiempo.
+    </p>
+  </div>
+
+  <div class="row align-items-stretch">
+    <div class="col-md-6 mb-4">
+
+      <!-- HORAS POR PROYECTO -->
+      <div class="card shadow-sm p-4 h-100">
+        <h5 class="mb-1">Horas por Proyecto</h5>
+        <p class="text-muted small mb-4">Tiempo invertido en cada proyecto</p>
+
+        <ng-container *ngFor="let p of proyectos">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <span class="project-name">{{ p.nombre }}</span>
+            <span class="progress-time-label">{{ p.horas }}h</span>
+            <span [class]="getClaseEtiquetaEstado(p.estado)">{{ p.estado }}</span>
+          </div>
+
+          <div class="progress custom-progress-bar mb-3" style="height: 10px;">
+            <div class="progress-bar" [class]="getClaseEstado(p.estado)" role="progressbar"
+              [attr.aria-valuenow]="p.horas" aria-valuemin="0" [attr.aria-valuemax]="getHorasMaximas()"
+              [style.width]="getAnchoBarra(p.horas)"></div>
+          </div>
+        </ng-container>
+
+        <div class="mt-auto">
+          <hr class="mt-4 mb-3">
+          <h5 class="mb-4">Estadísticas de Horas</h5>
+
+          <div class="row text-center">
+            <div class="col-6 border-end">
+              <p class="fs-4 fw-bold mb-0 text-primary">{{ totalHoras }}</p>
+              <p class="text-muted small">Total de Horas</p>
+            </div>
+            <div class="col-6">
+              <p class="fs-4 fw-bold mb-0 text-success">{{ promedioHoras }}</p>
+              <p class="text-muted small">Promedio de Horas</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PROYECTOS POR MES -->
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-sm p-4 h-100">
+        <h5 class="mb-1">Proyectos por Mes</h5>
+        <p class="text-muted small mb-4">Distribución de proyectos según su estado</p>
+
+        <div class="mb-4">
+          <span class="legend-item"><span class="legend-box bg-warning"></span>Planificados</span>
+          <span class="legend-item"><span class="legend-box bg-primary"></span>En Progreso</span>
+          <span class="legend-item"><span class="legend-box bg-success"></span>Completados / Finalizados</span>
+        </div>
+
+        <ng-container *ngFor="let mesData of proyectosPorMes">
+          <div class="d-flex justify-content-between align-items-center my-4">
+            <span class="month-name">{{ mesData.mes }}</span>
+            <span class="total-projects">{{ mesData.total }} proyectos</span>
+          </div>
+
+          <div class="progress progress-stacked mb-3" style="height: 25px;">
+            <div *ngFor="let estado of mesData.estados" class="progress-bar" [class]="estado.clase" role="progressbar"
+              [style.width]="estado.porcentaje + '%'" [attr.aria-valuenow]="estado.conteo" aria-valuemin="0"
+              [attr.aria-valuemax]="mesData.total" title="{{ estado.estado }}: {{ estado.conteo }} proyectos">
+              <span class="progress-bar-count">{{ estado.conteo }}</span>
+            </div>
+          </div>
+        </ng-container>
+
+        <div class="mt-auto">
+          <hr class="mt-4 mb-3">
+          <h5 class="mb-4">Resumen del Período</h5>
+
+          <div class="row text-center">
+            <div class="col-4">
+              <p class="fs-4 fw-bold mb-0 text-warning">{{ proyectosPorEstado.pendiente }}</p>
+              <p class="text-muted small">Pendientes</p>
+            </div>
+            <div class="col-4">
+              <p class="fs-4 fw-bold mb-0 text-primary">{{ proyectosPorEstado.enProgreso }}</p>
+              <p class="text-muted small">En progreso</p>
+            </div>
+            <div class="col-4">
+              <p class="fs-4 fw-bold mb-0 text-success">{{ proyectosPorEstado.finalizado }}</p>
+              <p class="text-muted small">Finalizados</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

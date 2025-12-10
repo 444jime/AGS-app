@@ -8,53 +8,84 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
 
-  constructor ( private userService: UserService, private router : Router) {}
+  constructor(private userService: UserService, private router: Router) { }
 
-  mail:any;
-  pass:any;
-  msg:any;
-  dataSourceLogin:any;
+  mail: any = '';
+  pass: any = '';
+
+  msg: any = '';
+  mailError: string = '';
+  showErrorAnimation: boolean = false;
+
+  dataSourceLogin: any;
 
   ngOnInit(): void {
-    localStorage.removeItem("user_state")
-    localStorage.removeItem("userId")
-
-    const esperarId = setInterval(() => {
-      const userId = this.userService.getUserId()
-      if(userId){
-        clearInterval(esperarId)
-      }
-    }, 100)
+    localStorage.clear()
   }
 
-  Login(){
-    let obj = {
-      "mail" : this.mail,
-      "pass" : this.pass
+  triggerAnimation() {
+    this.showErrorAnimation = false;
+    setTimeout(() => {
+      this.showErrorAnimation = true;
+    }, 10);
+  }
+
+  Login() {
+    this.msg = "";
+
+    if (!this.mail || this.mail.trim() === '' || !this.pass || this.pass.trim() === '') {
+      this.msg = "Por favor, completa todos los campos.";
+      this.triggerAnimation();
+      return;
     }
 
-    this.userService.Login(obj).subscribe( x => {
-      this.dataSourceLogin = x;
-      console.log(this.dataSourceLogin)
-      if (this.dataSourceLogin.result == true) {
-        localStorage.setItem("user_state", "true")
-        this.userService.GetUsers().subscribe( x => {
-          const users = x as any[];
-          const user = users.find((n:any) => n.mail === this.mail)
-          localStorage.setItem("userId", user.id)
-          console.log("login",user.id)
-          
-        })
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-        this.router.navigate(["AGS/admin"])
+    if (!emailRegex.test(this.mail)) {
+      this.msg = "El formato del correo electronico no es valido";
+      this.triggerAnimation();
+      return;
+    }
 
-      }
-      else {
-        this.msg = this.dataSourceLogin.message
+    let obj = {
+      "mail": this.mail,
+      "pass": this.pass
+    }
+
+    this.userService.Login(obj).subscribe({
+      next: (x) => {
+        this.dataSourceLogin = x;
+
+        if (this.dataSourceLogin.result == true) {
+          localStorage.setItem("token", this.dataSourceLogin.token)
+          localStorage.setItem("user_state", "true")
+
+          this.userService.GetUsers('activo').subscribe((res: any[]) => {
+            const user = res.find((n: any) => n.mail === this.mail);
+
+            if (user) {
+              localStorage.setItem("userId", user.id)
+
+              if (this.dataSourceLogin.contrasena == true) {
+                localStorage.setItem("change_pass", "true")
+                this.router.navigate(["AGS/perfil"])
+              } else {
+                this.router.navigate(["AGS/admin"])
+              }
+            }
+          })
+        } else {
+          this.msg = this.dataSourceLogin.message
+          this.triggerAnimation();
+        }
+      },
+      error: (err) => {
+        console.error(err);
+        this.msg = "Ocurrió un error al intentar conectar con el servidor.";
+        this.triggerAnimation();
       }
     })
-    
   }
 }

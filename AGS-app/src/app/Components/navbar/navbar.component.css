@@ -1,0 +1,107 @@
+/* NAVBAR GENERAL */
+.navbar {
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px);
+}
+
+/* LOGO Y TEXTO */
+.tracking-tight {
+  letter-spacing: -1px;
+  color: #2c3e50;
+}
+
+/* LINKS */
+.minimal-link {
+  position: relative;
+  color: #555;
+  font-weight: 600;
+  font-size: 1.15rem;
+  text-decoration: none;
+  padding: 5px 0;
+  transition: color 0.3s ease;
+}
+
+.minimal-link:hover {
+  color: #406AFF;
+}
+
+.minimal-link::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 3px;
+  bottom: 0;
+  left: 0;
+  background-color: #406AFF;
+  transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border-radius: 2px;
+}
+
+.minimal-link:hover::after {
+  width: 100%;
+}
+
+/* BOTÓN ADMIN */
+.btn-admin {
+  background-color: #eff3ff;
+  padding: 8px 20px !important;
+  border-radius: 50px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.btn-admin:hover {
+  background-color: #406AFF;
+}
+
+.btn-admin:hover span,
+.btn-admin:hover i {
+  color: #fff !important;
+}
+
+/* DROPDOWN MENU */
+.custom-dropdown {
+  border: none;
+  border-radius: 16px;
+  padding: 10px;
+  min-width: 260px;
+  animation: slideIn 0.3s ease forwards;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-item {
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-weight: 500;
+  color: #444;
+  margin-bottom: 2px;
+}
+
+.dropdown-item:hover {
+  background-color: #eff3ff;
+  color: #406AFF;
+  transform: translateX(5px);
+}
+
+.dropdown-header {
+  padding-left: 16px;
+  margin-bottom: 5px;
+  letter-spacing: 1px;
+}
+
+.logo-image {
+  height: 95px;
+  width: auto;  
+  margin-top: -25px;
+  margin-bottom: -25px;  
+  object-fit: contain;
+}

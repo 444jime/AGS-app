@@ -1,0 +1,183 @@
+/* COLORES */
+:host {
+  --pastel-blue: #a2d2ff;
+  --pastel-blue-text: #184e77;
+
+  --pastel-green: #b7e4c7;
+  --pastel-green-text: #1b4332;
+
+  --pastel-yellow: #ffe5ec;
+  --pastel-yellow-alt: #ffe6a7;
+  --pastel-yellow-text: #5f4304;
+
+  --text-soft: #495057;
+}
+
+/* ESTRUCTURA */
+.card {
+  border-radius: 16px;
+  border: none;
+  border: 1px solid rgba(0,0,0, 0.02);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* TEXTOS */
+h5 {
+  font-weight: 700;
+  color: #343a40;
+  letter-spacing: -0.5px;
+}
+
+.text-muted {
+  color: #868e96 !important;
+}
+
+/* BARRAS DE PROGRESO GENERAL */
+.custom-progress-bar {
+  position: relative;
+  background-color: #f1f3f5;
+  border-radius: 20px;
+  overflow: hidden;
+  height: 10px;
+}
+
+/* BARRA INTERNA */
+.custom-progress-bar .progress-bar,
+.progress-stacked .progress-bar {
+  border-radius: 20px;
+  transition: width 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: none;
+}
+
+/* COLORES Y ESTADOS */
+
+/* FINALIZADO */
+.estado-completado,
+.bg-success,
+.text-success {
+  background-color: var(--pastel-green) !important;
+  color: var(--pastel-green-text) !important;
+}
+
+p.text-success {
+  background-color: transparent !important;
+  color: #40916c !important;
+}
+
+/* EN PROGRESO */
+.estado-progreso,
+.bg-primary,
+.text-primary {
+  background-color: var(--pastel-blue) !important;
+  color: var(--pastel-blue-text) !important;
+}
+
+p.text-primary {
+  background-color: transparent !important;
+  color: #3a86ff !important;
+}
+
+/* PENDIENTES */
+.estado-planificado,
+.bg-warning,
+.text-warning {
+  background-color: var(--pastel-yellow-alt) !important;
+  color: var(--pastel-yellow-text) !important;
+}
+
+p.text-warning {
+  background-color: transparent !important;
+  color: #d4a373 !important;
+}
+
+/* ETIQUETAS */
+span[class*="estado-"] {
+  padding: 0.4em 0.8em;
+  font-size: 0.75em;
+  font-weight: 700;
+  border-radius: 12px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+/*LISTA PROYECTOS */
+.project-name {
+  font-weight: 600;
+  color: var(--text-soft);
+  font-size: 0.95rem;
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 10px;
+}
+
+.progress-time-label {
+  font-size: 0.85em;
+  font-weight: 600;
+  color: #adb5bd;
+  margin-right: 15px;
+  min-width: 40px;
+  text-align: right;
+}
+
+/* PROYECTOS POR MES */
+.progress-stacked {
+  background-color: #f1f3f5;
+  border-radius: 20px;
+  overflow: hidden;
+  height: 30px !important;
+  margin-bottom: 20px !important;
+  display: flex;
+}
+
+.progress-stacked .progress-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.7rem;
+  min-width: 25px;
+}
+
+.progress-bar-count {
+  opacity: 0.8;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 15px;
+  font-size: 0.85em;
+  font-weight: 500;
+  color: var(--text-soft);
+}
+
+.legend-box {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.month-name {
+  font-weight: 700;
+  color: var(--text-soft);
+}
+
+.total-projects {
+  font-weight: 500;
+  font-size: 0.9em;
+  color: #adb5bd;
+}
+
+hr {
+  border-top: 1px dashed #dee2e6;
+  opacity: 1;
+}

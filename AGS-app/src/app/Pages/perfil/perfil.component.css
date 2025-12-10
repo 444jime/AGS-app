@@ -1,0 +1,575 @@
+/* FONDO GENERAL */
+.main-content-wrapper {
+  min-height: 100vh;
+  padding-top: 20px;
+  padding-bottom: 40px;
+  background-color: #f4f6f9; 
+}
+
+/* TARJETA DE PERFIL */
+.card {
+  background: white;
+  transition: transform 0.2s;
+}
+
+/* TIRA DE ALERTA*/
+.alert-strip {
+  background: linear-gradient(90deg, #dc3545, #ef5350); 
+  color: white;
+  animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* CAJA DE HORAS */
+.bg-light-blue {
+  background-color: rgba(64, 106, 255, 0.08);
+}
+
+/* TEXTO PANEL DE USUARIO */
+.tracking-wide {
+  letter-spacing: 1.5px;
+  font-size: 0.75rem;
+}
+
+/* AVATAR CIRCULAR */
+.avatar-circle {
+  width: 60px;
+  height: 60px;
+  background-color: #406AFF;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  box-shadow: 0 4px 10px rgba(64, 106, 255, 0.3);
+}
+
+/* MENSAJE ERROR CONTRASEÑA */
+.error {
+  color: #dc3545;
+  background-color: #fdecea;
+  border: 1px solid #f5c2c7;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+/* MENSAJE EXITO */
+.cartel-flotante {
+  z-index: 2000;
+  bottom: -150px;
+  transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  opacity: 0;
+  min-width: 300px;
+  width: fit-content;
+  max-width: 90vw;
+}
+
+.cartel-flotante.mostrar {
+  bottom: 30px;
+  opacity: 1;
+}
+
+.cartel-flotante .alert {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+/* FONDO MODAL */
+.custom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+}
+
+/* MODAL */
+.custom-modal {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+  width: 400px;
+  max-width: 90%;
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+/* TITULO MODAL */
+.custom-modal h5 {
+  font-weight: 600;
+  color: #1f1f1f;
+}
+
+.custom-modal h5 span {
+  color: #406AFF;
+}
+
+/* LABELS */
+.custom-modal .form-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #555;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* INPUTS Y SELECT */
+.custom-modal .form-control,
+.custom-modal .form-select {
+  background-color: #f4f6f9;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 12px 15px;
+  font-size: 0.95rem;
+  color: #333;
+  transition: all 0.3s ease;
+  box-shadow: none;
+}
+
+.custom-modal .form-control:hover,
+.custom-modal .form-select:hover {
+  background-color: #eef2f7;
+}
+
+.custom-modal .form-control:focus,
+.custom-modal .form-select:focus {
+  background-color: #ffffff;
+  border-color: #406AFF;
+  box-shadow: 0 4px 15px rgba(72, 88, 232, 0.15);
+  outline: none;
+}
+
+.custom-modal ::placeholder {
+  color: #adb5bd;
+  font-weight: 400;
+}
+
+/* BOTONES MODAL */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 1.5rem;
+}
+
+.btn-primary {
+  background-color: #406AFF;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #3c4ed6;
+}
+
+.btn-light {
+  background-color: #f5f5f5;
+  border: none;
+  color: #333;
+}
+
+.btn-light:hover {
+  background-color: #e4e4e4;
+}
+
+/* ANIMACION */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* CALENDARIO Y PROYECTOS */
+.calendar-wrapper,
+.proyectos-wrapper {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  margin: 0 !important;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.fc-daygrid-day:hover {
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+.fc-day-today {
+  background: rgba(72, 88, 232, 0.07) !important;
+  border: 1px solid #0d6efd !important;
+}
+
+/* BOTONES */
+.fc-button {
+  background: transparent !important;
+  border: none !important;
+  color: #406AFF !important;
+  font-size: 1.2rem !important;
+  box-shadow: none !important;
+}
+
+.fc-button:hover {
+  background: rgba(72, 88, 232, 0.1) !important;
+}
+
+.fc-today-button:hover {
+  background: #3f4fd1 !important;
+}
+
+/* NÚMEROS DEL DÍA */
+.fc-daygrid-day-number {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  color: #333 !important;
+  text-decoration: none !important;
+}
+
+.fc-daygrid-day {
+  border: 1px solid #e8e8e8 !important;
+}
+
+/* BOTON HOY */
+.fc .fc-today-button {
+  background-color: #406AFF !important;
+  color: white !important;
+  border-radius: 12px !important;
+  padding: 6px 12px !important;
+  margin-left: 10px !important;
+  border: none !important;
+}
+
+/* ESTILO DE DIAS */
+/* NOMBRE */
+.fc .fc-col-header-cell-cushion {
+  font-size: 20px;
+  font-weight: 500;
+  color: #406AFF;
+  padding: 8px 0 !important;
+  text-decoration: none !important;
+}
+
+/* CUADRICULA */
+.fc .fc-daygrid-day-frame {
+  border-radius: 14px !important;
+  padding: 6px !important;
+}
+
+/* HOVER */
+.fc .fc-daygrid-day-frame:hover {
+  background-color: #f3f4ff;
+  transition: 0.2s ease;
+}
+
+/* EVENTOS */
+.fc .fc-event {
+  background-color: #406AFF !important;
+  color: white !important;
+  border-radius: 10px !important;
+  border: none !important;
+  padding: 4px 6px !important;
+  font-size: 13px !important;
+}
+
+.fc-theme-standard td,
+.fc-theme-standard th {
+  border: 0;
+}
+
+/* FLECHAS Y MES */
+.fc .fc-toolbar.fc-header-toolbar {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 20px;
+
+}
+
+/* FLECHA ATRAS */
+.fc .fc-toolbar-chunk:first-child {
+  display: flex;
+  justify-content: flex-start;
+  flex: 1;
+}
+
+/* TITULO MES */
+.fc .fc-toolbar-title {
+  flex: 1;
+  text-align: center !important;
+  font-size: 1.6rem !important;
+  font-weight: 600 !important;
+  color: #406AFF !important;
+}
+
+/* FLECHA ADELANTE */
+.fc .fc-toolbar-chunk:last-child {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+/* FLECHAS */
+.fc-prev-button,
+.fc-next-button {
+  background: transparent !important;
+  border: none !important;
+  color: #406AFF !important;
+  font-size: 18px !important;
+}
+
+.fc-scrollgrid {
+  border: none !important;
+}
+
+/* SECCION PROYECTOS / CALENDARIO */
+.contenedor-general {
+  margin: 0 !important;
+  margin-top: 20px !important;
+  width: 100%;
+}
+
+/* CONTENEDOR PROYECTOS */
+.proyectos-wrapper .scroll-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  height: 0;
+  min-height: 0;
+  padding-right: 5px;
+  margin-top: 15px;
+}
+
+/* ENCABEZADO PROYECTOS */
+.header-proyectos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 10px;
+  flex-shrink: 0;
+}
+
+/* TITULO PROYECTOS */
+.titulo-proyectos {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+  color: #406AFF;
+}
+
+/* CANTIDAD PROYECTOS */
+.badge-contador {
+  background-color: #406AFF;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 50%;
+  font-size: 1rem;
+  font-weight: 700;
+  min-width: 32px;
+  text-align: center;
+}
+
+/* SCROLL */
+.scroll-container {
+  overflow-y: auto;
+  padding-right: 5px;
+  flex-grow: 1;
+  height: 100%;
+  min-height: 0;
+}
+
+/* BARRA SCROLL */
+.scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+/* GRID RESPONSIVO */
+@media (max-width: 767px) {
+  .proyectos-wrapper {
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .proyectos-wrapper .scroll-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    height: auto !important; 
+    min-height: 0;
+    flex-grow: 1;
+  }
+}
+
+@media (max-width: 450px) {
+  .proyectos-wrapper .scroll-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* CARDS DE PROYECTO */
+.proyecto-card {
+  border: 1px solid #eee !important;
+  border-radius: 12px !important;
+  margin-bottom: 15px;
+  box-shadow: none !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.proyecto-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+@media (max-width: 991px) and (min-width: 577px) {
+  .proyecto-card {
+    margin-bottom: 0;
+    height: 100%;
+  }
+}
+
+/* DESCRIPCION */
+.desc-proyecto {
+  color: #555;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+
+/* ESTADOS */
+.estado-proyecto {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* EN PROGRESO*/
+.estado-proyecto.en-progreso,
+.estado-proyecto.en\ progreso {
+  background-color: rgba(255, 193, 7, 0.15);
+  color: #a07900;
+  border: 1px solid #ffca2c;
+}
+
+/* PENDIENTE */
+.estado-proyecto.pendiente {
+  background-color: rgba(220, 53, 69, 0.15);
+  color: #b02a37;
+  border: 1px solid #dc3545;
+}
+
+/* ESTILOS MODAL CAMBIO PASSWORD */
+.custom-modal-style {
+  border-radius: 16px;
+  padding: 10px;
+}
+
+/* TITULO */
+.custom-modal-style .modal-title {
+  color: #333;
+  font-size: 1.25rem;
+}
+
+/* LABELS */
+.custom-modal-style .form-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #555;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* INPUTS */
+.custom-modal-style .form-control {
+  background-color: #f4f6f9;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 12px 15px;
+  font-size: 0.95rem;
+  color: #333;
+  transition: all 0.3s ease;
+  box-shadow: none;
+}
+
+/* INPUT DESHABILITADO */
+.custom-modal-style .form-control:disabled {
+  background-color: #e9ecef;
+  color: #6c757d;
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+.custom-modal-style .form-control:not(:disabled):hover {
+  background-color: #eef2f7;
+}
+
+.custom-modal-style .form-control:focus {
+  background-color: #ffffff;
+  border-color: #406AFF;
+  box-shadow: 0 4px 15px rgba(72, 88, 232, 0.15);
+}
+
+.custom-modal-style ::placeholder {
+  color: #adb5bd;
+  font-size: 0.9rem;
+}
+
+/* BOTONES */
+.btn-primary {
+  background-color: #406AFF;
+  border: none;
+  font-weight: 600;
+  border-radius: 8px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.btn-primary:hover {
+  background-color: #3c4ed6;
+  transform: translateY(-1px);
+}
+
+.btn-light {
+  background-color: #f8f9fa;
+  border: 1px solid #eee;
+  color: #555;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.btn-light:hover {
+  background-color: #e2e6ea;
+}
