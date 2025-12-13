@@ -1,4 +1,4 @@
-<div class="container my-5 fade-in-up">
+<div class="container my-4 fade-in-up">
 
   <!-- INTRODUCCION -->
   <div class="mb-5 text-center">
@@ -12,23 +12,38 @@
     <div class="col-md-6 mb-4">
 
       <!-- HORAS POR PROYECTO -->
-      <div class="card shadow-sm p-4 h-100">
-        <h5 class="mb-1">Horas por Proyecto</h5>
-        <p class="text-muted small mb-4">Tiempo invertido en cada proyecto</p>
+      <div class="card shadow-sm p-4 h-100 d-flex flex-column">
 
-        <ng-container *ngFor="let p of proyectos">
-          <div class="d-flex justify-content-between align-items-center mb-1">
-            <span class="project-name">{{ p.nombre }}</span>
-            <span class="progress-time-label">{{ p.horas }}h</span>
-            <span [class]="getClaseEtiquetaEstado(p.estado)">{{ p.estado }}</span>
-          </div>
+        <div>
+          <h5 class="mb-1">Horas por Proyecto</h5>
+          <p class="text-muted small mb-4">Tiempo invertido en cada proyecto</p>
+        </div>
 
-          <div class="progress custom-progress-bar mb-3" style="height: 10px;">
-            <div class="progress-bar" [class]="getClaseEstado(p.estado)" role="progressbar"
-              [attr.aria-valuenow]="p.horas" aria-valuemin="0" [attr.aria-valuemax]="getHorasMaximas()"
-              [style.width]="getAnchoBarra(p.horas)"></div>
-          </div>
-        </ng-container>
+        <!-- LOADING -->
+        <div *ngIf="loading" class="col-12 d-flex flex-column justify-content-center align-items-center h-100">
+          <div class="spinner-border" style="color: #406AFF;" role="status"></div>
+          <p class="mt-2 text-muted mb-0 small">Cargando proyectos...</p>
+        </div>
+
+        <div class="project-list-wrapper flex-grow-1 d-flex flex-column justify-content-evenly overflow-auto" *ngIf="!loading" >
+
+          <ng-container *ngFor="let p of proyectos">
+            <div class="project-item py-1">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="project-name">{{ p.nombre }}</span>
+                <span class="progress-time-label">{{ p.horas }}h</span>
+                <span [class]="getClaseEtiquetaEstado(p.estado)">{{ p.estado }}</span>
+              </div>
+
+              <div class="progress custom-progress-bar mb-2" style="height: 10px;">
+                <div class="progress-bar" [class]="getClaseEstado(p.estado)" role="progressbar"
+                  [attr.aria-valuenow]="p.horas" aria-valuemin="0" [attr.aria-valuemax]="getHorasMaximas()"
+                  [style.width]="getAnchoBarra(p.horas)"></div>
+              </div>
+            </div>
+          </ng-container>
+          
+        </div>
 
         <div class="mt-auto">
           <hr class="mt-4 mb-3">
@@ -60,14 +75,20 @@
           <span class="legend-item"><span class="legend-box bg-primary"></span>En Progreso</span>
           <span class="legend-item"><span class="legend-box bg-success"></span>Completados / Finalizados</span>
         </div>
+        
+        <!-- LOADING -->
+        <div *ngIf="loading" class="col-12 d-flex flex-column justify-content-center align-items-center h-100">
+          <div class="spinner-border" style="color: #406AFF;" role="status"></div>
+          <p class="mt-2 text-muted mb-0 small">Cargando proyectos...</p>
+        </div>
 
         <ng-container *ngFor="let mesData of proyectosPorMes">
-          <div class="d-flex justify-content-between align-items-center my-4">
+          <div class="d-flex justify-content-between align-items-center my-4" *ngIf="!loading">
             <span class="month-name">{{ mesData.mes }}</span>
             <span class="total-projects">{{ mesData.total }} proyectos</span>
           </div>
 
-          <div class="progress progress-stacked mb-3" style="height: 25px;">
+          <div class="progress progress-stacked mb-3" style="height: 25px;" *ngIf="!loading">
             <div *ngFor="let estado of mesData.estados" class="progress-bar" [class]="estado.clase" role="progressbar"
               [style.width]="estado.porcentaje + '%'" [attr.aria-valuenow]="estado.conteo" aria-valuemin="0"
               [attr.aria-valuemax]="mesData.total" title="{{ estado.estado }}: {{ estado.conteo }} proyectos">

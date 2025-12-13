@@ -25,10 +25,15 @@
       </div>
 
       <div class="row g-4">
+        <!-- LOADING -->
+        <div *ngIf="loadingServicios" class="col-12 d-flex flex-column justify-content-center align-items-center h-100">
+          <div class="spinner-border text-primary" role="status"></div>
+          <p class="mt-2 text-muted mb-0 small">Cargando servicios...</p>
+        </div>
 
         <div class="col-md-4" *ngFor="let servicio of servicios; let i = index">
 
-          <div class="service-card p-4 h-100">
+          <div class="service-card p-4 h-100" *ngIf="!loadingServicios">
             <div class="icon-box mb-3">
               <i class="bi {{ iconos[i] || 'bi-star' }} fs-2"></i>
             </div>
@@ -51,8 +56,14 @@
         <h2 class="fw-bold section-title">Proyectos Recientes</h2>
       </div>
 
+      <!-- LOADING -->
+      <div *ngIf="loadingProyectos" class="col-12 d-flex flex-column justify-content-center align-items-center h-100">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-2 text-muted mb-0 small">Cargando proyectos...</p>
+      </div>
+
       <div id="carouselExampleCaptions" class="carousel slide project-carousel shadow-lg rounded-4 overflow-hidden"
-        data-bs-ride="carousel">
+        data-bs-ride="carousel" *ngIf="!loadingServicios">
 
         <div class="carousel-indicators">
           <button type="button" *ngFor="let item of carrousel; let i = index" data-bs-target="#carouselExampleCaptions"
@@ -70,7 +81,7 @@
 
             <div class="carousel-caption project-caption">
               <h5 class="fw-bold mb-2 text-white">{{img.nombre}}</h5>
-              <p class="mb-0 text-white-50 description-text">{{img.descripcion}}</p>
+              <p class="mb-0 text-grey-50 description-text">{{img.descripcion}}</p>
             </div>
           </div>
         </div>

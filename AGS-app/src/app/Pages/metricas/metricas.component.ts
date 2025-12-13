@@ -9,6 +9,7 @@ import { ProyectosService } from '../../Services/proyectos.service';
 })
 export class MetricasComponent implements OnInit {
 
+  loading = false;
   proyectos: any;
   totalHoras: any;
   cantProyectos: any;
@@ -72,6 +73,7 @@ export class MetricasComponent implements OnInit {
   }
 
   getProyectos() {
+    this.loading = true;
     this.proyectoService.getProject().subscribe(x => {
       this.proyectos = x
       this.totalHoras = this.proyectos.reduce((acumulador, proyecto) => {
@@ -88,6 +90,7 @@ export class MetricasComponent implements OnInit {
       }
       this.procesarProyectosPorMes();
       this.calcularConteoPorEstado();
+      this.loading = false;
     })
   }
 

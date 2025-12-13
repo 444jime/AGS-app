@@ -267,3 +267,74 @@
   width: 100%;
   margin-bottom: 0;
 }
+
+/* RESPONSIVE */
+@media (max-width: 991px) {
+  .usuarios-card { padding: 20px 15px; }
+  h1.fw-bold { font-size: 1.8rem; }
+  .custom-hover-table td { padding: 15px 5px; }
+}
+
+@media (max-width: 768px) {
+  .usuarios-card h3 { font-size: 1.4rem !important; }
+  .fw-bold.text-dark.fs-5 { font-size: 1rem !important; }
+  .text-secondary.small { font-size: 0.75rem !important; }
+  .contact-item { font-size: 0.85rem; }
+  .pe-4 { padding-right: 5px !important; }
+  .ps-4 { padding-left: 5px !important; }
+  
+  .usuarios-card .d-flex.justify-content-between.align-items-end {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 15px;
+  }
+
+  .custom-hover-table thead th {
+    font-size: 0.7rem;
+    padding-bottom: 10px;
+  }
+
+  .avatar-outline {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    font-size: 0.9rem;
+    margin-right: 10px !important;
+  }
+
+  .btn-action-outline {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+    margin-left: 4px;
+  }
+}
+
+@media (max-width: 576px) {
+  .nav-link.active { border-radius: 10px; }
+  .switch-container button { flex: 1; }
+  .modal-body { padding: 15px !important; }
+  .form-control { font-size: 0.9rem; }
+  h1.fw-bold { font-size: 1.5rem; }
+  h2.fw-bold { font-size: 1.3rem; }
+  p.fs-5 { font-size: 1rem !important; }
+  
+  .nav-switch {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+  
+  .nav-link {
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .switch-container {
+    width: 100%;
+    justify-content: space-between;
+  }  
+}

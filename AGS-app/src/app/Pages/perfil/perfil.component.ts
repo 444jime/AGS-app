@@ -30,6 +30,8 @@ export class PerfilComponent implements OnInit {
   passMsg = false;
 
   // EVENTO CALENDARIO
+  eventoSeleccionado: any = null;
+  showModalEvento: boolean = false;
   openOptions = false;
   selectedDate: any;
   proyectoCalendar: any;
@@ -42,6 +44,7 @@ export class PerfilComponent implements OnInit {
     selectable: true,
     locale: esLocale,
     dateClick: (info: any) => this.handleDateClick(info),
+    eventClick: (info: any) => this.handleEventClick(info) 
   }
 
   // TODO
@@ -50,6 +53,8 @@ export class PerfilComponent implements OnInit {
   horasMesActual: any
   textoMensaje: string = "";
   mensajeExito: boolean = false;
+  loading = false;
+  loadingUser = false;
 
 
   constructor(
@@ -65,16 +70,20 @@ export class PerfilComponent implements OnInit {
 
   // USUARIO
   getUser() {
+    this.loadingUser = true;
+
     this.userService.GetUserById(this.userId).subscribe(x => {
       this.user = x
       this.nombre = this.user.nombre
       this.apellido = this.user.apellido
       this.mail = this.user.mail
+      this.loadingUser = false;
     })
   }
 
   // PROYECTOS SOLO ACTIVOS
   getProyectos() {
+    this.loading = true;
     this.proyectoService.getProject().subscribe((data: any[]) => {
 
       let filtrados = data.filter(p =>
@@ -88,6 +97,7 @@ export class PerfilComponent implements OnInit {
       })
 
       this.cantidadActivos = this.proyectos.length;
+      this.loading = false
     })
   }
 
@@ -107,6 +117,19 @@ export class PerfilComponent implements OnInit {
     })
   }
 
+  // VER EVENTO
+  handleEventClick(clickInfo: any) {
+    this.eventoSeleccionado = {
+      titulo: clickInfo.event.title,
+      fecha: clickInfo.event.startStr,
+      horas: clickInfo.event.extendedProps.horas,
+    };
+
+    const btn = document.getElementById('btnVerDetallesEvento');
+    if (btn) btn.click();
+  }
+
+  // CALCULAR HORAS
   calcularHorasMesActual() {
     const hoy = new Date();
     const mesActual = hoy.getMonth()
@@ -161,6 +184,7 @@ export class PerfilComponent implements OnInit {
 
         this.mostrarExito("La contraseña fue cambiada exitosamente.");
         localStorage.setItem("change_pass", "false")
+        this.change_pass = false;
       },
       error: err => console.error(err)
     })
@@ -213,7 +237,8 @@ export class PerfilComponent implements OnInit {
       this.updateProject(proyecto.id, nuevasHoras);
       const eventVisual = {
         title: `${this.proyectoCalendar.nombre} - ${this.horas} hs`,
-        date: this.selectedDate
+        date: this.selectedDate,
+        horas: Number(this.horas)
       };
 
       let eventoParaBD = {
@@ -243,6 +268,7 @@ export class PerfilComponent implements OnInit {
     })
 
     this.getProyectos()
+    this.calcularHorasMesActual()
   }
 
 }
