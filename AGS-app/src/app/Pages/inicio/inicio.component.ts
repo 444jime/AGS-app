@@ -10,6 +10,8 @@ import { ServiciosEmpresaService } from '../../Services/servicios-empresa.servic
 })
 export class InicioComponent implements OnInit{
   
+  loadingProyectos = false;
+  loadingServicios = false;
   images:any;
   imagenHeader:string = 'img/HEADER.jpg';
   imagesCarrousel:any;
@@ -36,17 +38,21 @@ export class InicioComponent implements OnInit{
   }  
 
   getProyectos(){
+    this.loadingProyectos = true;
     this.proyectosService.getProject().subscribe(x=>{
       this.imagesCarrousel = x
       for (let i of this.imagesCarrousel){   
         this.carrousel.push(i)
       }
+      this.loadingProyectos = false;
     })
   }
 
   getServicios() {
+    this.loadingServicios = true;
     this.ServiciosService.getServices().subscribe( x => {
       this.servicios = x      
+      this.loadingServicios = false;
     })
   }
   

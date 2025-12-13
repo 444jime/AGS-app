@@ -11,6 +11,7 @@ import { ServiciosEmpresaService } from '../../Services/servicios-empresa.servic
 export class ServiciosProyectosComponent implements OnInit {
 
   // TODO
+  loadingServicios = false;
   showProyects = false;
   showServices = true;
   proyectos: any;
@@ -33,11 +34,10 @@ export class ServiciosProyectosComponent implements OnInit {
   id: any
   nombreEdit: any;
   descripcionEdit: any;
-  fileEdit!: File;
+  // fileEdit!: File;
   horasEdit: any;
   estadoEdit: any;
   fechaInicioEdit: any;
-  fechaFinEdit: any; //LA TENGO Q SACAR
   fileProyectoEdit: File | null = null;
   imagenPreviaEdit: any = null;
   nombreArchivoEdit: string = 'Imagen actual del proyecto';
@@ -182,14 +182,15 @@ export class ServiciosProyectosComponent implements OnInit {
     formData.append("estado", this.estadoEdit)
     formData.append("horas", this.horasEdit)
 
-    if (this.fileEdit) {
-      formData.append("imagenFile", this.fileEdit
-      )
+    if (this.fileProyectoEdit) {
+      formData.append("imagenFile", this.fileProyectoEdit)
     }
 
     this.proyectosService.editProject(this.id, formData).subscribe({
       next: () => {
         this.getProyectos();
+        this.fileProyectoEdit = null;
+
         const btn = document.getElementById('btnCerrarEditarP');
         if (btn) btn.click();
 
@@ -219,8 +220,10 @@ export class ServiciosProyectosComponent implements OnInit {
 
   // SERVICIOS
   getServicios() {
+    this.loadingServicios = true;
     this.serviciosService.getServices().subscribe(x => {
       this.servicios = x
+      this.loadingServicios = false;
     })
   }
 

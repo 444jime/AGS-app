@@ -28,8 +28,7 @@
 
     <div class="usuarios-card">
 
-      <div class="d-flex justify-content-between align-items-end mb-4 px-2 border-bottom pb-3">
-
+      <div class="d-flex justify-content-between align-items-end mb-3 px-2 border-bottom pb-3">
         <div>
           <h3 class="fw-bold mb-1" style="color: #406AFF; font-size: 1.75rem;">
             Usuarios Registrados
@@ -53,12 +52,13 @@
 
       </div>
 
-      <div class="table-responsive">
-        <table class="table align-middle custom-hover-table">
-        </table>
+      <!-- LOADING -->
+      <div *ngIf="loading" class="text-center p-5 my-3">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-2 text-muted mb-0 small">Cargando usuario...</p>
       </div>
 
-      <div class="table-responsive">
+      <div class="table-responsive" *ngIf="!loading">
         <table class="table align-middle custom-hover-table">
           <thead>
             <tr>
@@ -140,8 +140,8 @@
       </div>
     </div>
   </div>
-
 </div>
+
 <!-- Modal DETALLES -->
 <div class="modal fade" id="modalDetalles" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -218,28 +218,55 @@
       </div>
 
       <div class="modal-body px-4 pt-4">
-        <form>
+        <form #editForm="ngForm">
 
           <div class="row g-3 mb-3">
+
             <div class="col-md-6">
-              <label class="form-label text-muted small text-uppercase fw-bold">Nombre</label>
-              <input type="text" class="form-control bg-light border-0" [(ngModel)]="nombreEdit" name="nombreEdit" />
+              <div class="d-flex justify-content-between align-items-center">
+                <label class="form-label text-muted small text-uppercase fw-bold">Nombre</label>
+                <small class="text-muted">{{ nombreEdit?.length || 0 }} / 50</small>
+              </div>
+              <input type="text" class="form-control bg-light border-0" [(ngModel)]="nombreEdit" name="nombreEdit"
+                maxlength="50" required />
             </div>
+
             <div class="col-md-6">
-              <label class="form-label text-muted small text-uppercase fw-bold">Apellido</label>
-              <input type="text" class="form-control bg-light border-0" [(ngModel)]="apellidoEdit"
-                name="apellidoEdit" />
+              <div class="d-flex justify-content-between align-items-center">
+                <label class="form-label text-muted small text-uppercase fw-bold">Apellido</label>
+                <small class="text-muted">{{ apellidoEdit?.length || 0 }} / 50</small>
+              </div>
+              <input type="text" class="form-control bg-light border-0" [(ngModel)]="apellidoEdit" name="apellidoEdit"
+                maxlength="50" required />
             </div>
           </div>
 
           <div class="mb-3">
             <label class="form-label text-muted small text-uppercase fw-bold">Email</label>
-            <input type="email" class="form-control bg-light border-0" [(ngModel)]="mailEdit" name="mailEdit" />
+            <input type="email" class="form-control bg-light border-0" [(ngModel)]="mailEdit" name="mailEdit"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
+            <div
+              *ngIf="editForm.controls['mailEdit']?.invalid && (editForm.controls['mailEdit']?.dirty || editForm.controls['mailEdit']?.touched)"
+              class="text-danger small mt-1">
+              Formato de email inválido
+            </div>
           </div>
 
           <div class="mb-3">
-            <label class="form-label text-muted small text-uppercase fw-bold">Teléfono</label>
-            <input type="text" class="form-control bg-light border-0" [(ngModel)]="telefonoEdit" name="telefonoEdit" />
+            <div class="d-flex justify-content-between align-items-center">
+              <label class="form-label text-muted small text-uppercase fw-bold">Teléfono</label>
+              <small class="text-muted" [ngClass]="{'text-danger': telefonoEdit?.length !== 10}">
+                {{ telefonoEdit?.length || 0 }} / 10
+              </small>
+            </div>
+
+            <input type="tel" class="form-control bg-light border-0" [(ngModel)]="telefonoEdit" name="telefonoEdit"
+              maxlength="10" placeholder="Solo números" pattern="^[0-9]{10}$" required />
+            <div
+              *ngIf="editForm.controls['telefonoEdit']?.invalid && (editForm.controls['telefonoEdit']?.dirty || editForm.controls['telefonoEdit']?.touched)"
+              class="text-danger small mt-1">
+              El teléfono debe tener 10 números y sin letras.
+            </div>
           </div>
 
         </form>
@@ -247,7 +274,8 @@
 
       <div class="modal-footer border-top-0 pt-0 pb-4 px-4">
         <button id="btnCerrarEditar" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cancelar</button>
-        <button class="btn btn-primary rounded-pill px-4 shadow-sm" (click)="editarUser()">
+        <button class="btn btn-primary rounded-pill px-4 shadow-sm" (click)="editarUser()"
+          [disabled]="editForm.invalid">
           Guardar Cambios
         </button>
       </div>
@@ -303,29 +331,53 @@
 
     <div class="row g-3 mb-3">
       <div class="col-md-6">
-        <label class="form-label">Nombre *</label>
-        <input type="text" class="form-control" placeholder="Ej: Juan" name="nombre" [(ngModel)]="nombre" required>
+        <div class="d-flex justify-content-between">
+          <label class="form-label text-muted small text-uppercase fw-bold">Nombre *</label>
+          <small class="text-muted">{{ nombre?.length || 0 }}/50</small>
+        </div>
+        <input type="text" class="form-control" placeholder="Ej: Juan" name="nombre" [(ngModel)]="nombre" maxlength="50"
+          required>
       </div>
+
       <div class="col-md-6">
-        <label class="form-label">Apellido *</label>
-        <input type="text" class="form-control" placeholder="Ej: Pérez" name="apellido" [(ngModel)]="apellido" required>
+        <div class="d-flex justify-content-between">
+          <label class="form-label text-muted small text-uppercase fw-bold">Apellido *</label>
+          <small class="text-muted">{{ apellido?.length || 0 }}/50</small>
+        </div>
+        <input type="text" class="form-control" placeholder="Ej: Pérez" name="apellido" [(ngModel)]="apellido"
+          maxlength="50" required>
       </div>
     </div>
 
     <div class="mb-3">
-      <label class="form-label">Email Corporativo *</label>
+      <label class="form-label text-muted small text-uppercase fw-bold">Email Corporativo *</label>
       <input type="email" class="form-control" placeholder="juan.perez@empresa.com" name="mail" [(ngModel)]="mail"
-        required email>
+        required>
+      <div
+        *ngIf="formUsuario.controls['mail']?.invalid && (formUsuario.controls['mail']?.dirty || formUsuario.controls['mail']?.touched)"
+        class="text-danger small mt-1">
+        Formato de email inválido
+      </div>
     </div>
 
     <div class="row g-3 mb-4">
       <div class="col-md-6">
-        <label class="form-label">Teléfono *</label>
-        <input type="text" class="form-control" placeholder="Ej: 11 1234 5678" name="telefono" [(ngModel)]="telefono"
-          required>
+        <div class="d-flex justify-content-between">
+          <label class="form-label text-muted small text-uppercase fw-bold">Teléfono *</label>
+          <small class="text-muted">{{ telefono?.length || 0 }}/10</small>
+        </div>
+        <input type="text" class="form-control" placeholder="Ej: 1112345678" name="telefono" [(ngModel)]="telefono"
+          maxlength="10" required>
       </div>
+
       <div class="col-md-6">
-        <label class="form-label">Contraseña *</label>
+        <div class="d-flex justify-content-between align-items-center">
+          <label class="form-label text-muted small text-uppercase fw-bold">Contraseña *</label>
+          <small class="text-muted" [class.text-danger]="(contrasena?.length || 0) < 8"
+            [class.text-success]="(contrasena?.length || 0) >= 8">
+            Mín. 8 caracteres
+          </small>
+        </div>
         <input type="password" class="form-control" placeholder="******" name="contrasena" [(ngModel)]="contrasena"
           required minlength="8">
       </div>

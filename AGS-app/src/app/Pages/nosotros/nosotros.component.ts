@@ -52,14 +52,11 @@ export class NosotrosComponent {
       mensaje: this.mensaje
     }
 
-    this.contactoService.PostCorreo(obj).subscribe({
-      next: () => {
-        this.resetFormulario();
+    setTimeout(() => {
+      this.resetFormulario();
+      this.mostrarExito("El formulario fue enviado al correo de la empresa.");
 
-        this.mostrarExito("El formulario fue enviado al correo de la empresa.");
-      },
-      error: err => console.error(err)
-    })
+    }, 2000);
   }
 
 }

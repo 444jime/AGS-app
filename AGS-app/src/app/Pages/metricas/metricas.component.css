@@ -127,6 +127,21 @@ span[class*="estado-"] {
   text-align: right;
 }
 
+.project-list-wrapper {
+  min-height: 150px;
+  scrollbar-width: thin;
+  scrollbar-color: #dee2e6 transparent;
+}
+
+.project-list-wrapper::-webkit-scrollbar {
+  width: 4px;
+}
+
+.project-list-wrapper::-webkit-scrollbar-thumb {
+  background-color: #dee2e6;
+  border-radius: 4px;
+}
+
 /* PROYECTOS POR MES */
 .progress-stacked {
   background-color: #f1f3f5;

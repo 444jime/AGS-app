@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../Services/user.service';
-import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-panel-administrativo',
@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class PanelAdministrativoComponent implements OnInit {
 
   // TODOS / OTROS
+  todosLosUsuarios: any[] = [];
   listaUsuarios: any;
   estadoActual: 'activo' | 'inactivo' = 'activo'
   showList = true;
@@ -19,6 +20,7 @@ export class PanelAdministrativoComponent implements OnInit {
   textoMensaje: string = "";
   mensajeExito: boolean = false;
   textoError:any;
+  loading = false;
 
   // CREACION
   id: any;
@@ -47,10 +49,11 @@ export class PanelAdministrativoComponent implements OnInit {
   estaEliminado: any;
 
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.getUserByStatus(this.estadoActual)
+    this.getUsers()
   }
 
   // NAVBAR
@@ -86,18 +89,41 @@ export class PanelAdministrativoComponent implements OnInit {
     })
   }
 
-  getUserByStatus(status: 'activo' | 'inactivo') {
-    this.estadoActual = status
+  // TODOS LOS USUARIOS
+  getUsers() {
+    this.loading = true;
 
-    this.userService.GetUsers(status).subscribe({
-      next: (x) => {
-        this.listaUsuarios = x
+    forkJoin({
+      activos: this.userService.GetUsers('activo'),
+      inactivos: this.userService.GetUsers('inactivo')
+    }).subscribe({
+      next: (resultado: any) => {
+        this.todosLosUsuarios = [...resultado.activos, ...resultado.inactivos];        
+        this.filtrarLista();
+
+        this.loading = false;
       },
       error: (err) => {
-        console.error(err)
-        this.listaUsuarios = []
+        console.error("Error cargando usuarios:", err);
+        this.listaUsuarios = [];
+        this.loading = false;
       }
-    })
+    });
+  }
+
+  // FILTROS
+  filtrarLista() {
+    if (this.estadoActual === 'activo') {
+      this.listaUsuarios = this.todosLosUsuarios.filter(u => u.fechaBaja === null);
+    } else {
+      this.listaUsuarios = this.todosLosUsuarios.filter(u => u.fechaBaja !== null);
+    }
+  }
+
+  // USUARIOS ACTIVOS / INACTIVOS
+  getUserByStatus(status: 'activo' | 'inactivo') {
+    this.estadoActual = status;
+    this.filtrarLista();
   }
 
   // DETALLES
@@ -135,6 +161,7 @@ export class PanelAdministrativoComponent implements OnInit {
     this.userService.EditUser(user.id, user).subscribe({
       next: () => {
         this.getUsersActivos();
+        this.getUsers();
         const btn = document.getElementById('btnCerrarEditar');
         if (btn) btn.click();
 
@@ -153,6 +180,7 @@ export class PanelAdministrativoComponent implements OnInit {
     this.userService.DeleteUser(this.idDelete).subscribe({
       next: () => {
         this.getUsersActivos();
+        this.getUsers();
         const btn = document.getElementById('btnCerrarEliminar');
         if (btn) btn.click();
 
@@ -179,6 +207,7 @@ export class PanelAdministrativoComponent implements OnInit {
         if (data.result === true) {
           this.mensajeError = false
 
+          this.getUsers();
           this.getUsersActivos();
           this.resetFormulario();
           this.mostrarExito("El usuario ha sido creado correctamente.");

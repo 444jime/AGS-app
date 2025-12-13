@@ -5,7 +5,7 @@
     <div class="container">
       <h1 class="fw-bold text-primary display-5 ">Gestión de Contenidos</h1>
       <p class="text-muted mx-auto lead fs-6" style="max-width: 650px;">
-        Administra el portafolio digital. 
+        Administra el portafolio digital.
       </p>
     </div>
   </header>
@@ -40,9 +40,14 @@
       <div class="row g-3 mb-3">
 
         <div class="col-md-8">
-          <label class="form-label">Nombre del proyecto *</label>
-          <input type="text" class="form-control" placeholder="Ejemplo: Sitio Web de Fotografía" name="nombre"
-            [(ngModel)]="nombre" required>
+
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <label class="form-label mb-0">Nombre del proyecto *</label>
+            <span class="text-muted small">{{ nombre?.length || 0 }} / 50</span>
+          </div>
+
+          <input type="text" class="form-control" placeholder="Ejemplo: Plano Municipal" name="nombre"
+            [(ngModel)]="nombre" required maxlength="50">
         </div>
 
         <div class="col-md-4">
@@ -73,7 +78,10 @@
       <div class="mb-4">
         <label class="form-label">Breve descripción *</label>
         <textarea class="form-control" rows="3" placeholder="Describe brevemente el proyecto..." name="descripcion"
-          [(ngModel)]="descripcion" required></textarea>
+          [(ngModel)]="descripcion" required maxlength="255"></textarea>
+        <div class="text-end text-muted small mt-1">
+          {{ descripcion?.length || 0 }} / 255 caracteres
+        </div>
       </div>
 
       <div class="mb-4">
@@ -121,7 +129,7 @@
   </section>
 
   <!-- SECTOR DE PROYECTOS -->
-  <section *ngIf="showProyects" id="servicios" class="py-5">
+  <section *ngIf="showProyects" id="proyectos" class="py-5">
     <div class="container text-center">
       <h4 class="mb-4">Proyectos actuales:</h4>
 
@@ -189,7 +197,7 @@
   </section>
 
   <!-- FORMULARIO DE SERVICIOS -->
-  <section class="py-5 bg-light container shadow-lg rounded-4" id="servicios" *ngIf="showServices">
+  <section class="py-5 bg-light container shadow-lg rounded-4" id="servicio" *ngIf="showServices">
 
     <div class="text-center mb-4">
       <h2 class="fw-bold text-primary">Agregar Nuevo Servicio</h2>
@@ -199,15 +207,21 @@
     <form (ngSubmit)="crearServicio()" #formServicio="ngForm" class="mx-auto" style="max-width: 600px;">
 
       <div class="mb-3">
-        <label class="form-label">Nombre del servicio *</label>
-        <input type="text" class="form-control" placeholder="Ejemplo: Desarrollo Web" name="nombreServicio"
-          [(ngModel)]="nombreServicio" required>
+        <div class="d-flex justify-content-between align-items-center mb-1">
+          <label class="form-label mb-0">Nombre del servicio *</label>
+          <span class="text-muted small">{{ nombreServicio?.length || 0 }} / 50</span>
+        </div>
+        <input type="text" class="form-control" placeholder="Ejemplo: Instalaciones de gas" name="nombreServicio"
+          [(ngModel)]="nombreServicio" required maxlength="50">
       </div>
 
       <div class="mb-4">
         <label class="form-label">Descripción del servicio *</label>
         <textarea class="form-control" rows="3" placeholder="Describe brevemente el servicio..." name="descServicio"
-          [(ngModel)]="descServicio" required></textarea>
+          [(ngModel)]="descServicio" required maxlength="255"></textarea>
+        <div class="text-end text-muted small mt-1">
+          {{ descServicio?.length || 0 }} / 255 caracteres
+        </div>
       </div>
 
       <div class="text-center mt-4 border-top pt-3">
@@ -226,9 +240,15 @@
 
       <div class="row justify-content-center g-4">
 
+        <!-- LOADING -->
+        <div *ngIf="loadingServicios" class="col-12 d-flex flex-column justify-content-center align-items-center h-100">
+          <div class="spinner-border text-primary" role="status"></div>
+          <p class="mt-2 text-muted mb-0 small">Cargando servicios...</p>
+        </div>
+
         <div class="col-12 col-md-6 col-lg-4 col-xl-4" *ngFor="let s of servicios">
 
-          <div class="card project-card service-card-adjust">
+          <div class="card project-card service-card-adjust" *ngIf="!loadingServicios">
 
             <div class="service-card-header">
               <div class="service-icon-box">
@@ -280,16 +300,22 @@
 
           <!-- Nombre -->
           <div class="mb-4">
-            <label class="form-label text-muted small text-uppercase fw-bold">Nombre del servicio</label>
+            <div class="d-flex justify-content-between align-items-center">
+              <label class="form-label text-muted small text-uppercase fw-bold">Nombre del servicio</label>
+              <small class="text-muted">{{ nombreServicioEdit?.length || 0 }} / 50</small>
+            </div>
             <input type="text" class="form-control form-control-lg bg-light border-0" [(ngModel)]="nombreServicioEdit"
-              name="nombre" placeholder="Ej: Consultoría BIM" />
+              name="nombre" maxlength="50" placeholder="Ej: Consultoría BIM" />
           </div>
 
           <!-- Descripción -->
           <div class="mb-3">
             <label class="form-label text-muted small text-uppercase fw-bold">Descripción detallada</label>
             <textarea class="form-control bg-light border-0" rows="5" [(ngModel)]="descripcionServicioEdit"
-              name="descServicio" placeholder="Escribe aquí..."></textarea>
+              name="descServicio" maxlength="255" placeholder="Escribe aquí..."></textarea>
+            <div class="text-end mt-1">
+              <small class="text-muted">{{ descripcionServicioEdit?.length || 0 }} / 255</small>
+            </div>
           </div>
 
         </form>
@@ -360,38 +386,42 @@
 
       <div class="modal-body px-4 pt-4">
 
-        <form class="form-editar">
+        <form class="form-editar" #editForm="ngForm">
 
           <div class="row g-3 mb-3">
-
             <div class="col-md-6">
-              <label class="form-label text-muted small text-uppercase fw-bold">Nombre del proyecto</label>
+              <div class="d-flex justify-content-between align-items-center">
+                <label class="form-label text-muted small text-uppercase fw-bold">Nombre del proyecto</label>
+                <small class="text-muted">{{ nombreEdit?.length || 0 }} / 50</small>
+              </div>
+
               <input type="text" class="form-control form-control-lg bg-light border-0" [(ngModel)]="nombreEdit"
-                name="nombre" placeholder="Nombre del proyecto" />
+                name="nombre" maxlength="50" placeholder="Nombre del proyecto" required />
             </div>
 
             <div class="col-md-6">
               <label class="form-label text-muted small text-uppercase fw-bold">Fecha de inicio</label>
+
               <input type="date" class="form-control form-control-lg bg-light border-0" [(ngModel)]="fechaInicioEdit"
-                name="fechaInicioEdit" />
+                name="fechaInicioEdit" required />
             </div>
 
           </div>
 
           <div class="row g-3 mb-3">
-
             <div class="col-md-6">
               <label class="form-label text-muted small text-uppercase fw-bold">Horas</label>
+
               <input type="number" class="form-control bg-light border-0" [(ngModel)]="horasEdit" name="horasEdit"
-                placeholder="0" />
+                placeholder="0" required />
             </div>
 
             <div class="col-md-6">
               <label class="form-label text-muted small text-uppercase fw-bold">Estado actual</label>
-              <select class="form-select bg-light border-0" [(ngModel)]="estadoEdit" name="estado">
+              <select class="form-select bg-light border-0" [(ngModel)]="estadoEdit" name="estado" required>
                 <option value="Pendiente">Pendiente</option>
                 <option value="En progreso">En progreso</option>
-                <option value="Finalizado">Finalizado</option>
+                <option value="Finalizado" disabled>Finalizado</option>
               </select>
             </div>
 
@@ -399,8 +429,12 @@
 
           <div class="mb-4">
             <label class="form-label text-muted small text-uppercase fw-bold">Descripción</label>
-            <textarea class="form-control bg-light border-0" rows="3" [(ngModel)]="descripcionEdit"
-              name="descripcion"></textarea>
+
+            <textarea class="form-control bg-light border-0" rows="3" [(ngModel)]="descripcionEdit" name="descripcion"
+              maxlength="255" required></textarea>
+            <div class="text-end mt-1">
+              <small class="text-muted">{{ descripcionEdit?.length || 0 }} / 255</small>
+            </div>
           </div>
 
           <div class="mb-3">
@@ -446,13 +480,16 @@
 
         </form>
 
-      </div>
+        <div class="modal-footer border-top-0 pt-0 pb-4 px-4">
+          <button id="btnCerrarEditarP" class="btn btn-light px-4 rounded-pill"
+            data-bs-dismiss="modal">Cancelar</button>
 
-      <div class="modal-footer border-top-0 pt-0 pb-4 px-4">
-        <button id="btnCerrarEditarP" class="btn btn-light px-4 rounded-pill" data-bs-dismiss="modal">Cancelar</button>
-        <button class="btn btn-primary px-4 rounded-pill shadow-sm" (click)="editarProyecto()">
-          Guardar Cambios
-        </button>
+          <button class="btn btn-primary px-4 rounded-pill shadow-sm" (click)="editarProyecto()"
+            [disabled]="editForm.invalid">
+            Guardar Cambios
+          </button>
+        </div>
+
       </div>
 
     </div>

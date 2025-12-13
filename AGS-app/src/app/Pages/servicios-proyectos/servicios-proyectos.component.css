@@ -21,6 +21,10 @@
 }
 
 /* FORM */
+textarea.form-control {
+    resize: none !important;
+}
+
 .custom-file-upload label {
   cursor: pointer;
 }
@@ -273,4 +277,28 @@
 .cartel-flotante .alert {
   width: 100%;
   margin-bottom: 0;
+}
+
+/* FORMULARIOS SERVICIO / PROYECTO */
+#servicio, #proyecto {
+  width: 100%;
+  max-width: 800px !important;
+  margin: 30px auto !important;
+  padding: 40px !important; 
+}
+/* FORMUARIO PROYECTO */
+#proyecto {
+  max-width: 900px !important;
+  padding: 60px !important; 
+}
+
+/* RESPONSIVE */
+@media (max-width: 767px) {
+  #servicio, #proyecto {
+    width: 90% !important; 
+    max-width: 90% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 20px !important;
+  }
 }
