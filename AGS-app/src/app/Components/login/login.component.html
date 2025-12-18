@@ -25,7 +25,11 @@
       </div>
 
       <div class="d-grid mb-3">
-        <button class="btn btn-primary btn-lg login-btn" (click)="Login()">Entrar</button>
+        <button class="btn btn-primary btn-lg login-btn" (click)="Login()" [disabled]="loading">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+
+          <span>{{ loading ? 'Iniciando sesión...' : 'Entrar' }}</span>
+        </button>
       </div>
 
       <div class="text-center mt-3" *ngIf="msg">

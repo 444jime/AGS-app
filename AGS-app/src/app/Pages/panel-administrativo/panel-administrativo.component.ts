@@ -29,6 +29,7 @@ export class PanelAdministrativoComponent implements OnInit {
   telefono: any;
   mail: any;
   contrasena: any;
+  loadingCrear: boolean = false;
 
   // EDICION
   selectedUser: any;
@@ -37,9 +38,11 @@ export class PanelAdministrativoComponent implements OnInit {
   apellidoEdit: any;
   telefonoEdit: any;
   mailEdit: any;
+  loadingEdit: boolean = false;
 
   // ELIMINAR
   idDelete: any;
+  loadingDelete: boolean = false;
 
   // DETALLES
   detallesUsuario: any;
@@ -149,6 +152,9 @@ export class PanelAdministrativoComponent implements OnInit {
   }
 
   editarUser() {
+    if (this.loadingEdit) return;
+    this.loadingEdit = true;
+
     let user = {
       id: this.idEdit,
       nombre: this.nombreEdit,
@@ -160,6 +166,7 @@ export class PanelAdministrativoComponent implements OnInit {
 
     this.userService.EditUser(user.id, user).subscribe({
       next: () => {
+        this.loadingEdit = false;
         this.getUsersActivos();
         this.getUsers();
         const btn = document.getElementById('btnCerrarEditar');
@@ -167,7 +174,10 @@ export class PanelAdministrativoComponent implements OnInit {
 
         this.mostrarExito("Los cambios del usuario fueron guardados.");
       },
-      error: err => console.error(err)
+      error: err => {
+        console.error(err); 
+        this.loadingEdit = false;
+      }
     })
   }
 
@@ -177,21 +187,32 @@ export class PanelAdministrativoComponent implements OnInit {
   }
 
   deleteUser() {
+    if (this.loadingDelete) return;
+    this.loadingDelete = true;
+
     this.userService.DeleteUser(this.idDelete).subscribe({
       next: () => {
         this.getUsersActivos();
         this.getUsers();
         const btn = document.getElementById('btnCerrarEliminar');
         if (btn) btn.click();
-
+        
+        this.loadingDelete = false;
         this.mostrarExito("El usuario fue dado de baja exitosamente.");
       },
-      error: err => console.error(err)
+      error: err => { 
+        console.error(err);
+        this.loadingDelete = false;
+      }
     })
   }
 
   // CREAR
   createUser() {
+    if (this.loadingCrear) return;
+    this.loadingCrear = true;
+    this.mensajeError = false;
+
     let user = {
       id: 0,
       nombre: this.nombre,
@@ -205,6 +226,7 @@ export class PanelAdministrativoComponent implements OnInit {
     this.userService.CreateUser(user).subscribe({
       next: (data: any) => {        
         if (data.result === true) {
+          this.loadingCrear = false;
           this.mensajeError = false
 
           this.getUsers();
@@ -215,11 +237,13 @@ export class PanelAdministrativoComponent implements OnInit {
         } else {
           this.mensajeError = true
           this.textoError = data.message
+          this.loadingCrear = false;
           console.warn("El backend rechazó la creación:", data.message);
         }
       },
       error: err => {
         console.error(err);
+        this.loadingCrear = false;
       }
     })
   }

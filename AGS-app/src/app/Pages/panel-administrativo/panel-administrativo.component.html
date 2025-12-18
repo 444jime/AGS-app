@@ -275,8 +275,11 @@
       <div class="modal-footer border-top-0 pt-0 pb-4 px-4">
         <button id="btnCerrarEditar" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cancelar</button>
         <button class="btn btn-primary rounded-pill px-4 shadow-sm" (click)="editarUser()"
-          [disabled]="editForm.invalid">
-          Guardar Cambios
+          [disabled]="editForm.invalid || loadingEdit">
+          <span *ngIf="loadingEdit" class="spinner-border spinner-border-sm me-2" role="status"
+            aria-hidden="true"></span>
+
+          <span>{{ loadingEdit ? 'Guardando...' : 'Guardar Cambios' }}</span>
         </button>
       </div>
 
@@ -309,8 +312,14 @@
             class="btn btn-light text-muted px-4 fw-medium rounded-pill border-0" data-bs-dismiss="modal">
             Cancelar
           </button>
-          <button type="button" class="btn btn-danger px-4 fw-bold rounded-pill shadow-sm" (click)="deleteUser()">
-            Eliminar
+
+          <button type="button" class="btn btn-danger px-4 fw-bold rounded-pill shadow-sm" (click)="deleteUser()"
+            [disabled]="loadingDelete">
+
+            <span *ngIf="loadingDelete" class="spinner-border spinner-border-sm me-2" role="status"
+              aria-hidden="true"></span>
+
+            <span>{{ loadingDelete ? 'Eliminando...' : 'Eliminar' }}</span>
           </button>
         </div>
 
@@ -384,8 +393,11 @@
     </div>
 
     <div class="text-center mt-4 border-top pt-3">
-      <button type="submit" class="btn btn-primary btn-lg px-5" [disabled]="formUsuario.invalid">
-        Confirmar usuario
+      <button type="submit" class="btn btn-primary btn-lg px-5" [disabled]="formUsuario.invalid || loadingCrear">
+        <span *ngIf="loadingCrear" class="spinner-border spinner-border-sm me-2" role="status"
+          aria-hidden="true"></span>
+
+        <span>{{ loadingCrear ? 'Procesando...' : 'Confirmar usuario' }}</span>
       </button>
     </div>
 

@@ -15,6 +15,7 @@ export class NosotrosComponent {
   telefono: any;
   tipoProyecto: any;
   mensaje: any;
+  loading: boolean = false;
 
   // CARTELITO
   mensajeExito: boolean = false;
@@ -44,6 +45,9 @@ export class NosotrosComponent {
 
   // ENVIAR FORMULARIO CONTACTO
   enviarForm() {
+    if (this.loading) return;
+    this.loading = true;
+
     let obj = {
       nombreCompleto: this.nombreCompleto,
       email: this.email,
@@ -53,6 +57,7 @@ export class NosotrosComponent {
     }
 
     setTimeout(() => {
+      this.loading = false;
       this.resetFormulario();
       this.mostrarExito("El formulario fue enviado al correo de la empresa.");
 

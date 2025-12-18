@@ -14,6 +14,10 @@ export class ProyectosService {
     return this.httpClient.get(this.url)
   }
 
+  getPublicProject(){
+    return this.httpClient.get(this.url + "/publicos")
+  }
+
   getProjectId(id:any){
     return this.httpClient.get(`${this.url}/${id}`)
   }

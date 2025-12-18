@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   showErrorAnimation: boolean = false;
 
   dataSourceLogin: any;
+  loading: boolean = false;
 
   ngOnInit(): void {
     localStorage.clear()
@@ -53,10 +54,14 @@ export class LoginComponent implements OnInit {
       "mail": this.mail,
       "pass": this.pass
     }
+    
+    this.loading = true;
+    this.msg = '';
 
     this.userService.Login(obj).subscribe({
       next: (x) => {
         this.dataSourceLogin = x;
+        this.loading = false;
 
         if (this.dataSourceLogin.result == true) {
           localStorage.setItem("token", this.dataSourceLogin.token)
@@ -79,10 +84,12 @@ export class LoginComponent implements OnInit {
         } else {
           this.msg = this.dataSourceLogin.message
           this.triggerAnimation();
+          this.loading = false;
         }
       },
       error: (err) => {
         console.error(err);
+        this.loading = false;
         this.msg = "Ocurrió un error al intentar conectar con el servidor.";
         this.triggerAnimation();
       }

@@ -44,7 +44,7 @@ export class PerfilComponent implements OnInit {
     selectable: true,
     locale: esLocale,
     dateClick: (info: any) => this.handleDateClick(info),
-    eventClick: (info: any) => this.handleEventClick(info) 
+    eventClick: (info: any) => this.handleEventClick(info)
   }
 
   // TODO
@@ -55,6 +55,8 @@ export class PerfilComponent implements OnInit {
   mensajeExito: boolean = false;
   loading = false;
   loadingUser = false;
+  loadingEvento = false;
+  loadingChangePass = false;
 
 
   constructor(
@@ -103,7 +105,7 @@ export class PerfilComponent implements OnInit {
 
   // EVENTOS
   getEventos() {
-    this.eventosService.GetEventos().subscribe({
+    this.eventosService.GetEventosByUser().subscribe({
       next: (res: any[]) => {
 
         this.events = res.map(item => ({
@@ -169,6 +171,9 @@ export class PerfilComponent implements OnInit {
       return
     }
 
+    this.loadingChangePass = true;
+    this.passMsg = false;
+
     let passwords = {
       "NewPassword": this.pass,
       "ConfirmNewPassword": this.pass2
@@ -176,6 +181,7 @@ export class PerfilComponent implements OnInit {
 
     this.userService.ChangePass(passwords, this.userId).subscribe({
       next: () => {
+        this.loadingChangePass = false;
         this.getUser();
         this.resetFormulario();
 
@@ -186,7 +192,7 @@ export class PerfilComponent implements OnInit {
         localStorage.setItem("change_pass", "false")
         this.change_pass = false;
       },
-      error: err => console.error(err)
+      error: err => { console.error(err); this.loadingChangePass = false; }
     })
   }
 
@@ -228,47 +234,46 @@ export class PerfilComponent implements OnInit {
 
   // CALENDARIO
   createEvent() {
+    if (!this.proyectoCalendar || !this.horas) return;
+    this.loadingEvento = true;
+
     let proyecto: any
     this.getHoras(this.proyectoCalendar.id).subscribe(x => {
       proyecto = x
       const horasActuales = proyecto.horas
       const nuevasHoras = Number(horasActuales) + Number(this.horas);
 
-      this.updateProject(proyecto.id, nuevasHoras);
-      const eventVisual = {
-        title: `${this.proyectoCalendar.nombre} - ${this.horas} hs`,
-        date: this.selectedDate,
-        horas: Number(this.horas)
-      };
+      this.proyectoService.editProjectByHours(proyecto.id, nuevasHoras).subscribe({
+        next: () => {
+          let eventoParaBD = {
+            nombre: this.proyectoCalendar.nombre,
+            horas: Number(this.horas),
+            fecha: this.selectedDate
+          };
 
-      let eventoParaBD = {
-        nombre: this.proyectoCalendar.nombre,
-        horas: this.horas,
-        fecha: this.selectedDate
-      }
+          this.eventosService.PostEvento(eventoParaBD).subscribe({
+            next: (res) => {
+              console.log("Evento guardado:", res);
 
-      this.eventosService.PostEvento(eventoParaBD).subscribe({
-        next: res => console.log(res),
-        error: err => console.log(err)
-      })
+              const eventVisual = {
+                title: `${this.proyectoCalendar.nombre} - ${this.horas} hs`,
+                date: this.selectedDate,
+                horas: Number(this.horas)
+              };
+              this.events = [...this.events, eventVisual];
 
-      this.events = [...this.events, eventVisual];
-      this.calcularHorasMesActual();
-      this.openOptions = false;
-      this.getProyectos();
-    })
+              this.getProyectos();
+              this.calcularHorasMesActual();
 
+              this.openOptions = false;
+              this.mostrarExito("Evento creado y proyecto actualizado");
+              this.loadingEvento = false;
+            },
+            error: err => { console.error("Error al crear evento", err); this.loadingEvento = false; }
+          });
+        },
+        error: err => console.error("Error al actualizar proyecto", err)
+      });
+    });
   }
-
-  // ACTUALIZAR HORAS PROYECTO
-  updateProject(id: any, nuevasHoras: any) {
-    this.proyectoService.editProjectByHours(id, nuevasHoras).subscribe({
-      next: res => console.log(res),
-      error: err => console.error(err)
-    })
-
-    this.getProyectos()
-    this.calcularHorasMesActual()
-  }
-
 }

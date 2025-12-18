@@ -119,9 +119,30 @@
         </div>
       </div>
 
+      <div class="mb-4 p-3 rounded-3 bg-white border border-1 shadow-sm">
+        <div class="form-check form-switch d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3">
+          <div class="order-2 order-sm-1">
+            <label class="form-check-label fw-bold text-dark d-block mb-1" for="switchPublico">
+              <i class="bi" [ngClass]="esPublico ? 'bi-eye-fill text-success' : 'bi-eye-slash-fill text-muted'"></i>
+              Mostrar al público
+            </label>
+            <p class="text-muted small mb-0 lh-sm">
+              {{ esPublico ? 'Visible en la web principal.' : 'Visible de forma interna.' }}
+            </p>
+          </div>
+          <input class="form-check-input custom-switch-lg ms-0 order-1 order-sm-2" type="checkbox" id="switchPublico" 
+                [(ngModel)]="esPublico" name="esPublico">
+        </div>
+      </div>
+
       <div class="text-center mt-4 border-top pt-3">
-        <button type="submit" class="btn btn-primary btn-lg px-5" [disabled]="formProyecto.invalid || !imagenPrevia">
-          Confirmar proyecto
+        <button type="submit" class="btn btn-primary btn-lg px-5"
+          [disabled]="formProyecto.invalid || !imagenPrevia || loadingCrearProyecto">
+
+          <span *ngIf="loadingCrearProyecto" class="spinner-border spinner-border-sm me-2" role="status"
+            aria-hidden="true"></span>
+
+          <span>{{ loadingCrearProyecto ? 'Subiendo proyecto...' : 'Confirmar proyecto' }}</span>
         </button>
       </div>
 
@@ -225,8 +246,12 @@
       </div>
 
       <div class="text-center mt-4 border-top pt-3">
-        <button type="submit" class="btn btn-primary btn-lg px-5" [disabled]="formServicio.invalid">
-          Confirmar servicio
+        <button type="submit" class="btn btn-primary btn-lg px-5"
+          [disabled]="formServicio.invalid || loadingCrearServicio">
+          <span *ngIf="loadingCrearServicio" class="spinner-border spinner-border-sm me-2" role="status"
+            aria-hidden="true"></span>
+
+          <span>{{ loadingCrearServicio ? 'Guardando...' : 'Confirmar servicio' }}</span>
         </button>
       </div>
 
@@ -323,8 +348,13 @@
 
       <div class="modal-footer border-top-0 pt-0 pb-4 px-4">
         <button id="btnCerrarEditarS" class="btn btn-light px-4 rounded-pill" data-bs-dismiss="modal">Cancelar</button>
-        <button class="btn btn-primary px-4 rounded-pill shadow-sm" (click)="editarServicio()">
-          Guardar Cambios
+
+        <button class="btn btn-primary px-4 rounded-pill shadow-sm" (click)="editarServicio()"
+          [disabled]="loadingEditService || !nombreServicioEdit || !descripcionServicioEdit">
+          <span *ngIf="loadingEditService" class="spinner-border spinner-border-sm me-2" role="status"
+            aria-hidden="true"></span>
+
+           <span>{{ loadingEditService ? 'Guardando...' : 'Guardar Cambios' }}</span>
         </button>
       </div>
 
@@ -363,8 +393,14 @@
 
           <button type="button"
             class="btn btn-danger px-5 fw-bold rounded-pill shadow-sm d-flex align-items-center gap-2"
-            (click)="deleteService()">
-            <i class="bi bi-trash3"></i> Eliminar
+            (click)="deleteService()" [disabled]="loadingDeleteServicio">
+
+            <span *ngIf="loadingDeleteServicio" class="spinner-border spinner-border-sm" role="status"
+              aria-hidden="true"></span>
+
+            <i *ngIf="!loadingDeleteServicio" class="bi bi-trash3"></i>
+
+            <span>{{ loadingDeleteServicio ? 'Eliminando...' : 'Eliminar' }}</span>
           </button>
         </div>
 
@@ -437,6 +473,25 @@
             </div>
           </div>
 
+          <div class="mb-4">
+            <label class="form-label text-muted small text-uppercase fw-bold d-block">Configuración de visibilidad</label>
+            <div class="p-3 rounded-3 bg-light border-0">
+              <div class="form-check form-switch d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3">
+                <div class="order-2 order-sm-1">
+                  <label class="form-check-label fw-bold d-block mb-1" [class.text-primary]="esPublicoEdit" for="switchPublicoEdit">
+                    <i class="bi" [ngClass]="esPublicoEdit ? 'bi-eye-fill' : 'bi-eye-slash-fill'"></i>
+                    {{ esPublicoEdit ? 'Proyecto Público' : 'Proyecto Privado' }}
+                  </label>
+                  <p class="text-muted small mb-0 lh-sm">
+                    {{ esPublicoEdit ? 'Visible en el portafolio externo.' : 'Solo visible para administración.' }}
+                  </p>
+                </div>
+                <input class="form-check-input custom-switch-lg ms-0 order-1 order-sm-2" type="checkbox" id="switchPublicoEdit" 
+                      [(ngModel)]="esPublicoEdit" name="esPublicoEdit">
+              </div>
+            </div>
+          </div>
+
           <div class="mb-3">
             <label class="form-label text-muted small text-uppercase fw-bold">Imagen de portada</label>
 
@@ -485,8 +540,12 @@
             data-bs-dismiss="modal">Cancelar</button>
 
           <button class="btn btn-primary px-4 rounded-pill shadow-sm" (click)="editarProyecto()"
-            [disabled]="editForm.invalid">
-            Guardar Cambios
+            [disabled]="editForm.invalid || loadingEditProyecto">
+
+            <span *ngIf="loadingEditProyecto" class="spinner-border spinner-border-sm me-2" role="status"
+              aria-hidden="true"></span>
+
+            <span>{{ loadingEditProyecto ? 'Guardando...' : 'Guardar Cambios' }}</span>
           </button>
         </div>
 
@@ -537,10 +596,17 @@
             style="background-color: #f0f2f5;">
             Ahora no
           </button>
+
           <button type="button"
             class="btn btn-success px-5 fw-bold rounded-pill shadow-sm d-flex align-items-center gap-2"
-            (click)="deleteProject()">
-            <i class="bi bi-check2-circle fs-5"></i> Sí, finalizar
+            (click)="deleteProject()" [disabled]="loadingFinalizar">
+
+            <span *ngIf="loadingFinalizar" class="spinner-border spinner-border-sm" role="status"
+              aria-hidden="true"></span>
+
+            <i *ngIf="!loadingFinalizar" class="bi bi-check2-circle fs-5"></i>
+
+            <span>{{ loadingFinalizar ? 'Finalizando...' : 'Sí, finalizar' }}</span>
           </button>
         </div>
 
