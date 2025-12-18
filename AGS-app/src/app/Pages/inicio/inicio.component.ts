@@ -39,7 +39,7 @@ export class InicioComponent implements OnInit{
 
   getProyectos(){
     this.loadingProyectos = true;
-    this.proyectosService.getProject().subscribe(x=>{
+    this.proyectosService.getPublicProject().subscribe(x=>{
       this.imagesCarrousel = x
       for (let i of this.imagesCarrousel){   
         this.carrousel.push(i)

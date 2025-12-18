@@ -28,37 +28,44 @@ export class ServiciosProyectosComponent implements OnInit {
   fileProyecto!: File;
   nombreArchivo: string = 'Ningún archivo seleccionado';
   imagenPrevia: string | ArrayBuffer | null = null;
+  loadingCrearProyecto: boolean = false;
+  esPublico: boolean = false;
 
   // EDITAR PROYECTO
   selectedProject: any;
   id: any
   nombreEdit: any;
   descripcionEdit: any;
-  // fileEdit!: File;
   horasEdit: any;
   estadoEdit: any;
   fechaInicioEdit: any;
   fileProyectoEdit: File | null = null;
   imagenPreviaEdit: any = null;
   nombreArchivoEdit: string = 'Imagen actual del proyecto';
+  esPublicoEdit: boolean = false;
+  loadingEditProyecto: boolean = false;
 
   // FINALIZAR PROYECTO
   idDelete: any;
   fechaActual: string = "";
+  loadingFinalizar: boolean = false;
 
   // CREAR SERVICIO
   servicios: any;
   nombreServicio: any;
   descServicio: any;
+  loadingCrearServicio: boolean = false;
 
   // EDITAR SERVICIO
   selectedService: any;
   idServicio: any;
   nombreServicioEdit: any;
   descripcionServicioEdit: any;
+  loadingEditService: boolean = false;
 
   // ELIMINAR SERVICIO
   idDeleteService: any;
+  loadingDeleteServicio: boolean = false;
 
 
   constructor(
@@ -98,6 +105,9 @@ export class ServiciosProyectosComponent implements OnInit {
 
   // CREAR PROYECTO
   crearProyecto() {
+    if (this.loadingCrearProyecto) return;
+    this.loadingCrearProyecto = true;
+
     const formData = new FormData()
     formData.append("nombre", this.nombre)
     formData.append("descripcion", this.descripcion)
@@ -105,15 +115,20 @@ export class ServiciosProyectosComponent implements OnInit {
     formData.append("estado", this.estado)
     formData.append("horas", this.horas)
     formData.append("imagenFile", this.fileProyecto)
+    formData.append('es_publico', this.esPublico.toString())
 
     this.proyectosService.postProject(formData).subscribe({
       next: () => {
         this.getProyectos();
         this.resetFormulario();
 
+        this.loadingCrearProyecto = false;
         this.mostrarExito("El proyecto se ha creado correctamente.");
       },
-      error: err => console.error(err)
+      error: err => {
+        console.error(err);
+        this.loadingCrearProyecto = false;
+      }
     })
   }
 
@@ -170,17 +185,21 @@ export class ServiciosProyectosComponent implements OnInit {
     this.fechaInicioEdit = project.fecha_inicio
     this.imagenPreviaEdit = project.url;
     this.fileProyectoEdit = null;
-    this.nombreArchivoEdit = "Imagen actual del proyecto";;
+    this.nombreArchivoEdit = "Imagen actual del proyecto";
+    this.esPublicoEdit = project.es_publico;
   }
 
   editarProyecto() {
-    const formData = new FormData()
+    if (this.loadingEditProyecto) return;
+    this.loadingEditProyecto = true;
 
+    const formData = new FormData()
     formData.append("nombre", this.nombreEdit)
     formData.append("descripcion", this.descripcionEdit)
     formData.append("fecha_inicio", this.fechaInicioEdit)
     formData.append("estado", this.estadoEdit)
     formData.append("horas", this.horasEdit)
+    formData.append('es_publico', this.esPublicoEdit.toString())
 
     if (this.fileProyectoEdit) {
       formData.append("imagenFile", this.fileProyectoEdit)
@@ -188,6 +207,7 @@ export class ServiciosProyectosComponent implements OnInit {
 
     this.proyectosService.editProject(this.id, formData).subscribe({
       next: () => {
+        this.loadingEditProyecto = false;
         this.getProyectos();
         this.fileProyectoEdit = null;
 
@@ -196,7 +216,10 @@ export class ServiciosProyectosComponent implements OnInit {
 
         this.mostrarExito("Los cambios del proyecto fueron guardados.");
       },
-      error: err => console.error(err)
+      error: err => {
+        console.error(err);
+        this.loadingEditProyecto = false;
+      }
     })
   }
 
@@ -206,15 +229,22 @@ export class ServiciosProyectosComponent implements OnInit {
   }
 
   deleteProject() {
+    if (this.loadingFinalizar) return;
+    this.loadingFinalizar = true;
+
     this.proyectosService.deleteProject(this.idDelete).subscribe({
       next: () => {
         this.getProyectos();
+        this.loadingFinalizar = false;
         const btn = document.getElementById('btnCerrarFinalizarP');
         if (btn) btn.click();
 
         this.mostrarExito("La fecha de finalizacion fue actualizada correctamente.");
       },
-      error: err => console.error(err)
+      error: err => {
+        console.error(err);
+        this.loadingFinalizar = false;
+      }
     })
   }
 
@@ -235,6 +265,9 @@ export class ServiciosProyectosComponent implements OnInit {
 
   // CREAR SERVICIO
   crearServicio() {
+    if (this.loadingCrearServicio) return;
+    this.loadingCrearServicio = true;
+
     let obj = {
       "nombre": this.nombreServicio,
       "descripcion": this.descServicio
@@ -245,9 +278,13 @@ export class ServiciosProyectosComponent implements OnInit {
         this.getServicios();
         this.resetFormularioServicios();
 
+        this.loadingCrearServicio = false;
         this.mostrarExito("El servicio se ha creado correctamente.");
       },
-      error: err => console.error(err)
+      error: err => {
+        console.error(err);
+        this.loadingCrearServicio = false;
+      }
     })
   }
 
@@ -260,6 +297,9 @@ export class ServiciosProyectosComponent implements OnInit {
   }
 
   editarServicio() {
+    if (this.loadingEditService) return;
+    this.loadingEditService = true;
+
     let obj = {
       "nombre": this.nombreServicioEdit,
       "descripcion": this.descripcionServicioEdit
@@ -267,13 +307,17 @@ export class ServiciosProyectosComponent implements OnInit {
 
     this.serviciosService.editServices(this.idServicio, obj).subscribe({
       next: () => {
+        this.loadingEditService = false;
         this.getServicios();
         const btn = document.getElementById('btnCerrarEditarS');
         if (btn) btn.click();
 
         this.mostrarExito("Los cambios del servicio fueron guardados.");
       },
-      error: err => console.error(err)
+      error: err => {
+        console.error(err);
+        this.loadingEditService = false;
+      }
     })
   }
 
@@ -283,15 +327,22 @@ export class ServiciosProyectosComponent implements OnInit {
   }
 
   deleteService() {
+    if (this.loadingDeleteServicio) return;
+    this.loadingDeleteServicio = true;
+
     this.serviciosService.deleteServices(this.idDeleteService).subscribe({
       next: () => {
         this.getServicios();
+        this.loadingDeleteServicio = false;
         const btn = document.getElementById('btnCerrarEliminarS');
         if (btn) btn.click();
 
         this.mostrarExito("El servicio fue eliminado exitosamente.");
       },
-      error: err => console.error(err)
+      error: err => {
+        console.error(err);
+        this.loadingDeleteServicio = false;
+      }
     })
   }
 
