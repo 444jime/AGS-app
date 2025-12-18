@@ -14,6 +14,10 @@ export class EventosService {
     return this.httpClient.get(this.url)
   }
 
+  GetEventosByUser() {
+    return this.httpClient.get(this.url + "/mis-eventos")
+  }
+
   PostEvento(obj:any){
     return this.httpClient.post(this.url,obj)
   }
